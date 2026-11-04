@@ -397,6 +397,11 @@ a.btn{text-decoration:none}
 .secc{margin-top:28px}
 .secc>h3{margin-top:0}
 
+/* Sincronización */
+.nube{position:relative;display:grid;place-items:center;color:var(--muted)}
+.nube.bien{color:var(--ok)}.nube.mal{color:var(--bad)}
+.nube.bien::after,.nube.mal::after{content:"";position:absolute;right:-3px;bottom:-1px;width:8px;height:8px;border-radius:50%;background:currentColor;border:1.5px solid var(--card)}
+
 /* Legajo técnico */
 .b-azul svg.i,.b-ok svg.i,.b-bad svg.i,.b-mid svg.i,.b-na svg.i,.b-blanco svg.i{width:13px;height:13px;stroke-width:2.4}
 .kpi.b-blanco{border:1px solid var(--line-2)}
@@ -431,6 +436,7 @@ table.legtab tbody tr:hover td{background:var(--navy-soft)}
 <script src="app/agenda.js"></script>
 <script src="app/agenda-informes.js"></script>
 <script src="app/legajo.js"></script>
+<script src="app/sync.js"></script>
 <script src="app/app.js"></script>
 </body>
 </html>

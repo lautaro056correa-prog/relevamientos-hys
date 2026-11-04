@@ -11,7 +11,8 @@ const AG = (() => {
     pdf: ['https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js', 'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js'],
     graficos: ['https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js'],
     zip: ['https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js'],
-    escaner: ['https://cdn.jsdelivr.net/npm/jscanify@1.4.3/src/opencv.js', 'https://cdn.jsdelivr.net/npm/jscanify@1.4.3/src/jscanify.js']
+    escaner: ['https://cdn.jsdelivr.net/npm/jscanify@1.4.3/src/opencv.js', 'https://cdn.jsdelivr.net/npm/jscanify@1.4.3/src/jscanify.js'],
+    supabase: ['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js']
   };
   const cargados = {};
   const cargarUno = url => cargados[url] ||= new Promise((res, rej) => {
@@ -602,7 +603,8 @@ const AG = (() => {
 
         <h3>Observaciones</h3>
         <div class="card"><textarea id="v_obs" rows="5" placeholder="Lo que viste, lo que hablaste con el cliente…" ${dis} ${oi('vObs')}>${esc(v.observaciones)}</textarea>
-          ${dis ? '' : `<button class="btn sec small" style="margin-top:10px" id="v_mic" ${on('vDictar')}>${ic('mic')}Dictar</button>`}</div>
+          ${dis ? '' : `<div class="actions" style="margin-top:10px"><button class="btn sec small" id="v_mic" ${on('vDictar')}>${ic('mic')}Dictar</button>
+            <button class="btn sec small" ${on('abrirDictadoIA')}>${ic('auto')}Dictado con IA</button></div>`}</div>
 
         <h3>Fotos</h3>
         <div class="card" id="v_fotos">${v.fotos.length || !dis ? fotosVisitaHtml(v, !!dis) : '<p class="sub" style="margin:0">Sin fotos.</p>'}

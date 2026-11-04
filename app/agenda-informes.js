@@ -246,6 +246,7 @@
           : `<button class="btn hazard block" style="margin-top:12px" ${on('cerrarSemana')}>${ic('check')}Emitir y cerrar la semana</button>
              <p class="hint">Al cerrarla, las visitas de la semana quedan bloqueadas (se puede reabrir).</p>`}
       </div>
+      ${await Sync.directorHtml()}
       <h3>Exportar</h3>
       <div class="card">
         <div class="row"><div class="fld"><label for="x_desde">Desde</label><input id="x_desde" type="date" value="${S.xDesde}" ${oc('xCampo', 'xDesde')}></div>

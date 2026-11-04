@@ -17,7 +17,8 @@
       CAT.version = semilla.version;
     }
     CAT ||= {id: 'legajoCatalogo', version: 0, umbral_dias: 60, secciones: [], requisitos: []};
-    await put('config', CAT);
+    // Sin pasar por la cola: la semilla no debe pisar en la nube un catálogo que ya se editó en otro dispositivo
+    await tx('config', 'readwrite', o => o.put(CAT));
   }
   const umbral = () => +CAT.umbral_dias || 60;
   const reqs = () => CAT.requisitos.filter(r => r.activo !== false);

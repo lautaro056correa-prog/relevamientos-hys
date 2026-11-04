@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Visitas de Higiene y Seguridad</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Página de solo lectura para el director. Mismos colores que la app. */
+:root{--paper:#F5F6F2;--card:#FFFFFF;--ink:#202725;--muted:#626E69;--line:#DCE3DF;--pri:#123F42;--menta:#DDF3E9;--pri-ink:#123F42;--ok:#1E6B4F;--ok-s:#DDF3E9;--bad:#B42318;--bad-s:#FDECEA;--mid:#8A5A00;--mid-s:#FFF3D6;--na:#56625E;--na-s:#ECEFEC}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--paper:#0F1513;--card:#18201E;--ink:#E6ECE9;--muted:#9DABA5;--line:#28332F;--pri:#1E5D57;--menta:#1B3A33;--pri-ink:#BFEBD8;--ok:#7FD1A8;--ok-s:#173A2E;--bad:#FF8A7A;--bad-s:#3D1F1C;--mid:#F2C25C;--mid-s:#3A2F15;--na:#A9B5B0;--na-s:#25302C}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--pri);color:#fff;padding:20px 16px}
+header div,main{max-width:900px;margin:0 auto}
+h1{font-size:24px;margin:0;line-height:1.25}
+header p{margin:4px 0 0;opacity:.85;font-size:14px}
+main{padding:16px 16px 48px}
+h2{font-size:20px;margin:28px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.nav{display:flex;align-items:center;gap:8px;text-align:center}
+.nav>div{flex:1;min-width:0}
+button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;min-width:44px;min-height:44px;font:inherit;font-weight:600;cursor:pointer}
+button:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.sub{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:12px}
+.kpi{border-radius:12px;padding:12px 8px;text-align:center;background:var(--na-s);color:var(--na)}
+.kpi b{display:block;font-size:24px;line-height:1.1}.kpi span{font-size:13px}
+.ok{background:var(--ok-s);color:var(--ok)}.bad{background:var(--bad-s);color:var(--bad)}.mid{background:var(--mid-s);color:var(--mid)}.pri{background:var(--menta);color:var(--pri-ink)}.na{background:var(--na-s);color:var(--na)}
+.badge{display:inline-block;font-size:12.5px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.vis{border-top:1px solid var(--line);padding:14px 0}.vis:first-of-type{border-top:0;padding-top:0}.vis:last-child{padding-bottom:0}
+.vis b{font-size:16.5px}.fila{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+ul{margin:6px 0 0;padding-left:20px}
+.graf{display:grid;gap:12px}@media (min-width:720px){.graf{grid-template-columns:1fr 1fr}}
+.graf h3{margin:0 0 12px;font-size:16px}canvas{max-height:260px}
+.barra{height:8px;background:var(--na-s);border-radius:4px;overflow:hidden;margin-top:4px}.barra i{display:block;height:100%;background:var(--pri)}
+.hora{margin-top:12px}
+.err{text-align:center;padding:48px 16px}
+</style>
+</head>
+<body>
+<header><div><h1>Visitas de Higiene y Seguridad</h1><p id="prof">Cargando…</p></div></header>
+<main id="app"><p class="sub">Cargando los datos…</p></main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+const URL_F = 'https://obnuhhublcbdaolfpsjh.supabase.co/functions/v1/director', CLAVE = 'sb_publishable_cP6fsViS7VW3ydIM-Oikjw_wY538Eyd';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const iso = d => new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const aF = f => { const [y, m, d] = f.split('-').map(Number); return new Date(y, m - 1, d); };
+const sumar = (f, n) => { const d = aF(f); d.setDate(d.getDate() + n); return iso(d); };
+const lunes = f => sumar(f, -((aF(f).getDay() + 6) % 7));
+const fmt = f => f ? f.split('-').reverse().join('/') : '';
+const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'], MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+const EST = {planificada: ['Planificada', 'pri'], cumplida: ['Cumplida', 'ok'], parcial: ['Parcial', 'mid'], reprogramada: ['Reprogramada', 'na'], cancelada: ['Cancelada', 'bad']};
+const min = h => { const [a, b] = String(h || '0:0').split(':').map(Number); return a * 60 + b; };
+const horas = v => v.inicio && v.fin ? Math.max(0, min(v.fin) - min(v.inicio)) / 60 : 0;
+const fh = h => (Math.round(h * 10) / 10).toString().replace('.', ',') + ' h';
+let D = null, sem = lunes(iso(new Date())), charts = [];
+
+function resumen(desde, hasta){
+  const en = f => f && f >= desde && f <= hasta, vs = D.visitas.filter(v => en(v.fecha)).sort((a, b) => (a.fecha + (a.hora || '99')).localeCompare(b.fecha + (b.hora || '99')));
+  const n = k => vs.filter(v => v.estado === k).length, r = {vs, total: vs.length, cumplida: n('cumplida'), parcial: n('parcial'), reprogramada: n('reprogramada'), cancelada: n('cancelada'), planificada: n('planificada')};
+  r.pct = r.total ? Math.round((r.cumplida + r.parcial / 2) * 100 / r.total) : 0;
+  r.horas = vs.reduce((t, v) => t + horas(v), 0);
+  r.relev = D.relevamientos.filter(en).length;
+  r.desvN = D.desvios.filter(o => en(o.fecha)).length;
+  r.desvC = D.desvios.filter(o => o.estado === 'Cerrado' && en(o.fechaCierre)).length;
+  return r;
+}
+function dibujar(){
+  const dom = sumar(sem, 6), r = resumen(sem, dom), cerrada = D.semanas.find(x => x.lunes === sem), k = (n, t, c = '') => `<div class="kpi ${c}"><b>${n}</b><span>${t}</span></div>`;
+  const hoy = iso(new Date()), mes = hoy.slice(0, 7), [y, m] = mes.split('-').map(Number), rm = resumen(mes + '-01', iso(new Date(y, m, 0)));
+  const hs = D.establecimientos.map(s => ({s, h: rm.vs.filter(v => v.estabId === s.id).reduce((t, v) => t + horas(v), 0)})).filter(x => x.h || x.s.horasMes);
+  $('#app').innerHTML = `
+    <div class="card nav"><button id="ant" aria-label="Semana anterior">‹</button><div><b>Semana del ${fmt(sem).slice(0, 5)} al ${fmt(dom)}</b>
+      <div class="sub">${cerrada ? `Cerrada · informe enviado el ${fmt(cerrada.fechaEnvio)}` : 'Semana abierta: los datos pueden cambiar'}</div></div><button id="sig" aria-label="Semana siguiente">›</button></div>
+    <div class="card"><div class="kpis" style="margin-top:0">${k(r.total, 'Programadas')}${k(r.cumplida, 'Cumplidas', 'ok')}${k(r.parcial, 'Parciales', 'mid')}${k(r.reprogramada, 'Reprogramadas')}${k(r.cancelada, 'Canceladas', 'bad')}${k(r.planificada, 'Sin cerrar', 'pri')}
+      ${k(r.pct + '%', 'Cumplimiento', 'pri')}${k(fh(r.horas), 'En planta', 'pri')}${k(r.relev, 'Relevamientos', 'pri')}${k(r.desvN, 'Desvíos detectados', 'bad')}${k(r.desvC, 'Desvíos cerrados', 'ok')}</div>
+      <p class="sub" style="margin:12px 0 0">Cumplimiento = (cumplidas + la mitad de las parciales) / visitas programadas de la semana.</p></div>
+    <h2>Detalle por visita</h2>
+    <div class="card">${r.vs.map(v => `<div class="vis"><div class="fila"><div><b>${esc(v.cliente)}</b><div class="sub">${esc(v.establecimiento)}</div>
+        <div class="sub">${DIAS[aF(v.fecha).getDay()]} ${fmt(v.fecha)} · ${v.inicio ? `${esc(v.inicio)} a ${esc(v.fin || '?')} (${fh(horas(v))})` : esc(v.hora || 'sin hora')}</div></div><span class="badge ${EST[v.estado]?.[1] || 'na'}">${EST[v.estado]?.[0] || esc(v.estado)}</span></div>
+      ${v.motivo ? `<p class="sub" style="margin:6px 0 0"><b style="font-size:14px">Motivo:</b> ${esc(v.motivo)}</p>` : ''}
+      ${v.tareas.length ? `<ul>${v.tareas.map(t => `<li>${esc(t.nombre)}${t.hecha ? '' : ' <span class="sub">(no realizada)</span>'}</li>`).join('')}</ul>` : ''}
+      ${v.observaciones ? `<p style="margin:8px 0 0;white-space:pre-wrap">${esc(v.observaciones)}</p>` : ''}
+      ${v.pendientes.length ? `<p class="sub" style="margin:8px 0 0"><b style="font-size:14px">Pendientes:</b> ${v.pendientes.map(p => esc(p.texto) + (p.estado === 'Cerrado' ? ' (resuelto)' : '')).join(' · ')}</p>` : ''}</div>`).join('') || '<p class="sub" style="margin:0">No hay visitas en esta semana.</p>'}</div>
+    <h2>Control del mes (${MESES[m - 1]} ${y})</h2>
+    <div class="card"><h3 style="margin:0;font-size:16px">Horas cumplidas y comprometidas</h3>
+      ${hs.map(x => `<div class="hora"><div class="fila"><span>${esc(x.s.cliente)} · ${esc(x.s.nombre)}</span><b class="sub" style="white-space:nowrap">${fh(x.h)}${x.s.horasMes ? ' / ' + x.s.horasMes + ' h' : ''}</b></div><div class="barra"><i style="width:${x.s.horasMes ? Math.min(100, x.h * 100 / x.s.horasMes) : 100}%"></i></div></div>`).join('') || '<p class="sub">Sin datos este mes.</p>'}</div>
+    <div class="graf"><div class="card"><h3>Cumplimiento mes a mes</h3><canvas id="g1" height="200"></canvas></div><div class="card"><h3>Visitas por cliente</h3><canvas id="g2" height="220"></canvas></div>
+      <div class="card"><h3>Actividades más frecuentes</h3><canvas id="g3" height="220"></canvas></div><div class="card"><h3>Horas por empresa</h3><canvas id="g4" height="220"></canvas></div></div>
+    <p class="sub">Página de solo lectura. Actualizado el ${new Date(D.generado).toLocaleString('es-AR')}.</p>`;
+  $('#ant').onclick = () => { sem = sumar(sem, -7); dibujar(); };
+  $('#sig').onclick = () => { sem = sumar(sem, 7); dibujar(); };
+  graficos(rm, y, m);
+}
+function graficos(rm, y, m){
+  if (!window.Chart) return;
+  charts.forEach(c => c.destroy()); charts = [];
+  const css = getComputedStyle(document.documentElement), col = n => css.getPropertyValue(n).trim();
+  Chart.defaults.color = col('--muted'); Chart.defaults.borderColor = col('--line'); Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
+  const meses = [];
+  for (let i = 5; i >= 0; i--) { const f = new Date(y, m - 1 - i, 1); meses.push([iso(f), iso(new Date(f.getFullYear(), f.getMonth() + 1, 0)), MESES[f.getMonth()]]); }
+  charts.push(new Chart($('#g1'), {type: 'line', data: {labels: meses.map(x => x[2]), datasets: [{data: meses.map(([a, b]) => resumen(a, b).pct), borderColor: col('--ok'), backgroundColor: col('--ok'), tension: .3}]},
+    options: {plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100, ticks: {callback: v => v + '%'}}}}}));
+  const hechas = rm.vs.filter(v => v.estado === 'cumplida' || v.estado === 'parcial');
+  const contar = (l, clave, val = () => 1) => Object.entries(l.reduce((o, x) => { const k = clave(x); o[k] = (o[k] || 0) + val(x); return o; }, {})).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const barras = (id, pares, c) => charts.push(new Chart($(id), {type: 'bar', data: {labels: pares.map(p => p[0].length > 18 ? p[0].slice(0, 17) + '…' : p[0]), datasets: [{data: pares.map(p => Math.round(p[1] * 10) / 10), backgroundColor: c, borderRadius: 4}]},
+    options: {indexAxis: 'y', plugins: {legend: {display: false}}, scales: {x: {beginAtZero: true, ticks: {precision: 0}}}}}));
+  barras('#g2', contar(hechas, v => v.cliente), col('--pri'));
+  barras('#g3', contar(hechas.flatMap(v => v.tareas.filter(t => t.hecha)), t => t.nombre), col('--ok'));
+  barras('#g4', contar(hechas, v => v.cliente, horas), col('--mid'));
+}
+(async () => {
+  const token = new URLSearchParams(location.hash.slice(1)).get('t') || '';
+  const falla = t => { $('#prof').textContent = ''; $('#app').innerHTML = `<div class="err"><b>${esc(t)}</b></div>`; };
+  try {
+    const r = await fetch(URL_F, {method: 'POST', headers: {'Content-Type': 'application/json', apikey: CLAVE}, body: JSON.stringify({token})});
+    if (r.status === 404) return falla('Este enlace no es válido o fue reemplazado. Pedile uno nuevo al profesional.');
+    if (!r.ok) throw new Error(r.status);
+    D = await r.json();
+    const p = D.profesional;
+    $('#prof').textContent = [[p.titulo, p.nombre].filter(Boolean).join(' '), p.matricula && 'Mat. ' + p.matricula].filter(Boolean).join(' · ') || 'Informe de visitas';
+    dibujar();
+  } catch (e) { console.error(e); falla('No se pudieron cargar los datos. Probá de nuevo en un rato.'); }
+})();
+</script>
+</body>
+</html>
