@@ -1,0 +1,36 @@
+# Buscador automático de normativa: corre de lunes a viernes a las 8:00 de Argentina (11:00 UTC).
+# Arranca desde el día siguiente a la última corrida, así los lunes cubre también sábado y domingo.
+# También se puede correr a mano desde la pestaña "Actions" de GitHub (botón "Run workflow").
+name: Buscar normativa
+
+on:
+  schedule:
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      dias:
+        description: 'Revisar los últimos N días (dejar vacío para seguir desde la última corrida)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  buscar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Buscar normas nuevas
+        run: |
+          if [ -n "${{ inputs.dias }}" ]; then node buscador/buscar.mjs --dias "${{ inputs.dias }}"; else node buscador/buscar.mjs; fi
+      - name: Guardar resultados
+        run: |
+          git config user.name "Buscador de normativa"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add normativa/novedades.json
+          git diff --cached --quiet || git commit -m "Normativa: corrida del $(date +%F)"
+          git push

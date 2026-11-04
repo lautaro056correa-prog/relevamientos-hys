@@ -1,0 +1,66 @@
+{
+  "id": "compresores",
+  "version": "1.0",
+  "titulo": "Compresores de aire",
+  "descripcion": "Pulmón, válvula de seguridad, transmisión e instalación",
+  "grupo": "Instalaciones y equipos",
+  "icono": "compresor",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de compresores de aire",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Compresor",
+  "nombre_elemento_plural": "Compresores",
+  "atributos": [
+    { "clave": "identificacion", "etiqueta": "N° de identificación", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true },
+    { "clave": "tipo", "etiqueta": "Tipo", "tipo": "opcion", "opciones": ["A pistón", "A tornillo", "Portátil"] },
+    { "clave": "pulmon", "etiqueta": "Capacidad del pulmón", "etiqueta_corta": "Pulmón", "tipo": "numero", "unidad": "l" },
+    { "clave": "presion", "etiqueta": "Presión de trabajo", "etiqueta_corta": "P. trabajo", "tipo": "numero", "unidad": "bar" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "ubicacion", "tipo", "pulmon", "valvula", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 16 (arts. 138 a 144)", "aplicacion": "Aparatos que puedan desarrollar presión interna." },
+    { "codigo": "Dec. 351/79 – Cap. 15 (arts. 103 a 107)", "aplicacion": "Protección de motores, transmisiones y partes móviles." },
+    { "codigo": "Dec. 351/79 – Cap. 14", "aplicacion": "Instalaciones eléctricas." },
+    { "codigo": "IRAM 2507", "aplicacion": "Identificación de cañerías por colores." }
+  ],
+  "secciones": [
+    { "clave": "presion", "titulo": "Pulmón y elementos de presión" },
+    { "clave": "transmision", "titulo": "Transmisión y montaje" },
+    { "clave": "instalacion", "titulo": "Instalación" }
+  ],
+  "items": [
+    { "clave": "pulmon_estado", "seccion": "presion", "texto": "Pulmón sin corrosión, abolladuras ni pérdidas", "criterio": "El recipiente de aire no presenta corrosión, golpes, fisuras ni pérdidas audibles.", "norma": "Dec. 351/79 – Cap. 16", "gravedad": "ALTA", "desvio_defecto": "Pulmón del compresor con corrosión, golpes o pérdidas.", "accion_defecto": "Retirar de servicio el compresor y hacer evaluar el pulmón por personal competente.", "responsable_defecto": "Responsable del establecimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "valvula", "etiqueta_corta": "Válv. seg.", "seccion": "presion", "texto": "Válvula de seguridad calibrada y precintada", "criterio": "Posee válvula de seguridad en buen estado, calibrada y con precinto.", "norma": "Dec. 351/79 – Cap. 16", "gravedad": "ALTA", "desvio_defecto": "Compresor sin válvula de seguridad o con la válvula sin precinto.", "accion_defecto": "Instalar o calibrar y precintar la válvula de seguridad del compresor.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "manometro", "seccion": "presion", "texto": "Manómetro sano y legible", "criterio": "El manómetro no tiene el vidrio roto y permite leer la presión.", "norma": "Dec. 351/79 – Cap. 16", "gravedad": "MEDIA", "desvio_defecto": "Manómetro del compresor dañado o ilegible.", "accion_defecto": "Reemplazar el manómetro del compresor.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "purga", "seccion": "presion", "texto": "Pulmón purgado, sin acumulación de condensado", "criterio": "La purga funciona y se realiza con la frecuencia indicada por el fabricante.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Pulmón del compresor sin purgar.", "accion_defecto": "Purgar el pulmón y establecer una rutina de purga.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "canerias", "seccion": "presion", "texto": "Cañerías y mangueras de aire sin pérdidas ni daños", "criterio": "Cañerías fijadas, mangueras sin cortes y conexiones sin pérdidas.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Cañerías o mangueras de aire con pérdidas o daños.", "accion_defecto": "Reparar las cañerías y mangueras de aire comprimido.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "canerias_color", "seccion": "presion", "texto": "Cañerías identificadas por color", "criterio": "Las cañerías de aire comprimido están pintadas o identificadas según la norma.", "norma": "Dec. 351/79 – art. 82 – IRAM 2507", "gravedad": "BAJA", "desvio_defecto": "Cañerías de aire comprimido sin identificar.", "accion_defecto": "Identificar las cañerías de aire comprimido según IRAM 2507.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "cubrecorrea", "seccion": "transmision", "texto": "Correas y poleas con protección (cubrecorrea) colocada", "criterio": "La transmisión está cubierta por un resguardo fijo que impide el contacto.", "norma": "Dec. 351/79 – arts. 103 a 107", "gravedad": "ALTA", "desvio_defecto": "Transmisión del compresor sin cubrecorrea.", "accion_defecto": "Colocar el cubrecorrea del compresor.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "correas", "seccion": "transmision", "texto": "Correas y poleas en buen estado", "criterio": "Correas sin grietas ni desgaste y correctamente tensadas.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Correas del compresor desgastadas o mal tensadas.", "accion_defecto": "Reemplazar o tensar las correas del compresor.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "aceite", "seccion": "transmision", "texto": "Nivel y estado del aceite correctos", "criterio": "El nivel de aceite está dentro del rango y sin pérdidas.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Compresor con nivel de aceite incorrecto o pérdidas.", "accion_defecto": "Completar o cambiar el aceite del compresor y reparar pérdidas.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "antivibratorios", "seccion": "transmision", "texto": "Tacos antivibratorios en buen estado", "criterio": "El equipo apoya sobre tacos antivibratorios enteros y está estable.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Tacos antivibratorios del compresor deteriorados.", "accion_defecto": "Reemplazar los tacos antivibratorios del compresor.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "limpieza", "seccion": "instalacion", "texto": "Equipo y entorno limpios", "criterio": "Sin acumulación de suciedad, aceite ni materiales combustibles alrededor.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Compresor y su entorno con suciedad o materiales acumulados.", "accion_defecto": "Limpiar el compresor y despejar su entorno.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "electrica", "seccion": "instalacion", "texto": "Instalación eléctrica y puesta a tierra en buen estado", "criterio": "Alimentación protegida, sin cables expuestos y con conexión a tierra.", "norma": "Dec. 351/79 – Cap. 14", "gravedad": "ALTA", "desvio_defecto": "Instalación eléctrica del compresor deficiente o sin puesta a tierra.", "accion_defecto": "Normalizar la instalación eléctrica y la puesta a tierra del compresor.", "responsable_defecto": "Electricista matriculado" }
+  ],
+  "items_generales": [
+    { "clave": "instrucciones", "texto": "Personal instruido en la operación segura de los compresores", "criterio": "Quienes operan los equipos conocen las instrucciones de uso y los riesgos.", "norma": "Dec. 351/79 – art. 138", "gravedad": "MEDIA", "desvio_defecto": "El personal no está instruido en la operación segura de los compresores.", "accion_defecto": "Instruir al personal en la operación segura de los compresores.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "mantenimiento", "texto": "Registro de mantenimiento de los compresores", "criterio": "Se registran los mantenimientos preventivos y correctivos realizados.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No se registra el mantenimiento de los compresores.", "accion_defecto": "Implementar el registro de mantenimiento de los compresores.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Purgar periódicamente los pulmones según las indicaciones del fabricante.", "responsable": "Mantenimiento", "norma": "Buenas prácticas" },
+    { "accion": "Registrar los mantenimientos preventivos y correctivos de cada compresor.", "responsable": "Mantenimiento", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar el estado de los compresores de aire y de sus elementos de seguridad, en particular el pulmón, la válvula de seguridad y la protección de la transmisión.",
+    "metodologia": "Se inspeccionó visualmente cada compresor, sus protecciones y su instalación, verificando cada ítem contra su criterio de aceptación.",
+    "alcance_extra": "No incluye ensayos de presión, mediciones de espesor del pulmón ni la calibración de la válvula de seguridad.",
+    "recomendaciones": [
+      "No modificar ni anular la válvula de seguridad del compresor.",
+      "Mantener colocados los resguardos de la transmisión.",
+      "Programar la inspección periódica del pulmón por personal competente."
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "epp",
+  "version": "1.0",
+  "titulo": "Elementos de protección personal",
+  "descripcion": "Provisión, uso y estado de los EPP por puesto",
+  "grupo": "Condiciones y salud",
+  "icono": "casco",
+  "color": "azul",
+  "subtitulo_informe": "Relevamiento de elementos de protección personal",
+  "tipo_elemento": "sector",
+  "nombre_elemento": "Puesto",
+  "nombre_elemento_plural": "Puestos",
+  "atributos": [
+    { "clave": "tarea", "etiqueta": "Tarea principal", "tipo": "texto", "ayuda": "Ej.: soldadura, pintura, carga y descarga" },
+    { "clave": "personal", "etiqueta": "Trabajadores en el puesto", "etiqueta_corta": "Personal", "tipo": "numero" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "tarea", "personal", "uso", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 19 (arts. 188 a 203)", "aplicacion": "Equipos y elementos de protección personal." },
+    { "codigo": "Res. SRT 299/11", "aplicacion": "Constancia de entrega de ropa de trabajo y EPP." },
+    { "codigo": "IRAM 10005", "aplicacion": "Señalización de uso obligatorio de EPP." }
+  ],
+  "secciones": [
+    { "clave": "general", "titulo": "Provisión y uso" },
+    { "clave": "tipos", "titulo": "Protecciones según el riesgo" }
+  ],
+  "items": [
+    { "clave": "provision", "seccion": "general", "texto": "EPP provistos según los riesgos de la tarea", "criterio": "El puesto cuenta con todos los EPP que exigen sus riesgos.", "norma": "Dec. 351/79 – art. 188", "gravedad": "ALTA", "desvio_defecto": "Puesto sin los EPP que requieren sus riesgos.", "accion_defecto": "Proveer los EPP faltantes según los riesgos del puesto.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "uso", "etiqueta_corta": "Uso", "seccion": "general", "texto": "El personal usa los EPP requeridos", "criterio": "Se observa el uso efectivo y correcto de los EPP durante la tarea.", "norma": "Dec. 351/79 – art. 188", "gravedad": "ALTA", "desvio_defecto": "Personal sin uso de los EPP requeridos.", "accion_defecto": "Exigir el uso de los EPP y reforzar la supervisión.", "responsable_defecto": "Supervisor", "foto_obligatoria_si_nc": true },
+    { "clave": "estado", "seccion": "general", "texto": "EPP en buen estado y limpios", "criterio": "Sin roturas, desgaste ni suciedad que reduzcan su protección.", "norma": "Dec. 351/79 – Cap. 19", "gravedad": "MEDIA", "desvio_defecto": "EPP deteriorados o sucios.", "accion_defecto": "Reemplazar los EPP deteriorados.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "certificados", "seccion": "general", "texto": "EPP con certificación de calidad", "criterio": "Los EPP tienen marca de certificación visible.", "norma": "Dec. 351/79 – Cap. 19", "gravedad": "MEDIA", "desvio_defecto": "EPP sin certificación de calidad.", "accion_defecto": "Adquirir EPP certificados.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "ropa", "seccion": "tipos", "texto": "Ropa de trabajo adecuada", "criterio": "Ajustada, sin partes sueltas y acorde a la tarea.", "norma": "Dec. 351/79 – art. 191", "gravedad": "BAJA", "desvio_defecto": "Ropa de trabajo inadecuada para la tarea.", "accion_defecto": "Proveer ropa de trabajo adecuada a la tarea.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "cabeza", "seccion": "tipos", "texto": "Protección de cabeza donde hay riesgo de golpes o caída de objetos", "criterio": "Se usa casco en buen estado.", "norma": "Dec. 351/79 – arts. 192 y 193", "gravedad": "MEDIA", "desvio_defecto": "Falta de protección de cabeza donde se requiere.", "accion_defecto": "Proveer cascos y exigir su uso.", "responsable_defecto": "Supervisor" },
+    { "clave": "ojos", "seccion": "tipos", "texto": "Protección ocular o facial donde hay proyecciones o radiación", "criterio": "Se usan anteojos, antiparras o máscara adecuados.", "norma": "Dec. 351/79 – arts. 194 y 195", "gravedad": "MEDIA", "desvio_defecto": "Falta de protección ocular o facial donde se requiere.", "accion_defecto": "Proveer protección ocular o facial y exigir su uso.", "responsable_defecto": "Supervisor" },
+    { "clave": "auditiva", "seccion": "tipos", "texto": "Protección auditiva donde hay exposición a ruido", "criterio": "Se usan protectores auditivos en los puestos con ruido elevado.", "norma": "Dec. 351/79 – art. 196", "gravedad": "MEDIA", "desvio_defecto": "Falta de protección auditiva en puesto con ruido.", "accion_defecto": "Proveer protección auditiva y exigir su uso.", "responsable_defecto": "Supervisor" },
+    { "clave": "respiratoria", "seccion": "tipos", "texto": "Protección respiratoria adecuada al contaminante", "criterio": "El respirador y el filtro corresponden al contaminante y se reemplazan a tiempo.", "norma": "Dec. 351/79 – art. 199", "gravedad": "ALTA", "desvio_defecto": "Protección respiratoria inexistente o inadecuada al contaminante.", "accion_defecto": "Proveer protección respiratoria adecuada y controlar el recambio de filtros.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "manos", "seccion": "tipos", "texto": "Guantes adecuados a la tarea", "criterio": "El tipo de guante corresponde al riesgo (corte, químico, térmico).", "norma": "Dec. 351/79 – art. 198", "gravedad": "MEDIA", "desvio_defecto": "Guantes inexistentes o inadecuados para la tarea.", "accion_defecto": "Proveer guantes adecuados al riesgo de la tarea.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "calzado", "seccion": "tipos", "texto": "Calzado de seguridad", "criterio": "Se usa calzado con puntera y suela adecuadas al riesgo.", "norma": "Dec. 351/79 – art. 197", "gravedad": "MEDIA", "desvio_defecto": "Personal sin calzado de seguridad.", "accion_defecto": "Proveer calzado de seguridad y exigir su uso.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "senalizacion", "seccion": "general", "texto": "Señalización de uso obligatorio de EPP", "criterio": "En el puesto hay carteles de EPP obligatorio.", "norma": "IRAM 10005", "gravedad": "BAJA", "desvio_defecto": "Puesto sin señalización de EPP obligatorio.", "accion_defecto": "Señalizar el EPP obligatorio en el puesto.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "guardado", "seccion": "general", "texto": "Lugar adecuado para guardar los EPP", "criterio": "Los EPP se guardan limpios, protegidos y en un lugar asignado.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No hay lugar adecuado para guardar los EPP.", "accion_defecto": "Disponer un lugar adecuado para guardar los EPP.", "responsable_defecto": "Responsable del establecimiento" }
+  ],
+  "items_generales": [
+    { "clave": "constancias", "texto": "Constancias de entrega de EPP al día", "criterio": "Cada trabajador tiene su constancia de entrega firmada (papel o digital).", "norma": "Res. SRT 299/11", "gravedad": "MEDIA", "desvio_defecto": "Constancias de entrega de EPP incompletas o inexistentes.", "accion_defecto": "Completar las constancias de entrega de EPP de cada trabajador.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "capacitacion", "texto": "Personal capacitado en el uso y cuidado de los EPP", "criterio": "Existe registro de capacitación sobre uso, cuidado y recambio de EPP.", "norma": "Dec. 351/79 – art. 208", "gravedad": "BAJA", "desvio_defecto": "No hay registro de capacitación en uso de EPP.", "accion_defecto": "Capacitar al personal en el uso y cuidado de los EPP.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Actualizar las constancias de entrega en cada reposición de EPP.", "responsable": "Responsable del establecimiento", "norma": "Res. SRT 299/11" }
+  ],
+  "textos": {
+    "objetivo": "Verificar que cada puesto de trabajo cuente con los elementos de protección personal que exigen sus riesgos, y que se usen y mantengan correctamente.",
+    "metodologia": "Se observó al personal en sus puestos, verificando la provisión, el uso y el estado de los EPP según los riesgos de cada tarea. Los ítems que no corresponden al puesto se marcaron como No aplica.",
+    "alcance_extra": "No incluye la evaluación cuantitativa de los riesgos ni ensayos de los EPP.",
+    "recomendaciones": [
+      "Seleccionar los EPP en función de la evaluación de riesgos de cada puesto.",
+      "Reponer los EPP cuando pierdan su capacidad de protección.",
+      "Registrar cada entrega en la constancia de la Res. SRT 299/11."
+    ]
+  }
+}

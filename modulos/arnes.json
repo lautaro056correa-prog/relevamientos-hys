@@ -1,0 +1,62 @@
+{
+  "id": "arnes",
+  "version": "1.0",
+  "titulo": "Arnés y cola de amarre",
+  "descripcion": "Costuras, enganches, mosquetones y absorbedor",
+  "grupo": "Trabajo en altura",
+  "icono": "arnes",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de arneses de seguridad y colas de amarre",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Arnés",
+  "nombre_elemento_plural": "Arneses",
+  "atributos": [
+    { "clave": "numero", "etiqueta": "Arnés N°", "etiqueta_corta": "Arnés", "tipo": "texto", "obligatorio": true },
+    { "clave": "cola", "etiqueta": "Cola de amarre N°", "etiqueta_corta": "Cola", "tipo": "texto" },
+    { "clave": "marca", "etiqueta": "Marca / modelo", "tipo": "texto" },
+    { "clave": "fabricacion", "etiqueta": "Fecha de fabricación", "etiqueta_corta": "Fabricación", "tipo": "mes", "ayuda": "Según la etiqueta del arnés" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "numero", "cola", "fabricacion", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – art. 200", "aplicacion": "Uso de arnés de seguridad en trabajos en altura." },
+    { "codigo": "Res. SRT 61/23", "aplicacion": "Medidas de seguridad obligatorias para trabajos en altura y sistemas de arresto de caídas." },
+    { "codigo": "Dec. 351/79 – Cap. 19", "aplicacion": "Equipos y elementos de protección personal." }
+  ],
+  "secciones": [
+    { "clave": "arnes", "titulo": "Arnés" },
+    { "clave": "cola", "titulo": "Cola de amarre y conectores" }
+  ],
+  "items": [
+    { "clave": "etiqueta", "seccion": "arnes", "texto": "Etiqueta legible con identificación y certificación", "criterio": "La etiqueta permite identificar fabricante, modelo, fecha y certificación.", "norma": "Res. SRT 61/23", "gravedad": "MEDIA", "desvio_defecto": "Arnés sin etiqueta de identificación legible.", "accion_defecto": "Reemplazar los arneses sin identificación ni certificación.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "costuras", "seccion": "arnes", "texto": "Costuras completas, sin cortes ni hilos sueltos", "criterio": "Todas las costuras están enteras y sin desgaste.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Arnés con costuras dañadas.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad", "foto_obligatoria_si_nc": true },
+    { "clave": "cintas", "seccion": "arnes", "texto": "Cintas sin cortes, quemaduras, deshilachados ni manchas químicas", "criterio": "Las cintas mantienen su trama y color, sin daños por calor o químicos.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Arnés con cintas cortadas, quemadas o deterioradas.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "dorsal", "seccion": "arnes", "texto": "Enganche dorsal en buen estado", "criterio": "La argolla dorsal no está deformada, fisurada ni corroída.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Enganche dorsal del arnés deformado o dañado.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "hebillas", "seccion": "arnes", "texto": "Hebillas y regulación de muslos y pecho funcionan", "criterio": "Las hebillas cierran, regulan y no se aflojan.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Hebillas o regulaciones del arnés defectuosas.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "limpieza", "seccion": "arnes", "texto": "Arnés limpio", "criterio": "Sin barro, grasa, pintura ni suciedad que oculte daños.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Arnés sucio.", "accion_defecto": "Limpiar los arneses según las indicaciones del fabricante.", "responsable_defecto": "Operador" },
+    { "clave": "cola_estado", "seccion": "cola", "texto": "Cola de amarre sin cortes ni desgaste", "criterio": "La cuerda o cinta de la cola está entera y sin abrasión.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Cola de amarre cortada o desgastada.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "absorbedor", "seccion": "cola", "texto": "Absorbedor de energía sin activar ni dañado", "criterio": "La empaquetadura del absorbedor está cerrada y sin señales de haber detenido una caída.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Absorbedor de energía activado o dañado.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "mosquetones", "seccion": "cola", "texto": "Mosquetones con cierre y traba operativos", "criterio": "Cierran solos, traban y no presentan deformación ni corrosión.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Mosquetones sin traba o deformados.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "estado_general", "seccion": "cola", "texto": "Estado general del equipo apto para el uso", "criterio": "El conjunto no presenta otros daños que comprometan su función.", "norma": "Res. SRT 61/23", "gravedad": "MEDIA", "desvio_defecto": "Arnés con estado general deficiente.", "accion_defecto": "Retirar de servicio y reemplazar los arneses o colas de amarre dañados.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "items_generales": [
+    { "clave": "anclajes", "texto": "Puntos de anclaje identificados y adecuados", "criterio": "Los trabajos en altura cuentan con puntos de anclaje o líneas de vida definidos y aptos.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "No hay puntos de anclaje definidos para trabajos en altura.", "accion_defecto": "Definir e instalar puntos de anclaje o líneas de vida para trabajos en altura.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "capacitacion", "texto": "Personal capacitado en trabajo en altura", "criterio": "Quienes trabajan en altura tienen capacitación registrada.", "norma": "Res. SRT 61/23", "gravedad": "MEDIA", "desvio_defecto": "Personal sin capacitación registrada en trabajo en altura.", "accion_defecto": "Capacitar al personal en trabajo en altura y registrarlo.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "guardado", "texto": "Arneses guardados colgados y protegidos", "criterio": "Se guardan colgados, secos y lejos del sol, el calor y los químicos.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Arneses guardados en forma inadecuada.", "accion_defecto": "Disponer un lugar para guardar colgados los arneses.", "responsable_defecto": "Responsable del establecimiento" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Revisar el arnés y la cola de amarre antes de cada uso.", "responsable": "Operador", "norma": "Res. SRT 61/23" },
+    { "accion": "Retirar de servicio todo arnés que haya detenido una caída.", "responsable": "Servicio de Higiene y Seguridad", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar el estado de los arneses de seguridad y colas de amarre, y determinar si están aptos para trabajos en altura.",
+    "metodologia": "Se inspeccionó visualmente cada arnés y su cola de amarre: cintas, costuras, herrajes, absorbedor y conectores.",
+    "alcance_extra": "No incluye ensayos de resistencia ni la verificación de la vida útil según el fabricante.",
+    "recomendaciones": [
+      "Anclar siempre la cola de amarre a un punto por encima del usuario.",
+      "Respetar la vida útil indicada por el fabricante.",
+      "No modificar ni reparar arneses o colas de amarre."
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "obra",
+  "version": "1.0",
+  "titulo": "Obra en construcción",
+  "descripcion": "Condiciones de seguridad de obra según Dec. 911/96",
+  "grupo": "Construcción",
+  "icono": "grua",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de condiciones de seguridad en obra",
+  "tipo_elemento": "establecimiento",
+  "nombre_elemento": "Obra",
+  "nombre_elemento_plural": "Obras",
+  "atributos": [
+    { "clave": "etapa", "etiqueta": "Etapa de obra", "tipo": "opcion", "opciones": ["Demolición", "Excavación / fundaciones", "Estructura", "Mampostería", "Instalaciones", "Terminaciones"] },
+    { "clave": "trabajadores", "etiqueta": "Trabajadores en obra", "tipo": "numero" },
+    { "clave": "contratistas", "etiqueta": "Contratistas presentes", "tipo": "texto" }
+  ],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 911/96", "aplicacion": "Reglamento de Higiene y Seguridad para la industria de la construcción." },
+    { "codigo": "Res. SRT 231/96", "aplicacion": "Legajo técnico de obra." },
+    { "codigo": "Res. SRT 61/23", "aplicacion": "Medidas de seguridad obligatorias para trabajos en altura." }
+  ],
+  "secciones": [
+    { "clave": "documentacion", "titulo": "Documentación y organización" },
+    { "clave": "altura", "titulo": "Trabajo en altura y excavaciones" },
+    { "clave": "instalaciones", "titulo": "Instalaciones y equipos" },
+    { "clave": "personal", "titulo": "Personal y servicios" }
+  ],
+  "items": [
+    { "clave": "legajo", "seccion": "documentacion", "texto": "Legajo técnico de obra disponible", "criterio": "El legajo técnico está en obra y actualizado.", "norma": "Res. SRT 231/96", "gravedad": "MEDIA", "desvio_defecto": "No hay legajo técnico disponible en obra.", "accion_defecto": "Confeccionar y mantener en obra el legajo técnico.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "programa", "seccion": "documentacion", "texto": "Programa de seguridad presentado ante la ART", "criterio": "El programa de seguridad de la obra está presentado y aprobado.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "No se acredita el programa de seguridad de la obra.", "accion_defecto": "Presentar el programa de seguridad ante la ART.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "cerco", "seccion": "documentacion", "texto": "Cerco perimetral y control de acceso", "criterio": "La obra está cercada y el ingreso es controlado.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "Obra sin cerco perimetral o sin control de acceso.", "accion_defecto": "Completar el cerco perimetral y controlar el acceso.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "senalizacion", "seccion": "documentacion", "texto": "Señalización de obra y de riesgos", "criterio": "Hay cartelería de riesgos, uso de EPP y prohibiciones.", "norma": "Dec. 911/96", "gravedad": "BAJA", "desvio_defecto": "Obra sin señalización de riesgos.", "accion_defecto": "Señalizar los riesgos y el EPP obligatorio en obra.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "orden", "seccion": "documentacion", "texto": "Orden y limpieza; circulaciones libres", "criterio": "Materiales acopiados, escombros retirados y pasos despejados.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "Obra con desorden, escombros o circulaciones obstruidas.", "accion_defecto": "Ordenar la obra, retirar escombros y despejar circulaciones.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "bordes", "seccion": "altura", "texto": "Barandas en bordes de losa, aberturas y huecos", "criterio": "Todo borde o hueco con riesgo de caída tiene baranda o cubierta resistente.", "norma": "Dec. 911/96 – Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Bordes o huecos sin protección contra caídas.", "accion_defecto": "Colocar barandas o cubiertas en bordes y huecos.", "responsable_defecto": "Jefe de obra", "foto_obligatoria_si_nc": true },
+    { "clave": "andamios", "seccion": "altura", "texto": "Andamios completos y estables", "criterio": "Plataformas completas, barandas, rodapiés, bases niveladas y arriostramiento.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Andamios incompletos o inestables.", "accion_defecto": "Completar y estabilizar los andamios según Res. SRT 61/23.", "responsable_defecto": "Jefe de obra", "foto_obligatoria_si_nc": true },
+    { "clave": "escaleras", "seccion": "altura", "texto": "Escaleras de mano en buen estado y aseguradas", "criterio": "Escaleras sin daños, apoyadas y amarradas.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "Escaleras de mano dañadas o sin asegurar.", "accion_defecto": "Reemplazar las escaleras dañadas y asegurarlas.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "arnes", "seccion": "altura", "texto": "Uso de arnés anclado en trabajos en altura", "criterio": "Quienes trabajan en altura sin protección colectiva usan arnés anclado.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Trabajos en altura sin arnés anclado.", "accion_defecto": "Exigir el uso de arnés anclado y proveer puntos de anclaje.", "responsable_defecto": "Jefe de obra", "foto_obligatoria_si_nc": true },
+    { "clave": "excavaciones", "seccion": "altura", "texto": "Excavaciones con talud o entibado y protección perimetral", "criterio": "Las excavaciones tienen talud o entibado y están valladas.", "norma": "Dec. 911/96", "gravedad": "ALTA", "desvio_defecto": "Excavaciones sin talud, entibado o vallado.", "accion_defecto": "Entibar o taludar las excavaciones y vallarlas.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "tablero", "seccion": "instalaciones", "texto": "Tablero de obra con disyuntor diferencial y puesta a tierra", "criterio": "El tablero tiene protecciones, diferencial, tapa y jabalina.", "norma": "Dec. 911/96", "gravedad": "ALTA", "desvio_defecto": "Tablero de obra sin diferencial o sin puesta a tierra.", "accion_defecto": "Normalizar el tablero de obra con diferencial y puesta a tierra.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "cables", "seccion": "instalaciones", "texto": "Cables y prolongaciones sin empalmes precarios", "criterio": "Cables en buen estado, elevados o protegidos del tránsito.", "norma": "Dec. 911/96", "gravedad": "ALTA", "desvio_defecto": "Cables con empalmes precarios o expuestos al tránsito.", "accion_defecto": "Reemplazar los cables dañados y protegerlos del tránsito.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "izaje", "seccion": "instalaciones", "texto": "Equipos de izaje en condiciones y con operador capacitado", "criterio": "Guinches y montacargas en buen estado y operados por personal capacitado.", "norma": "Dec. 911/96", "gravedad": "ALTA", "desvio_defecto": "Equipos de izaje en malas condiciones u operados sin capacitación.", "accion_defecto": "Revisar los equipos de izaje y habilitar a sus operadores.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "extintores", "seccion": "instalaciones", "texto": "Extintores disponibles en obra", "criterio": "Hay extintores accesibles y con carga vigente.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "Obra sin extintores disponibles.", "accion_defecto": "Ubicar extintores con carga vigente en obra.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "epp", "seccion": "personal", "texto": "Uso de casco, calzado de seguridad y ropa adecuada", "criterio": "Todo el personal usa el EPP básico de obra.", "norma": "Dec. 911/96", "gravedad": "ALTA", "desvio_defecto": "Personal sin el EPP básico de obra.", "accion_defecto": "Proveer y exigir el uso del EPP básico de obra.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "sanitarios", "seccion": "personal", "texto": "Servicios sanitarios y agua potable para el personal", "criterio": "Hay baños, lavabos y agua potable suficientes.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "Servicios sanitarios o agua potable insuficientes en obra.", "accion_defecto": "Proveer servicios sanitarios y agua potable en obra.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "botiquin", "seccion": "personal", "texto": "Botiquín de primeros auxilios en obra", "criterio": "Hay botiquín completo y accesible.", "norma": "Dec. 911/96", "gravedad": "BAJA", "desvio_defecto": "Obra sin botiquín de primeros auxilios.", "accion_defecto": "Disponer un botiquín de primeros auxilios en obra.", "responsable_defecto": "Jefe de obra" },
+    { "clave": "capacitacion", "seccion": "personal", "texto": "Capacitación del personal registrada", "criterio": "Hay registro de inducción y capacitaciones del personal de obra.", "norma": "Dec. 911/96", "gravedad": "MEDIA", "desvio_defecto": "No hay registro de capacitación del personal de obra.", "accion_defecto": "Capacitar al personal de obra y registrarlo.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Realizar recorridas de seguridad periódicas y registrarlas en el legajo de obra.", "responsable": "Servicio de Higiene y Seguridad", "norma": "Dec. 911/96" }
+  ],
+  "textos": {
+    "objetivo": "Verificar las condiciones de seguridad de la obra según el Decreto 911/96 y las medidas para trabajos en altura de la Res. SRT 61/23.",
+    "metodologia": "Se recorrió la obra observando protecciones contra caídas, andamios, excavaciones, instalación eléctrica provisoria, equipos y uso de EPP, y se verificó la documentación disponible.",
+    "alcance_extra": "Refleja la etapa de obra observada el día de la visita. No incluye el cálculo estructural de andamios ni de entibados.",
+    "recomendaciones": [
+      "Priorizar las protecciones colectivas (barandas, redes, cubiertas) sobre el arnés.",
+      "Revisar andamios y protecciones al inicio de cada jornada.",
+      "Actualizar el programa de seguridad ante cada cambio de etapa."
+    ]
+  }
+}

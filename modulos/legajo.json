@@ -1,0 +1,63 @@
+{
+  "id": "legajo",
+  "version": "1.0",
+  "titulo": "Legajo técnico y documentación",
+  "descripcion": "Servicios, protocolos, constancias y registros obligatorios",
+  "grupo": "Gestión",
+  "icono": "carpeta",
+  "color": "azul",
+  "subtitulo_informe": "Relevamiento de documentación de higiene y seguridad",
+  "tipo_elemento": "establecimiento",
+  "nombre_elemento": "Establecimiento",
+  "nombre_elemento_plural": "Establecimientos",
+  "atributos": [
+    { "clave": "art", "etiqueta": "ART", "tipo": "texto" },
+    { "clave": "contrato", "etiqueta": "N° de contrato ART", "tipo": "texto" }
+  ],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Ley 24.557", "aplicacion": "Ley de Riesgos del Trabajo." },
+    { "codigo": "Dec. 1338/96", "aplicacion": "Servicios de Medicina y de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Res. SRT 463/09", "aplicacion": "Relevamiento General de Riesgos Laborales (RGRL)." },
+    { "codigo": "Res. SRT 900/15, 84/12, 85/12 y 886/15", "aplicacion": "Protocolos de puesta a tierra, iluminación, ruido y ergonomía." },
+    { "codigo": "Res. SRT 299/11", "aplicacion": "Constancia de entrega de ropa de trabajo y EPP." },
+    { "codigo": "Dec. 351/79 – Cap. 21 y arts. 183, 187, 207 y 213", "aplicacion": "Capacitación, carga de fuego, simulacros, exámenes médicos y normas escritas." }
+  ],
+  "secciones": [
+    { "clave": "servicios", "titulo": "Servicios y cobertura" },
+    { "clave": "protocolos", "titulo": "Protocolos y estudios" },
+    { "clave": "registros", "titulo": "Registros y procedimientos" }
+  ],
+  "items": [
+    { "clave": "art_vigente", "seccion": "servicios", "texto": "Contrato vigente con una ART", "criterio": "La empresa tiene cobertura de riesgos del trabajo vigente.", "norma": "Ley 24.557", "gravedad": "ALTA", "desvio_defecto": "No se acredita contrato vigente con una ART.", "accion_defecto": "Regularizar la cobertura con una ART.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "servicio_hys", "seccion": "servicios", "texto": "Servicio de Higiene y Seguridad asignado", "criterio": "Hay profesional responsable del servicio con las horas que corresponden.", "norma": "Dec. 1338/96", "gravedad": "MEDIA", "desvio_defecto": "No se acredita el servicio de Higiene y Seguridad.", "accion_defecto": "Asignar el servicio de Higiene y Seguridad según Dec. 1338/96.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "servicio_medicina", "seccion": "servicios", "texto": "Servicio de Medicina del Trabajo asignado", "criterio": "Hay médico del trabajo responsable según corresponda por dotación.", "norma": "Dec. 1338/96", "gravedad": "MEDIA", "desvio_defecto": "No se acredita el servicio de Medicina del Trabajo.", "accion_defecto": "Asignar el servicio de Medicina del Trabajo según Dec. 1338/96.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "rgrl", "seccion": "servicios", "texto": "RGRL presentado y actualizado", "criterio": "El Relevamiento General de Riesgos Laborales está presentado ante la ART y al día.", "norma": "Res. SRT 463/09", "gravedad": "MEDIA", "desvio_defecto": "RGRL no presentado o desactualizado.", "accion_defecto": "Confeccionar y presentar el RGRL ante la ART.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "pat", "seccion": "protocolos", "texto": "Protocolo de puesta a tierra vigente (menos de 12 meses)", "criterio": "Existe medición de puesta a tierra y continuidad de masas con menos de 12 meses.", "norma": "Res. SRT 900/15", "gravedad": "MEDIA", "desvio_defecto": "Protocolo de puesta a tierra inexistente o vencido.", "accion_defecto": "Realizar la medición de puesta a tierra según Res. SRT 900/15.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "iluminacion", "seccion": "protocolos", "texto": "Protocolo de medición de iluminación", "criterio": "Existe medición de iluminación según Res. SRT 84/12.", "norma": "Res. SRT 84/12", "gravedad": "MEDIA", "desvio_defecto": "No se cuenta con protocolo de medición de iluminación.", "accion_defecto": "Realizar la medición de iluminación según Res. SRT 84/12.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "ruido", "seccion": "protocolos", "texto": "Protocolo de medición de ruido (si hay exposición)", "criterio": "Donde hay ruido elevado existe medición según Res. SRT 85/12.", "norma": "Res. SRT 85/12", "gravedad": "MEDIA", "desvio_defecto": "No se cuenta con protocolo de medición de ruido.", "accion_defecto": "Realizar la medición de ruido según Res. SRT 85/12.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "ergonomia", "seccion": "protocolos", "texto": "Protocolo de ergonomía", "criterio": "Existe el protocolo de la Res. SRT 886/15 para los puestos con riesgo.", "norma": "Res. SRT 886/15", "gravedad": "MEDIA", "desvio_defecto": "No se cuenta con protocolo de ergonomía.", "accion_defecto": "Realizar el protocolo de ergonomía según Res. SRT 886/15.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "carga_fuego", "seccion": "protocolos", "texto": "Estudio de carga de fuego", "criterio": "Existe el cálculo de carga de fuego y potencial extintor de los sectores.", "norma": "Dec. 351/79 – art. 183", "gravedad": "MEDIA", "desvio_defecto": "No se cuenta con estudio de carga de fuego.", "accion_defecto": "Realizar el estudio de carga de fuego.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "constancias_epp", "seccion": "registros", "texto": "Constancias de entrega de EPP", "criterio": "Cada trabajador tiene su constancia de entrega al día.", "norma": "Res. SRT 299/11", "gravedad": "MEDIA", "desvio_defecto": "Constancias de entrega de EPP incompletas.", "accion_defecto": "Completar las constancias de entrega de EPP.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "plan_capacitacion", "seccion": "registros", "texto": "Plan anual de capacitación", "criterio": "Existe un plan anual de capacitación en higiene y seguridad.", "norma": "Dec. 351/79 – arts. 209 a 211", "gravedad": "MEDIA", "desvio_defecto": "No hay plan anual de capacitación.", "accion_defecto": "Elaborar el plan anual de capacitación.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "registros_capacitacion", "seccion": "registros", "texto": "Registros de capacitación firmados", "criterio": "Las capacitaciones dictadas tienen registro con firma de los asistentes.", "norma": "Dec. 351/79 – art. 208", "gravedad": "MEDIA", "desvio_defecto": "Faltan registros de capacitación.", "accion_defecto": "Registrar las capacitaciones con firma de los asistentes.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "simulacros", "seccion": "registros", "texto": "Plan de evacuación y registro de simulacros", "criterio": "Hay plan de evacuación y constancia de simulacros realizados.", "norma": "Dec. 351/79 – art. 187", "gravedad": "MEDIA", "desvio_defecto": "No hay plan de evacuación ni registro de simulacros.", "accion_defecto": "Elaborar el plan de evacuación y realizar simulacros.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "examenes", "seccion": "registros", "texto": "Exámenes médicos preocupacionales y periódicos", "criterio": "Se acreditan los exámenes médicos del personal.", "norma": "Dec. 351/79 – art. 207", "gravedad": "MEDIA", "desvio_defecto": "No se acreditan los exámenes médicos del personal.", "accion_defecto": "Realizar los exámenes médicos preocupacionales y periódicos.", "responsable_defecto": "Servicio de Medicina del Trabajo" },
+    { "clave": "procedimientos", "seccion": "registros", "texto": "Procedimientos de trabajo seguro por escrito", "criterio": "Las tareas con riesgo tienen procedimiento escrito entregado al personal.", "norma": "Dec. 351/79 – art. 213", "gravedad": "BAJA", "desvio_defecto": "Faltan procedimientos de trabajo seguro escritos.", "accion_defecto": "Elaborar y entregar los procedimientos de trabajo seguro.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "credenciales", "seccion": "registros", "texto": "Credenciales de operadores de autoelevador", "criterio": "Los operadores de autoelevadores tienen credencial habilitante.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Operadores de autoelevador sin credencial habilitante.", "accion_defecto": "Emitir las credenciales habilitantes de los operadores.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Mantener el legajo técnico actualizado y disponible para inspecciones.", "responsable": "Servicio de Higiene y Seguridad", "norma": "Ley 19.587" }
+  ],
+  "textos": {
+    "objetivo": "Verificar que el establecimiento cuente con la documentación, los protocolos y los registros obligatorios en materia de higiene y seguridad.",
+    "metodologia": "Se solicitó y revisó la documentación del establecimiento, verificando su existencia y vigencia. Los ítems que no corresponden a la actividad se marcaron como No aplica.",
+    "alcance_extra": "Se verificó la existencia y vigencia de los documentos, no la calidad técnica de su contenido.",
+    "recomendaciones": [
+      "Llevar un calendario de vencimientos de protocolos y estudios.",
+      "Conservar la documentación ordenada en el legajo técnico.",
+      "Actualizar el RGRL ante cambios en la actividad o en los riesgos."
+    ]
+  }
+}

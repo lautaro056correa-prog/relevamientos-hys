@@ -1,0 +1,62 @@
+{
+  "id": "quimicos",
+  "version": "1.0",
+  "titulo": "Sustancias químicas",
+  "descripcion": "Almacenamiento, rotulado SGA, fichas de seguridad e inflamables",
+  "grupo": "Condiciones y salud",
+  "icono": "frasco",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de almacenamiento y manipulación de sustancias químicas",
+  "tipo_elemento": "sector",
+  "nombre_elemento": "Depósito / sector",
+  "nombre_elemento_plural": "Depósitos / sectores",
+  "atributos": [
+    { "clave": "productos", "etiqueta": "Productos principales", "tipo": "texto", "ayuda": "Ej.: solventes, ácidos, pinturas, GLP" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "productos", "rotulado", "fds", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Res. SRT 801/15", "aplicacion": "Sistema Globalmente Armonizado (SGA): rotulado y fichas de datos de seguridad." },
+    { "codigo": "Dec. 351/79 – Cap. 17 (arts. 145 a 158)", "aplicacion": "Sustancias peligrosas: manipulación y almacenamiento." },
+    { "codigo": "Dec. 351/79 – Cap. 11", "aplicacion": "Ventilación." },
+    { "codigo": "Dec. 351/79 – Cap. 18 y Anexo VII", "aplicacion": "Inflamables y protección contra incendios." }
+  ],
+  "secciones": [
+    { "clave": "identificacion", "titulo": "Identificación e información" },
+    { "clave": "almacenamiento", "titulo": "Almacenamiento" },
+    { "clave": "emergencia", "titulo": "Protección y emergencias" }
+  ],
+  "items": [
+    { "clave": "rotulado", "etiqueta_corta": "Rotulado", "seccion": "identificacion", "texto": "Envases rotulados con pictogramas y advertencias (SGA)", "criterio": "Cada envase identifica el producto, sus pictogramas y sus indicaciones de peligro.", "norma": "Res. SRT 801/15", "gravedad": "MEDIA", "desvio_defecto": "Envases sin rotulado según el SGA.", "accion_defecto": "Rotular todos los envases según el SGA.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "fds", "etiqueta_corta": "FDS", "seccion": "identificacion", "texto": "Fichas de datos de seguridad disponibles en el lugar", "criterio": "Las FDS de los productos están accesibles para el personal.", "norma": "Res. SRT 801/15", "gravedad": "MEDIA", "desvio_defecto": "Fichas de datos de seguridad no disponibles.", "accion_defecto": "Solicitar a los proveedores las FDS y dejarlas accesibles.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "trasvase", "seccion": "identificacion", "texto": "Sin productos trasvasados a envases de alimentos o bebidas", "criterio": "No hay químicos en botellas o recipientes de alimentos.", "norma": "Dec. 351/79 – Cap. 17", "gravedad": "ALTA", "desvio_defecto": "Productos químicos trasvasados a envases de alimentos o bebidas.", "accion_defecto": "Retirar los envases de alimentos con químicos y usar recipientes identificados.", "responsable_defecto": "Encargado del sector", "foto_obligatoria_si_nc": true },
+    { "clave": "envases", "seccion": "almacenamiento", "texto": "Envases cerrados y en buen estado", "criterio": "Envases tapados, sin golpes, corrosión ni pérdidas.", "norma": "Dec. 351/79 – Cap. 17", "gravedad": "MEDIA", "desvio_defecto": "Envases abiertos, dañados o con pérdidas.", "accion_defecto": "Cerrar los envases y reemplazar los dañados.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "incompatibles", "seccion": "almacenamiento", "texto": "Productos incompatibles almacenados por separado", "criterio": "Ácidos, bases, oxidantes e inflamables están separados según sus FDS.", "norma": "Dec. 351/79 – Cap. 17", "gravedad": "ALTA", "desvio_defecto": "Productos incompatibles almacenados juntos.", "accion_defecto": "Separar los productos incompatibles según sus fichas de seguridad.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "contencion", "seccion": "almacenamiento", "texto": "Contención antiderrame (bateas o bandejas)", "criterio": "Los líquidos se almacenan sobre bateas que contienen un derrame.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Líquidos almacenados sin contención antiderrame.", "accion_defecto": "Colocar bateas o bandejas de contención.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "ventilacion", "seccion": "almacenamiento", "texto": "Lugar de almacenamiento ventilado", "criterio": "Ventilación natural o forzada suficiente; sin olores acumulados.", "norma": "Dec. 351/79 – Cap. 11", "gravedad": "MEDIA", "desvio_defecto": "Depósito de químicos sin ventilación adecuada.", "accion_defecto": "Mejorar la ventilación del depósito de químicos.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "inflamables", "seccion": "almacenamiento", "texto": "Inflamables alejados de fuentes de ignición", "criterio": "Sin llamas, chispas, tableros ni equipos calientes cerca de los inflamables; cantidades limitadas.", "norma": "Dec. 351/79 – Cap. 18 y Anexo VII", "gravedad": "ALTA", "desvio_defecto": "Inflamables cerca de fuentes de ignición.", "accion_defecto": "Alejar los inflamables de fuentes de ignición y limitar las cantidades.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "extintor", "seccion": "emergencia", "texto": "Extintor adecuado al riesgo en las cercanías", "criterio": "Hay un extintor de clase adecuada (B para inflamables) accesible.", "norma": "Dec. 351/79 – arts. 176 y 177", "gravedad": "MEDIA", "desvio_defecto": "Sin extintor adecuado cerca del almacenamiento de químicos.", "accion_defecto": "Ubicar un extintor adecuado junto al almacenamiento de químicos.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "kit_derrames", "seccion": "emergencia", "texto": "Kit para derrames disponible", "criterio": "Hay material absorbente y elementos para contener un derrame.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No hay kit para derrames.", "accion_defecto": "Disponer un kit para derrames en el sector.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "epp", "seccion": "emergencia", "texto": "EPP específico disponible para la manipulación", "criterio": "Guantes, protección ocular y respiratoria según las FDS.", "norma": "Dec. 351/79 – Cap. 19", "gravedad": "MEDIA", "desvio_defecto": "Falta el EPP específico para manipular los productos.", "accion_defecto": "Proveer el EPP indicado en las fichas de seguridad.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "lavaojos", "seccion": "emergencia", "texto": "Lavaojos o ducha de emergencia donde se manipulan corrosivos", "criterio": "Hay lavaojos o ducha operativa cerca de donde se manipulan corrosivos.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Sin lavaojos ni ducha de emergencia donde se manipulan corrosivos.", "accion_defecto": "Instalar un lavaojos o ducha de emergencia.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "senalizacion", "seccion": "emergencia", "texto": "Señalización de riesgo químico y de prohibición de fumar", "criterio": "El sector tiene carteles de riesgo y de prohibido fumar o hacer fuego.", "norma": "IRAM 10005", "gravedad": "BAJA", "desvio_defecto": "Sector de químicos sin señalización de riesgo.", "accion_defecto": "Señalizar el riesgo químico y la prohibición de fumar.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "items_generales": [
+    { "clave": "inventario", "texto": "Inventario de productos químicos actualizado", "criterio": "Existe un listado de los productos, cantidades y ubicación.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No hay inventario de productos químicos.", "accion_defecto": "Confeccionar el inventario de productos químicos.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "capacitacion", "texto": "Personal capacitado en riesgo químico y uso de las FDS", "criterio": "Existe registro de capacitación sobre manipulación segura y lectura de FDS.", "norma": "Dec. 351/79 – art. 208", "gravedad": "BAJA", "desvio_defecto": "No hay registro de capacitación en riesgo químico.", "accion_defecto": "Capacitar al personal en riesgo químico y uso de las FDS.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Actualizar el inventario y las FDS cada vez que ingresa un producto nuevo.", "responsable": "Responsable del establecimiento", "norma": "Res. SRT 801/15" }
+  ],
+  "textos": {
+    "objetivo": "Verificar las condiciones de almacenamiento, identificación y manipulación de las sustancias químicas del establecimiento.",
+    "metodologia": "Se inspeccionaron los lugares donde se almacenan o usan productos químicos, verificando rotulado, fichas de seguridad, separación de incompatibles y elementos de emergencia.",
+    "alcance_extra": "No incluye mediciones de contaminantes en el ambiente laboral.",
+    "recomendaciones": [
+      "Comprar y almacenar solo las cantidades necesarias.",
+      "Leer la ficha de datos de seguridad antes de usar un producto nuevo.",
+      "No comer, beber ni fumar en los lugares donde se manipulan químicos."
+    ]
+  }
+}

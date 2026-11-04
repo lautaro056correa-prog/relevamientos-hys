@@ -1,0 +1,52 @@
+{
+  "id": "sujecion",
+  "version": "1.0",
+  "titulo": "Elementos de sujeción",
+  "descripcion": "Eslingas, grilletes y ganchos: aptos o no para el uso",
+  "grupo": "Izaje y movimiento de cargas",
+  "icono": "eslinga",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de elementos de sujeción de cargas",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Elemento de sujeción",
+  "nombre_elemento_plural": "Elementos de sujeción",
+  "atributos": [
+    { "clave": "numero", "etiqueta": "Número / identificación", "etiqueta_corta": "N°", "tipo": "texto", "obligatorio": true },
+    { "clave": "tipo", "etiqueta": "Tipo", "tipo": "opcion", "obligatorio": true, "opciones": ["Eslinga de faja sintética", "Eslinga de cable de acero", "Eslinga de cadena", "Grillete", "Gancho"] },
+    { "clave": "capacidad", "etiqueta": "Capacidad", "etiqueta_corta": "Cap.", "tipo": "numero", "unidad": "t", "obligatorio": true }
+  ],
+  "columnas_planilla_resumen": ["nombre", "numero", "tipo", "capacidad", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 15 (aparatos para izar)", "aplicacion": "Cables, cadenas, eslingas y ganchos para el izaje de cargas." }
+  ],
+  "items": [
+    { "clave": "etiqueta", "texto": "Etiqueta o chapa con la capacidad legible", "criterio": "La capacidad de carga del elemento se puede leer.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Elemento de sujeción sin identificación de capacidad.", "accion_defecto": "Retirar de servicio los elementos de sujeción no aptos y reemplazarlos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "costuras", "texto": "Costuras sin cortes ni deshilachados", "criterio": "Las costuras de la faja están completas, sin hilos cortados.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Eslinga con costuras dañadas.", "accion_defecto": "Retirar de servicio los elementos de sujeción no aptos y reemplazarlos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "ojales", "texto": "Ojales y terminales en buen estado", "criterio": "Ojales, guardacabos y terminales sin desgaste, aplastamiento ni deformación.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Elemento de sujeción con ojales o terminales dañados.", "accion_defecto": "Retirar de servicio los elementos de sujeción no aptos y reemplazarlos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "perforaciones", "texto": "Sin perforaciones ni quemaduras", "criterio": "Sin agujeros, quemaduras, salpicaduras de soldadura ni daño químico.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Elemento de sujeción con perforaciones o quemaduras.", "accion_defecto": "Retirar de servicio los elementos de sujeción no aptos y reemplazarlos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "desgaste", "texto": "Sin desgaste excesivo, aplastamiento ni deformación", "criterio": "Sin abrasión importante, eslabones estirados, grilletes o ganchos deformados.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Elemento de sujeción con desgaste o deformación.", "accion_defecto": "Retirar de servicio los elementos de sujeción no aptos y reemplazarlos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "cortes", "texto": "Sin cortes ni hilos rotos", "criterio": "La faja no tiene cortes y el cable no presenta hilos rotos.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Elemento de sujeción con cortes o hilos rotos.", "accion_defecto": "Retirar de servicio los elementos de sujeción no aptos y reemplazarlos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "guardado", "texto": "Guardado colgado y protegido", "criterio": "Se guarda colgado, al resguardo de la intemperie, el calor y los productos químicos.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Elemento de sujeción guardado en el piso o expuesto.", "accion_defecto": "Disponer un lugar para guardar colgados los elementos de sujeción.", "responsable_defecto": "Encargado del sector" }
+  ],
+  "items_generales": [
+    { "clave": "inspeccion", "texto": "Inspección periódica registrada de los elementos de sujeción", "criterio": "Existe registro de la inspección periódica de eslingas y accesorios.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No se registra la inspección de los elementos de sujeción.", "accion_defecto": "Implementar la inspección periódica registrada de los elementos de sujeción.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "reglas_automaticas": [
+    { "descripcion": "Las costuras solo aplican a las fajas sintéticas", "cuando": { "atributo": "tipo", "operador": "distinto", "valor": "Eslinga de faja sintética" }, "entonces": { "items": ["costuras"], "valor": "NA" } },
+    { "descripcion": "Grilletes y ganchos no tienen ojales", "cuando": { "atributo": "tipo", "operador": "en", "valor": ["Grillete", "Gancho"] }, "entonces": { "items": ["ojales", "cortes"], "valor": "NA" } }
+  ],
+  "acciones_gestion": [
+    { "accion": "Revisar los elementos de sujeción antes de cada uso y retirar los que no estén aptos.", "responsable": "Operador", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar el estado de las eslingas y accesorios de sujeción de cargas y determinar si están aptos para el uso. Un elemento con algún ítem que no cumple se considera no apto.",
+    "metodologia": "Se inspeccionó visualmente cada elemento de sujeción en toda su longitud, sus terminales y su identificación.",
+    "alcance_extra": "No incluye ensayos de carga ni mediciones de diámetro o elongación con instrumentos.",
+    "recomendaciones": [
+      "Retirar de servicio y destruir los elementos no aptos para evitar su reutilización.",
+      "No superar la capacidad indicada ni usar eslingas anudadas.",
+      "Proteger las eslingas de aristas vivas durante el izaje."
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "_ayuda": "Lista de palabras para filtrar normas. Se comparan sin acentos y sin mayúsculas. Se puede editar libremente.",
+  "organismos_siempre": [
+    "superintendencia de riesgos del trabajo"
+  ],
+  "organismos_revisar": [
+    "secretaria de trabajo",
+    "ministerio de trabajo",
+    "ministerio de salud"
+  ],
+  "organismos_excluir": [
+    "relaciones y regulaciones del trabajo",
+    "secretaria de educacion",
+    "jefatura de gabinete"
+  ],
+  "incluir": [
+    "riesgos del trabajo", "aseguradora de riesgos", "ley 19.587", "ley n° 19.587", "19587", "351/79", "decreto 351", "911/96", "617/97", "1338/96",
+    "24.557", "24557", "27.348", "higiene y seguridad", "seguridad e higiene", "salud y seguridad en el trabajo", "enfermedades profesionales", "enfermedad profesional",
+    "accidente de trabajo", "accidentes de trabajo", "incendio", "evacuacion", "riesgo electrico", "instalaciones electricas", "ruido", "iluminacion", "ergonomi",
+    "contaminantes", "trabajo en altura", "trabajos en altura", "espacios confinados", "aparatos sometidos a presion", "recipientes sometidos a presion",
+    "sustancias peligrosas", "elementos de proteccion personal", "medicina del trabajo", "examenes medicos", "607/11", "comites de salud y seguridad", "autoelevador",
+    "cancerigen", "agentes de riesgo"
+  ],
+  "excluir": [
+    "designase", "designacion", "dase por designad", "prorrogase la designacion", "asignacion transitoria", "presupuesto", "licitacion", "renuncia",
+    "homologase", "homologacion", "convencion colectiva", "convenciones colectivas", "acuerdo salarial", "escala salarial", "paritaria", "jubilacion", "pension",
+    "asociaciones sindicales", "23.551", "personeria gremial", "inscripcion gremial", "entidad sindical", "estatuto social", "subsidio", "beca",
+    "representacion judicial", "patrocinio juridico", "mandatos", "auditoria interna", "contrataciones", "estructura organizativa"
+  ],
+  "riesgos": {
+    "altura": ["trabajo en altura", "trabajos en altura", "andamio", "arnes", "caida de personas", "silleta"],
+    "electrico": ["riesgo electrico", "instalaciones electricas", "trabajos con tension", "puesta a tierra", "electricidad"],
+    "presion": ["sometidos a presion", "calderas", "compresores", "cilindros", "recipientes a presion"],
+    "quimicos": ["sustancias peligrosas", "sustancias quimicas", "productos quimicos", "sistema globalmente armonizado", "sga", "cancerigen", "contaminantes"],
+    "inflamables": ["inflamable", "combustible", "hidrocarburo"],
+    "confinados": ["espacios confinados", "espacio confinado"],
+    "ruido": ["ruido", "hipoacusia"],
+    "cargas": ["levantamiento manual", "manipulacion manual", "manipulacion de cargas"],
+    "ergonomia": ["ergonomi", "posturas", "movimientos repetitivos"],
+    "maquinas": ["maquinas", "herramientas"],
+    "izaje": ["autoelevador", "gruas", "aparatos para izar", "izaje"],
+    "soldadura": ["soldadura", "trabajos en caliente"],
+    "calor": ["carga termica", "estres termico", "temperaturas extremas", "ola de calor"],
+    "construccion": ["construccion", "911/96", "obras"],
+    "agro": ["agrari", "617/97", "rural"],
+    "publico": ["atencion al publico", "atencion de publico"],
+    "radiaciones": ["radiaciones", "rayos x", "radiologi"],
+    "biologico": ["riesgo biologico", "agentes biologicos"],
+    "vehiculos": ["conductores", "transporte de cargas", "seguridad vial"]
+  },
+  "rubros": {
+    "construccion": ["industria de la construccion", "911/96"],
+    "agro": ["actividad agraria", "617/97"],
+    "salud": ["establecimientos de salud", "establecimientos asistenciales"],
+    "estacion": ["estaciones de servicio"],
+    "gastronomia": ["gastronomi"]
+  },
+  "general": ["riesgos del trabajo", "19.587", "19587", "351/79", "higiene y seguridad", "aseguradora de riesgos", "enfermedades profesionales", "24.557", "27.348", "superintendencia de riesgos del trabajo"]
+}

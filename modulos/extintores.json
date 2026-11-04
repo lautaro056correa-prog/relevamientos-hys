@@ -1,0 +1,306 @@
+{
+  "id": "extintores",
+  "version": "1.0",
+  "titulo": "Extintores",
+  "descripcion": "Control de extintores y puestos de incendio",
+  "grupo": "Incendio y emergencias",
+  "icono": "extintor",
+  "color": "rojo",
+  "subtitulo_informe": "Relevamiento de extintores portátiles",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Extintor",
+  "nombre_elemento_plural": "Extintores",
+  "atributos": [
+    { "clave": "puesto", "etiqueta": "Puesto N°", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true, "ayuda": "Ej.: junto a puerta de depósito" },
+    { "clave": "tipo", "etiqueta": "Tipo", "tipo": "opcion", "obligatorio": true,
+      "opciones": ["ABC (polvo químico)", "BC (polvo químico)", "CO2", "Agua (A)", "Espuma AFFF (AB)", "Clase K (acetato de potasio)", "HCFC 123 (halogenado)", "Clase D"] },
+    { "clave": "capacidad", "etiqueta": "Capacidad", "etiqueta_corta": "Cap.", "tipo": "numero", "unidad": "kg", "obligatorio": true },
+    { "clave": "numero", "etiqueta": "Número / N° de serie", "etiqueta_corta": "N° serie", "tipo": "texto" },
+    { "clave": "vto_carga", "etiqueta": "Vencimiento de carga", "etiqueta_corta": "Vto. carga", "tipo": "mes", "obligatorio": true, "ayuda": "Según tarjeta del recargador" },
+    { "clave": "vto_ph", "etiqueta": "Vencimiento de prueba hidráulica (PH)", "etiqueta_corta": "Vto. PH", "tipo": "mes" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "ubicacion", "tipo", "capacidad", "vto_carga", "vto_ph", "presion", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 18 (arts. 160 a 187)", "aplicacion": "Protección contra incendios: cantidad, distribución, clase y mantenimiento de extintores." },
+    { "codigo": "Dec. 351/79 – Anexo VII", "aplicacion": "Potencial extintor mínimo y condiciones de extinción." },
+    { "codigo": "IRAM 3517-2", "aplicacion": "Extintores portátiles: control, mantenimiento y recarga." },
+    { "codigo": "IRAM 10005", "aplicacion": "Colores y señales de seguridad." }
+  ],
+  "secciones": [
+    { "clave": "ubicacion", "titulo": "Ubicación y acceso" },
+    { "clave": "estado", "titulo": "Estado del equipo" },
+    { "clave": "vigencia", "titulo": "Carga y control" }
+  ],
+  "items": [
+    {
+      "clave": "acceso",
+      "seccion": "ubicacion",
+      "texto": "Acceso libre y sin obstáculos",
+      "criterio": "El extintor puede retirarse de inmediato, sin objetos, mercadería ni mobiliario que lo obstruyan.",
+      "norma": "Dec. 351/79 – Anexo VII, pto. 7.1.1",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Extintor con acceso obstruido.",
+      "accion_defecto": "Despejar el acceso a los extintores y mantenerlo libre de obstáculos.",
+      "responsable_defecto": "Encargado del sector",
+      "foto_obligatoria_si_nc": true
+    },
+    {
+      "clave": "puesto_asignado",
+      "seccion": "ubicacion",
+      "texto": "Se encuentra en su puesto de incendio asignado",
+      "criterio": "El extintor está colgado en el soporte de su puesto, no apoyado en el piso ni trasladado a otro lugar.",
+      "norma": "Dec. 351/79 – art. 176",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Extintor fuera de su puesto asignado.",
+      "accion_defecto": "Reubicar el extintor en su puesto de incendio, colgado en su soporte.",
+      "responsable_defecto": "Encargado del sector"
+    },
+    {
+      "clave": "senalizacion",
+      "seccion": "ubicacion",
+      "texto": "Señalizado con cartelería",
+      "criterio": "El puesto cuenta con señal de extintor visible, según colores y formas de seguridad normalizados.",
+      "norma": "IRAM 10005 – Dec. 351/79 Cap. 12",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Puesto de incendio sin señalización.",
+      "accion_defecto": "Colocar cartelería de señalización de extintor según IRAM 10005.",
+      "responsable_defecto": "Mantenimiento"
+    },
+    {
+      "clave": "intemperie",
+      "seccion": "ubicacion",
+      "texto": "Protegido de la intemperie",
+      "criterio": "Si está al exterior, cuenta con gabinete o cobertura que lo protege de lluvia y sol.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "BAJA",
+      "desvio_defecto": "Extintor expuesto a la intemperie sin protección.",
+      "accion_defecto": "Colocar gabinete o protección para los extintores ubicados al exterior.",
+      "responsable_defecto": "Mantenimiento"
+    },
+    {
+      "clave": "clase_adecuada",
+      "seccion": "ubicacion",
+      "texto": "Tipo de extintor adecuado al riesgo del sector",
+      "criterio": "La clase del extintor corresponde al fuego probable del sector (ej.: clase C en tableros, clase K en cocinas con aceites).",
+      "norma": "Dec. 351/79 – arts. 176 y 178",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Extintor de clase no adecuada al riesgo del sector.",
+      "accion_defecto": "Reemplazar el extintor por uno de clase adecuada al riesgo del sector.",
+      "responsable_defecto": "Responsable del establecimiento"
+    },
+    {
+      "clave": "cuerpo",
+      "seccion": "estado",
+      "texto": "Cuerpo sin óxido, golpes ni pintura deteriorada",
+      "criterio": "El recipiente no presenta corrosión, abolladuras, repintado ni daños visibles.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Extintor con cuerpo deteriorado (óxido, golpes o pintura dañada).",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para su evaluación.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "manijas",
+      "seccion": "estado",
+      "texto": "Manijas de transporte y accionamiento en buen estado",
+      "criterio": "Las manijas no están rotas, flojas ni deformadas y permiten accionar el equipo.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Manija de transporte o accionamiento dañada.",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para su reparación.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "precinto",
+      "seccion": "estado",
+      "texto": "Precinto de seguridad y pasador colocados",
+      "criterio": "Tiene el pasador de seguridad colocado y el precinto sano, lo que indica que no fue utilizado.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Extintor sin precinto de seguridad o sin pasador.",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para su control y reprecintado.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "manometro",
+      "seccion": "estado",
+      "texto": "Manómetro sano y legible",
+      "criterio": "El manómetro no tiene el vidrio roto ni la escala ilegible.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Manómetro dañado o ilegible.",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para su control.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "presion",
+      "seccion": "estado",
+      "texto": "Aguja del manómetro en zona de carga (verde)",
+      "etiqueta_corta": "Presión",
+      "criterio": "La presión indicada está dentro del rango de operación del equipo.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Extintor con presión fuera de la zona de carga.",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para su recarga.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "manguera",
+      "seccion": "estado",
+      "texto": "Manguera sin grietas ni rajaduras",
+      "criterio": "La manguera está flexible, sin grietas, cortes ni desprendimientos.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Manguera del extintor agrietada o dañada.",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para el reemplazo de la manguera.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "boquilla",
+      "seccion": "estado",
+      "texto": "Boquilla en buen estado y sin obstrucciones",
+      "criterio": "La boquilla (o tobera en CO2) está entera y libre de suciedad u objetos.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Boquilla del extintor dañada u obstruida.",
+      "accion_defecto": "Enviar el extintor a recargador habilitado para su reparación.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado"
+    },
+    {
+      "clave": "rotulo",
+      "seccion": "estado",
+      "texto": "Rótulo legible, con clase y potencial extintor",
+      "criterio": "La etiqueta del fabricante es legible, sin decoloración, e indica clase de fuego y potencial extintor.",
+      "norma": "Dec. 351/79 – art. 176",
+      "gravedad": "BAJA",
+      "desvio_defecto": "Rótulo del extintor ilegible o deteriorado.",
+      "accion_defecto": "Solicitar al recargador la reposición del rótulo.",
+      "responsable_defecto": "Recargador habilitado"
+    },
+    {
+      "clave": "carga_vigente",
+      "seccion": "vigencia",
+      "texto": "Carga vigente",
+      "criterio": "La fecha de vencimiento de carga de la tarjeta es posterior a la fecha del relevamiento.",
+      "norma": "IRAM 3517-2 – Dec. 351/79 arts. 184 y 185",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Extintor con carga vencida.",
+      "accion_defecto": "Enviar a recarga los extintores vencidos, reemplazándolos provisoriamente por equipos de igual clase y capacidad.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado",
+      "automatico": true
+    },
+    {
+      "clave": "ph_vigente",
+      "seccion": "vigencia",
+      "texto": "Prueba hidráulica vigente",
+      "criterio": "La fecha de vencimiento de la prueba hidráulica es posterior a la fecha del relevamiento.",
+      "norma": "IRAM 3517-2",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Extintor con prueba hidráulica vencida.",
+      "accion_defecto": "Realizar la prueba hidráulica de los extintores vencidos con recargador habilitado.",
+      "responsable_defecto": "Responsable del establecimiento / recargador habilitado",
+      "automatico": true
+    },
+    {
+      "clave": "tarjeta",
+      "seccion": "vigencia",
+      "texto": "Tarjeta de control con carga y vencimientos indicados",
+      "criterio": "Posee tarjeta del recargador con fecha de carga, vencimiento de carga y de PH, y datos del recargador.",
+      "norma": "Dec. 351/79 – arts. 184 y 185",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Extintor sin tarjeta de control o con datos incompletos.",
+      "accion_defecto": "Solicitar al recargador la tarjeta de control de cada extintor.",
+      "responsable_defecto": "Recargador habilitado"
+    }
+  ],
+  "items_generales": [
+    {
+      "clave": "cantidad",
+      "texto": "Cantidad de extintores suficiente (1 cada 200 m² o fracción)",
+      "criterio": "Hay al menos un extintor cada 200 m² de superficie cubierta, y como mínimo 1 A y 5 BC por piso.",
+      "norma": "Dec. 351/79 – art. 176 y Anexo VII, pto. 7.1.1",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Cantidad de extintores insuficiente para la superficie del establecimiento.",
+      "accion_defecto": "Incorporar extintores hasta cubrir 1 cada 200 m² de superficie.",
+      "responsable_defecto": "Responsable del establecimiento"
+    },
+    {
+      "clave": "distancia",
+      "texto": "Distancia máxima a recorrer hasta un extintor: 20 m (clase A) / 15 m (clase B)",
+      "criterio": "Desde cualquier punto del sector se llega a un extintor recorriendo no más de 20 m (fuegos A) o 15 m (fuegos B).",
+      "norma": "Dec. 351/79 – art. 176",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Sectores con distancia a recorrer hasta un extintor mayor a la reglamentaria.",
+      "accion_defecto": "Redistribuir o incorporar extintores para cumplir la distancia máxima a recorrer.",
+      "responsable_defecto": "Responsable del establecimiento"
+    },
+    {
+      "clave": "registro",
+      "texto": "Registro de controles y mantenimiento de extintores",
+      "criterio": "Existe planilla de control periódico o registro de mantenimiento de los extintores.",
+      "norma": "Dec. 351/79 – art. 184",
+      "gravedad": "BAJA",
+      "desvio_defecto": "No se cuenta con registro de control periódico de extintores.",
+      "accion_defecto": "Implementar planilla de control mensual de extintores.",
+      "responsable_defecto": "Responsable del establecimiento"
+    },
+    {
+      "clave": "capacitacion",
+      "texto": "Personal capacitado en el uso de extintores",
+      "criterio": "Existe registro de capacitación del personal en uso de extintores y/o simulacros.",
+      "norma": "Dec. 351/79 – art. 187",
+      "gravedad": "BAJA",
+      "desvio_defecto": "No se cuenta con registro de capacitación en uso de extintores.",
+      "accion_defecto": "Capacitar al personal en uso de extintores y registrar la capacitación.",
+      "responsable_defecto": "Servicio de Higiene y Seguridad"
+    }
+  ],
+  "reglas_automaticas": [
+    {
+      "descripcion": "Carga vencida → No cumple, prioridad ALTA",
+      "cuando": { "atributo": "vto_carga", "operador": "vencido" },
+      "entonces": { "items": ["carga_vigente"], "valor": "NC", "observacion": "Carga vencida en {vto_carga}.", "gravedad": "ALTA" }
+    },
+    {
+      "descripcion": "Carga vigente → Cumple",
+      "cuando": { "atributo": "vto_carga", "operador": "vigente" },
+      "entonces": { "items": ["carga_vigente"], "valor": "C" }
+    },
+    {
+      "descripcion": "Carga vence en 60 días o menos → observación (no es desvío)",
+      "cuando": { "atributo": "vto_carga", "operador": "vence_en_dias", "valor": 60 },
+      "entonces": { "observacion": "Vencimiento de carga próximo ({vto_carga})." }
+    },
+    {
+      "descripcion": "PH vencida → No cumple, prioridad ALTA",
+      "cuando": { "atributo": "vto_ph", "operador": "vencido" },
+      "entonces": { "items": ["ph_vigente"], "valor": "NC", "observacion": "Prueba hidráulica vencida en {vto_ph}.", "gravedad": "ALTA" }
+    },
+    {
+      "descripcion": "PH vigente → Cumple",
+      "cuando": { "atributo": "vto_ph", "operador": "vigente" },
+      "entonces": { "items": ["ph_vigente"], "valor": "C" }
+    },
+    {
+      "descripcion": "Los extintores de CO2 no tienen manómetro → No aplica",
+      "cuando": { "atributo": "tipo", "operador": "igual", "valor": "CO2" },
+      "entonces": { "items": ["manometro", "presion"], "valor": "NA" }
+    }
+  ],
+  "acciones_gestion": [
+    { "accion": "Realizar control visual mensual de los extintores y registrarlo en planilla.", "responsable": "Responsable del establecimiento", "norma": "Dec. 351/79 – art. 184" },
+    { "accion": "Programar la recarga anual y las pruebas hidráulicas con recargador habilitado.", "responsable": "Responsable del establecimiento", "norma": "IRAM 3517-2" }
+  ],
+  "textos": {
+    "objetivo": "Evaluar el estado, la ubicación, la señalización y la vigencia de los extintores portátiles del establecimiento, verificando el cumplimiento de la normativa de protección contra incendios.",
+    "metodologia": "Se realizó una inspección visual de cada extintor en su puesto, registrando sus datos de identificación y verificando cada ítem contra su criterio de aceptación. Las fechas de vencimiento se tomaron de la tarjeta de control del recargador.",
+    "alcance_extra": "La inspección es visual. No incluye la verificación del peso del agente extintor, el ensayo de los equipos ni el cálculo de carga de fuego.",
+    "recomendaciones": [
+      "Mantener actualizado el registro de control mensual de extintores.",
+      "Verificar que el recargador cuente con habilitación vigente.",
+      "Capacitar periódicamente al personal en el uso de extintores y realizar simulacros de evacuación."
+    ]
+  }
+}

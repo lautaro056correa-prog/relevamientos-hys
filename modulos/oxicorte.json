@@ -1,0 +1,65 @@
+{
+  "id": "oxicorte",
+  "version": "1.0",
+  "titulo": "Equipos de oxicorte",
+  "descripcion": "Cilindros, reguladores, mangueras y arrestallamas",
+  "grupo": "Instalaciones y equipos",
+  "icono": "llama",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de equipos de oxicorte",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Equipo de oxicorte",
+  "nombre_elemento_plural": "Equipos de oxicorte",
+  "atributos": [
+    { "clave": "identificacion", "etiqueta": "N° del equipo", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true },
+    { "clave": "gas", "etiqueta": "Gas combustible", "tipo": "opcion", "obligatorio": true, "opciones": ["Acetileno", "GLP", "Otro"] }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "ubicacion", "gas", "arrestallamas", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 16, art. 142", "aplicacion": "Gases licuados y comprimidos: almacenamiento y traslado de cilindros." },
+    { "codigo": "Dec. 351/79 – Cap. 17 (arts. 152 a 157)", "aplicacion": "Trabajos de soldadura y corte." },
+    { "codigo": "Dec. 351/79 – Cap. 19", "aplicacion": "Equipos y elementos de protección personal." },
+    { "codigo": "Dec. 351/79 – Cap. 18, art. 176", "aplicacion": "Extintores." }
+  ],
+  "secciones": [
+    { "clave": "cilindros", "titulo": "Cilindros y carro" },
+    { "clave": "equipo", "titulo": "Reguladores, mangueras y soplete" },
+    { "clave": "operacion", "titulo": "Operación" }
+  ],
+  "items": [
+    { "clave": "carro", "seccion": "cilindros", "texto": "Carro portacilindros en buenas condiciones", "criterio": "El carro está entero, estable y con ruedas en buen estado.", "norma": "Dec. 351/79 – art. 142", "gravedad": "MEDIA", "desvio_defecto": "Carro portacilindros deteriorado.", "accion_defecto": "Reparar o reemplazar el carro portacilindros.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "sujetos", "seccion": "cilindros", "texto": "Cilindros sujetos con cadena o abrazadera", "criterio": "Los cilindros no pueden caerse: están amarrados al carro o a un punto fijo.", "norma": "Dec. 351/79 – art. 142", "gravedad": "ALTA", "desvio_defecto": "Cilindros de gas sin sujeción.", "accion_defecto": "Sujetar los cilindros con cadena o abrazadera.", "responsable_defecto": "Encargado del sector", "foto_obligatoria_si_nc": true },
+    { "clave": "identificados", "seccion": "cilindros", "texto": "Cilindros identificados por color y rótulo", "criterio": "Cada cilindro tiene color e identificación del gas legibles.", "norma": "Dec. 351/79 – art. 142", "gravedad": "MEDIA", "desvio_defecto": "Cilindros sin identificación del gas.", "accion_defecto": "Solicitar al proveedor la identificación de los cilindros.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "proteccion_valvula", "seccion": "cilindros", "texto": "Válvulas de los cilindros protegidas", "criterio": "Los cilindros cuentan con capuchón o protección de la válvula cuando no están en uso.", "norma": "Dec. 351/79 – art. 142", "gravedad": "MEDIA", "desvio_defecto": "Cilindros sin protección de la válvula.", "accion_defecto": "Colocar el capuchón de protección a los cilindros que no están en uso.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "sin_grasa", "seccion": "cilindros", "texto": "Cilindros, válvulas y reguladores libres de grasa y aceite", "criterio": "No hay grasa ni aceite en contacto con el equipo de oxígeno.", "norma": "Dec. 351/79 – art. 142", "gravedad": "ALTA", "desvio_defecto": "Equipo de oxígeno con restos de grasa o aceite.", "accion_defecto": "Limpiar el equipo con productos aptos para oxígeno y prohibir el uso de grasas.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "vacios", "seccion": "cilindros", "texto": "Cilindros vacíos identificados, sujetos y separados", "criterio": "Los cilindros vacíos se acopian identificados y amarrados, separados de los llenos.", "norma": "Dec. 351/79 – art. 142", "gravedad": "MEDIA", "desvio_defecto": "Cilindros vacíos acopiados sin identificar o sin sujeción.", "accion_defecto": "Identificar, sujetar y separar los cilindros vacíos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "reguladores", "seccion": "equipo", "texto": "Reguladores y manómetros en buen estado", "criterio": "Reguladores sin golpes, manómetros sanos y legibles.", "norma": "Dec. 351/79 – Cap. 16", "gravedad": "MEDIA", "desvio_defecto": "Reguladores o manómetros dañados.", "accion_defecto": "Reemplazar los reguladores o manómetros dañados.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "mangueras", "seccion": "equipo", "texto": "Mangueras sin fisuras, quemaduras ni empalmes precarios", "criterio": "Mangueras de color correcto, enteras y sin reparaciones con cinta.", "norma": "Dec. 351/79 – arts. 152 a 157", "gravedad": "ALTA", "desvio_defecto": "Mangueras del equipo de oxicorte dañadas o empalmadas en forma precaria.", "accion_defecto": "Reemplazar las mangueras dañadas del equipo de oxicorte.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "abrazaderas", "seccion": "equipo", "texto": "Mangueras sujetas con abrazaderas", "criterio": "Las conexiones de las mangueras están aseguradas con abrazaderas adecuadas.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Mangueras conectadas sin abrazaderas.", "accion_defecto": "Colocar abrazaderas en las conexiones de las mangueras.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "arrestallamas", "etiqueta_corta": "Arrestallamas", "seccion": "equipo", "texto": "Válvulas arrestallamas instaladas", "criterio": "El equipo cuenta con arrestallamas en buen estado.", "norma": "Dec. 351/79 – arts. 152 a 157", "gravedad": "ALTA", "desvio_defecto": "Equipo de oxicorte sin válvulas arrestallamas.", "accion_defecto": "Instalar válvulas arrestallamas en el equipo de oxicorte.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "soplete", "seccion": "equipo", "texto": "Soplete y pico en buen estado", "criterio": "Soplete sin pérdidas, con robinetes operativos y pico sin obstrucciones.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Soplete o pico en mal estado.", "accion_defecto": "Reparar o reemplazar el soplete o el pico.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "epp", "seccion": "operacion", "texto": "El operador usa EPP adecuado (protección ocular con filtro, guantes, delantal)", "criterio": "Quien opera el equipo cuenta y usa protección ocular con filtro, guantes y ropa ignífuga o delantal de cuero.", "norma": "Dec. 351/79 – arts. 152 a 157 y Cap. 19", "gravedad": "ALTA", "desvio_defecto": "Operador de oxicorte sin el EPP adecuado.", "accion_defecto": "Proveer y exigir el uso de EPP para trabajos de oxicorte.", "responsable_defecto": "Supervisor" },
+    { "clave": "extintor", "seccion": "operacion", "texto": "Extintor disponible en el área de trabajo", "criterio": "Hay un extintor apto y accesible en el lugar donde se usa el equipo.", "norma": "Dec. 351/79 – art. 176", "gravedad": "MEDIA", "desvio_defecto": "Área de oxicorte sin extintor disponible.", "accion_defecto": "Ubicar un extintor en el área de trabajo de oxicorte.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "encendedor", "seccion": "operacion", "texto": "Se usa encendedor de chispa apropiado", "criterio": "El soplete se enciende con yesquero o encendedor de chispa, no con fósforos ni encendedores.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No se utiliza encendedor de chispa para el soplete.", "accion_defecto": "Proveer encendedores de chispa para los equipos de oxicorte.", "responsable_defecto": "Supervisor" }
+  ],
+  "items_generales": [
+    { "clave": "deposito", "texto": "Depósito de cilindros ventilado, señalizado y con oxígeno separado de combustibles", "criterio": "Los cilindros se almacenan de pie, amarrados, en lugar ventilado, señalizado y con separación entre oxígeno y gases combustibles.", "norma": "Dec. 351/79 – art. 142", "gravedad": "MEDIA", "desvio_defecto": "Almacenamiento de cilindros sin separación, ventilación o señalización adecuadas.", "accion_defecto": "Acondicionar el depósito de cilindros (ventilación, separación y señalización).", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "capacitacion", "texto": "Personal capacitado en el uso seguro del oxicorte", "criterio": "Existe registro de capacitación de los operadores.", "norma": "Dec. 351/79 – art. 208", "gravedad": "BAJA", "desvio_defecto": "No hay registro de capacitación en uso seguro del oxicorte.", "accion_defecto": "Capacitar a los operadores en el uso seguro del oxicorte y registrarlo.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Revisar antes de cada uso mangueras, conexiones y arrestallamas.", "responsable": "Operador", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar las condiciones de seguridad de los equipos de oxicorte, sus cilindros y su almacenamiento, y el uso de protección por parte de los operadores.",
+    "metodologia": "Se inspeccionó cada equipo de oxicorte con sus cilindros, reguladores y mangueras, y se observó la operación cuando fue posible.",
+    "alcance_extra": "No incluye la verificación de pérdidas con instrumentos ni la revisión interna de reguladores y arrestallamas.",
+    "recomendaciones": [
+      "Mantener los cilindros siempre amarrados y con capuchón cuando no se usan.",
+      "No usar grasas ni aceites en equipos de oxígeno.",
+      "Cerrar las válvulas de los cilindros al terminar el trabajo."
+    ]
+  }
+}

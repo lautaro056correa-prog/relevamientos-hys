@@ -1,0 +1,50 @@
+{
+  "id": "retractiles",
+  "version": "1.0",
+  "titulo": "Retráctiles (T5)",
+  "descripcion": "Dispositivos anticaídas retráctiles y su anclaje",
+  "grupo": "Trabajo en altura",
+  "icono": "retractil",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de dispositivos anticaídas retráctiles",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Retráctil",
+  "nombre_elemento_plural": "Retráctiles",
+  "atributos": [
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true },
+    { "clave": "equipo", "etiqueta": "Marca / modelo", "tipo": "texto" },
+    { "clave": "serie", "etiqueta": "N° de serie", "etiqueta_corta": "N° serie", "tipo": "texto" },
+    { "clave": "longitud", "etiqueta": "Longitud", "tipo": "numero", "unidad": "m" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "ubicacion", "serie", "bloqueo", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – art. 200", "aplicacion": "Protección contra caídas en trabajos en altura." },
+    { "codigo": "Res. SRT 61/23", "aplicacion": "Medidas de seguridad obligatorias para trabajos en altura y sistemas de arresto de caídas." }
+  ],
+  "items": [
+    { "clave": "carcasa", "texto": "Carcasa sin golpes, fisuras ni tornillos faltantes", "criterio": "La carcasa está entera y cerrada.", "norma": "Res. SRT 61/23", "gravedad": "MEDIA", "desvio_defecto": "Carcasa del retráctil dañada.", "accion_defecto": "Retirar de servicio el retráctil y enviarlo a revisión del fabricante.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "cable", "texto": "Cable o cinta sin cortes, deshilachados ni corrosión", "criterio": "El elemento retráctil está entero en toda su longitud.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Cable o cinta del retráctil dañado.", "accion_defecto": "Retirar de servicio el retráctil y enviarlo a revisión del fabricante.", "responsable_defecto": "Servicio de Higiene y Seguridad", "foto_obligatoria_si_nc": true },
+    { "clave": "retraccion", "texto": "Extiende y recoge en forma suave y completa", "criterio": "El cable sale y vuelve sin trabas ni saltos.", "norma": "Res. SRT 61/23", "gravedad": "MEDIA", "desvio_defecto": "El retráctil no extiende o recoge correctamente.", "accion_defecto": "Retirar de servicio el retráctil y enviarlo a revisión del fabricante.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "bloqueo", "etiqueta_corta": "Bloqueo", "texto": "Bloquea al dar un tirón brusco (prueba de bloqueo)", "criterio": "Al tirar con fuerza el mecanismo traba de inmediato.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "El retráctil no bloquea en la prueba.", "accion_defecto": "Retirar de servicio el retráctil y enviarlo a revisión del fabricante.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "indicador", "texto": "Indicador de caída sin activar", "criterio": "El testigo de caída no muestra que el equipo haya detenido una caída.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Retráctil con indicador de caída activado.", "accion_defecto": "Retirar de servicio el retráctil y enviarlo a revisión del fabricante.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "mosqueton", "texto": "Mosquetón con cierre y traba operativos", "criterio": "Cierra solo, traba y no presenta deformación.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Mosquetón del retráctil sin traba o deformado.", "accion_defecto": "Reemplazar el mosquetón del retráctil.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "anclaje", "texto": "Anclaje firme y por encima del usuario", "criterio": "El retráctil está fijado a una estructura resistente, sobre la vertical del trabajo.", "norma": "Res. SRT 61/23", "gravedad": "ALTA", "desvio_defecto": "Retráctil anclado en forma inadecuada.", "accion_defecto": "Reubicar el retráctil en un punto de anclaje adecuado.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "etiqueta", "texto": "Etiqueta legible e inspección periódica vigente", "criterio": "Tiene identificación legible y la revisión periódica indicada por el fabricante al día.", "norma": "Res. SRT 61/23", "gravedad": "MEDIA", "desvio_defecto": "Retráctil sin identificación o con revisión periódica vencida.", "accion_defecto": "Enviar el retráctil a la revisión periódica del fabricante.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Realizar la prueba de bloqueo antes de cada uso.", "responsable": "Operador", "norma": "Res. SRT 61/23" },
+    { "accion": "Cumplir la revisión periódica de los retráctiles según el fabricante.", "responsable": "Servicio de Higiene y Seguridad", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar el estado y el funcionamiento de los dispositivos anticaídas retráctiles (T5) y de su anclaje.",
+    "metodologia": "Se inspeccionó cada retráctil, se verificó la extensión y recogida del cable y se hizo la prueba manual de bloqueo.",
+    "alcance_extra": "No incluye la revisión interna del mecanismo ni ensayos de caída.",
+    "recomendaciones": [
+      "No usar el retráctil en tramos horizontales si el fabricante no lo permite.",
+      "Retirar de servicio todo retráctil que haya detenido una caída.",
+      "Mantener los equipos protegidos de la intemperie cuando no se usan."
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "id": "autoelevadores",
+  "version": "1.0",
+  "titulo": "Autoelevadores",
+  "descripcion": "Estado del equipo, dispositivos de seguridad y habilitación",
+  "grupo": "Izaje y movimiento de cargas",
+  "icono": "autoelevador",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de autoelevadores",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Autoelevador",
+  "nombre_elemento_plural": "Autoelevadores",
+  "atributos": [
+    { "clave": "interno", "etiqueta": "N° interno", "etiqueta_corta": "N° int.", "tipo": "texto", "obligatorio": true },
+    { "clave": "marca", "etiqueta": "Marca / modelo", "tipo": "texto" },
+    { "clave": "combustible", "etiqueta": "Combustible", "tipo": "opcion", "obligatorio": true, "opciones": ["GLP", "Diésel", "Nafta", "Eléctrico"] },
+    { "clave": "capacidad", "etiqueta": "Capacidad", "etiqueta_corta": "Cap.", "tipo": "numero", "unidad": "kg" },
+    { "clave": "horas", "etiqueta": "Horas de trabajo", "tipo": "numero", "unidad": "h" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "interno", "combustible", "credencial", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Res. SRT 960/15", "aplicacion": "Trabajos con autoelevadores: habilitación de operadores, control y mantenimiento." },
+    { "codigo": "Dec. 351/79 – Cap. 15", "aplicacion": "Máquinas y aparatos para izar." },
+    { "codigo": "Dec. 351/79 – Cap. 12, art. 79", "aplicacion": "Demarcación de circulaciones." }
+  ],
+  "secciones": [
+    { "clave": "estado", "titulo": "Estado del equipo" },
+    { "clave": "seguridad", "titulo": "Dispositivos de seguridad" },
+    { "clave": "habilitacion", "titulo": "Operación y control" }
+  ],
+  "items": [
+    { "clave": "ruedas", "seccion": "estado", "texto": "Ruedas y bandas de rodaje en buen estado", "criterio": "Sin desgaste excesivo, cortes ni desprendimientos; presión correcta si son neumáticas.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Ruedas del autoelevador desgastadas o dañadas.", "accion_defecto": "Reemplazar las ruedas dañadas del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "horquillas", "seccion": "estado", "texto": "Horquillas y su fijación en buen estado", "criterio": "Uñas sin fisuras ni deformación, con trabas de fijación colocadas.", "norma": "Res. SRT 960/15", "gravedad": "ALTA", "desvio_defecto": "Horquillas deformadas o mal fijadas.", "accion_defecto": "Retirar de servicio el autoelevador y reemplazar o fijar las horquillas.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "hidraulico", "seccion": "estado", "texto": "Sin fugas en el sistema hidráulico", "criterio": "Mangueras, cilindros y conexiones sin pérdidas.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Fugas en el sistema hidráulico del autoelevador.", "accion_defecto": "Reparar las fugas del sistema hidráulico.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "niveles", "seccion": "estado", "texto": "Niveles de aceite y fluidos correctos", "criterio": "Aceite de motor, hidráulico y líquido de frenos en nivel.", "norma": "Res. SRT 960/15", "gravedad": "BAJA", "desvio_defecto": "Niveles de fluidos del autoelevador incorrectos.", "accion_defecto": "Completar los niveles de fluidos del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "mandos", "seccion": "estado", "texto": "Mandos de servicio en buen estado", "criterio": "Palancas y pedales responden correctamente y están identificados.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Mandos del autoelevador en mal estado.", "accion_defecto": "Reparar los mandos del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "transmision", "seccion": "estado", "texto": "Transmisión y dirección sin anomalías", "criterio": "Sin ruidos, juegos ni respuestas anormales.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Anomalías en la transmisión o dirección del autoelevador.", "accion_defecto": "Revisar la transmisión y la dirección del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "asiento", "seccion": "estado", "texto": "Asiento en buen estado", "criterio": "Asiento firme y sin roturas.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Asiento del autoelevador deteriorado.", "accion_defecto": "Reparar el asiento del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "glp", "seccion": "estado", "texto": "Cilindro de GLP sujeto, sin pérdidas y con conexión en buen estado", "criterio": "El cilindro está trabado en su soporte y la manguera y válvula no pierden.", "norma": "Res. SRT 960/15 – Dec. 351/79 art. 142", "gravedad": "ALTA", "desvio_defecto": "Cilindro de GLP mal sujeto o con pérdidas.", "accion_defecto": "Asegurar el cilindro de GLP y reparar las pérdidas.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "frenos", "seccion": "seguridad", "texto": "Freno de servicio y de mano operativos", "criterio": "El equipo frena con eficacia y el freno de mano lo retiene detenido.", "norma": "Res. SRT 960/15", "gravedad": "ALTA", "desvio_defecto": "Frenos del autoelevador deficientes.", "accion_defecto": "Retirar de servicio el autoelevador y reparar los frenos.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "techo", "seccion": "seguridad", "texto": "Techo protector del operador colocado", "criterio": "Cuenta con estructura de protección contra caída de objetos, sin modificaciones.", "norma": "Res. SRT 960/15", "gravedad": "ALTA", "desvio_defecto": "Autoelevador sin techo protector.", "accion_defecto": "Colocar la estructura de protección del operador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "cinturon", "seccion": "seguridad", "texto": "Cinturón de seguridad en buen estado y en uso", "criterio": "El cinturón existe, funciona y el operador lo usa.", "norma": "Res. SRT 960/15", "gravedad": "ALTA", "desvio_defecto": "Cinturón de seguridad inexistente, dañado o sin uso.", "accion_defecto": "Reparar el cinturón y exigir su uso.", "responsable_defecto": "Supervisor" },
+    { "clave": "bocina", "seccion": "seguridad", "texto": "Bocina operativa", "criterio": "La bocina funciona.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Bocina del autoelevador inoperante.", "accion_defecto": "Reparar la bocina del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "luces", "seccion": "seguridad", "texto": "Luces operativas", "criterio": "Luces delanteras, traseras y baliza funcionan.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Luces del autoelevador inoperantes.", "accion_defecto": "Reparar las luces del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "alarma", "seccion": "seguridad", "texto": "Alarma de retroceso operativa", "criterio": "Suena al poner marcha atrás.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Alarma de retroceso inoperante.", "accion_defecto": "Reparar la alarma de retroceso.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "espejos", "seccion": "seguridad", "texto": "Espejos en buen estado", "criterio": "Espejos enteros y bien orientados.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Espejos del autoelevador rotos o faltantes.", "accion_defecto": "Reponer los espejos del autoelevador.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "extintor", "seccion": "seguridad", "texto": "Extintor a bordo con carga vigente", "criterio": "Lleva un extintor fijado, accesible y con carga vigente.", "norma": "Dec. 351/79 – art. 176", "gravedad": "MEDIA", "desvio_defecto": "Autoelevador sin extintor o con carga vencida.", "accion_defecto": "Colocar un extintor con carga vigente en el autoelevador.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "placa", "seccion": "seguridad", "texto": "Placa de capacidad de carga legible", "criterio": "La placa del fabricante con el diagrama de carga se puede leer.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "Autoelevador sin placa de capacidad legible.", "accion_defecto": "Reponer la placa de capacidad de carga.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "credencial", "etiqueta_corta": "Credencial", "seccion": "habilitacion", "texto": "El operador tiene credencial habilitante", "criterio": "Quien lo conduce está capacitado y tiene la credencial que emite el empleador.", "norma": "Res. SRT 960/15", "gravedad": "ALTA", "desvio_defecto": "Autoelevador conducido por operador sin credencial habilitante.", "accion_defecto": "Capacitar a los operadores y emitir sus credenciales habilitantes.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "control_diario", "seccion": "habilitacion", "texto": "Se registra el control diario al inicio del turno", "criterio": "La planilla de control diario está completa y al día.", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "No se registra el control diario del autoelevador.", "accion_defecto": "Implementar la planilla de control diario al inicio de cada turno.", "responsable_defecto": "Supervisor" },
+    { "clave": "mantenimiento", "seccion": "habilitacion", "texto": "Mantenimiento preventivo registrado", "criterio": "Hay registro del mantenimiento periódico (por ejemplo, el control trimestral).", "norma": "Res. SRT 960/15", "gravedad": "MEDIA", "desvio_defecto": "No hay registro del mantenimiento preventivo del autoelevador.", "accion_defecto": "Programar y registrar el mantenimiento preventivo del autoelevador.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "items_generales": [
+    { "clave": "circulacion", "texto": "Circulación de autoelevadores demarcada y señalizada", "criterio": "Las vías de circulación están demarcadas y separadas de las de peatones donde es posible.", "norma": "Dec. 351/79 – art. 79", "gravedad": "MEDIA", "desvio_defecto": "Circulación de autoelevadores sin demarcar.", "accion_defecto": "Demarcar y señalizar las vías de circulación de autoelevadores.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "velocidad", "texto": "Velocidad máxima de circulación señalizada", "criterio": "Hay cartelería con la velocidad máxima permitida dentro del establecimiento.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No se señaliza la velocidad máxima de circulación.", "accion_defecto": "Señalizar la velocidad máxima de circulación de autoelevadores.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "carga_baterias", "texto": "Sector de carga de baterías o recarga de GLP ventilado y señalizado", "criterio": "La carga de baterías o el recambio de cilindros se hace en un lugar ventilado, señalizado y con extintor.", "norma": "Dec. 351/79 – art. 99", "gravedad": "MEDIA", "desvio_defecto": "Sector de carga de baterías o recambio de GLP sin ventilación o señalización.", "accion_defecto": "Acondicionar el sector de carga de baterías o recambio de GLP.", "responsable_defecto": "Responsable del establecimiento" }
+  ],
+  "reglas_automaticas": [
+    { "descripcion": "El cilindro de GLP solo aplica a equipos a GLP", "cuando": { "atributo": "combustible", "operador": "distinto", "valor": "GLP" }, "entonces": { "items": ["glp"], "valor": "NA" } }
+  ],
+  "acciones_gestion": [
+    { "accion": "Completar la planilla de control diario al inicio de cada turno.", "responsable": "Operador", "norma": "Res. SRT 960/15" },
+    { "accion": "Realizar el control trimestral de mantenimiento de cada autoelevador.", "responsable": "Mantenimiento", "norma": "Res. SRT 960/15" }
+  ],
+  "textos": {
+    "objetivo": "Verificar el estado de los autoelevadores, sus dispositivos de seguridad y la habilitación de sus operadores según la Res. SRT 960/15.",
+    "metodologia": "Se inspeccionó cada autoelevador y se probaron frenos, bocina, luces y alarma de retroceso. Se verificaron las credenciales de los operadores y los registros de control.",
+    "alcance_extra": "No incluye la revisión mecánica interna ni ensayos de carga de los equipos.",
+    "recomendaciones": [
+      "No transportar personas en las horquillas ni circular con la carga elevada.",
+      "Usar siempre el cinturón de seguridad.",
+      "Respetar las vías de circulación y la velocidad máxima."
+    ]
+  }
+}

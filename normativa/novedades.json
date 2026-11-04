@@ -1,0 +1,92 @@
+{
+ "actualizado": "2026-10-30T00:55:57.302Z",
+ "ultima_fecha": "2026-10-29",
+ "nuevas": [
+  "bo-348412",
+  "bo-349554",
+  "bo-349560",
+  "sf-2026-2026-10-05ley14487-html"
+ ],
+ "normas": [
+  {
+   "id": "bo-349554",
+   "fecha": "2026-10-26",
+   "tipo": "Resolución",
+   "numero": "56/2026",
+   "organismo": "Superintendencia de Riesgos del Trabajo",
+   "jurisdiccion": "Nación",
+   "titulo": "Déjase sin efecto la autorización para afiliar y operar como ASEGURADORA DE RIESGOS DEL TRABAJO (A.R.T.), en todo el territorio del país, que le fuera…",
+   "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/349554/20261026",
+   "fuente": "Boletín Oficial de la República Argentina",
+   "resumen": "Déjase sin efecto la autorización para afiliar y operar como ASEGURADORA DE RIESGOS DEL TRABAJO (A.R.T.), en todo el territorio del país, que le fuera otorgada a PRODUCTORES DE FRUTAS ARGENTINAS COOPERATIVA DE SEGUROS LIMITADA mediante las Resoluciones de la SUPERINTENDENCIA DE RIESGOS DEL…",
+   "riesgos": [],
+   "rubros": [],
+   "general": true,
+   "palabras": [
+    "riesgos del trabajo",
+    "aseguradora de riesgos",
+    "24.557",
+    "27.348"
+   ]
+  },
+  {
+   "id": "bo-349560",
+   "fecha": "2026-10-26",
+   "tipo": "Disposición",
+   "numero": "10/2026",
+   "organismo": "Superintendencia de Riesgos del Trabajo - Gerencia de Control Prestacional",
+   "jurisdiccion": "Nación",
+   "titulo": "Establécese que el valor de la suma fija prevista en el artículo 5° del Decreto N° 590 de fecha 30 de junio de 1997 y sus normas modificatorias y…",
+   "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/349560/20261026",
+   "fuente": "Boletín Oficial de la República Argentina",
+   "resumen": "Establécese que el valor de la suma fija prevista en el artículo 5° del Decreto N° 590 de fecha 30 de junio de 1997 y sus normas modificatorias y complementarias, calculada conforme lo dispuesto en el",
+   "riesgos": [],
+   "rubros": [],
+   "general": true,
+   "palabras": [
+    "riesgos del trabajo",
+    "24.557",
+    "27.348",
+    "enfermedades profesionales"
+   ]
+  },
+  {
+   "id": "sf-2026-2026-10-05ley14487-html",
+   "fecha": "2026-10-05",
+   "tipo": "Ley",
+   "numero": "14487",
+   "organismo": "Gobierno de Santa Fe",
+   "jurisdiccion": "Santa Fe",
+   "titulo": "LEY N.º 12.913 – COMITÉS DE SALUD Y SEGURIDAD EN EL TRABAJO: MODIFICA LOS ARTÍCULOS 3 (ÁMBITO DE APLICACIÓN), 6 INCORPORANDO LOS INCISOS N), O) Y P) (FUNCIONES Y ATRIBUCIONES) Y 28 (DISPOSICIONES GENERALES).",
+   "url": "https://www.santafe.gov.ar/boletinoficial/ver.php?seccion=2026/2026-10-05ley14487.html",
+   "fuente": "Boletín Oficial de la Provincia de Santa Fe",
+   "resumen": "",
+   "riesgos": [],
+   "rubros": [],
+   "general": false,
+   "palabras": [
+    "salud y seguridad en el trabajo",
+    "comites de salud y seguridad"
+   ]
+  },
+  {
+   "id": "bo-348412",
+   "fecha": "2026-10-02",
+   "tipo": "Resolución",
+   "numero": "50/2026",
+   "organismo": "Superintendencia de Riesgos del Trabajo",
+   "jurisdiccion": "Nación",
+   "titulo": "Establécese en PESOS NOVENTA Y CINCO MIL OCHOCIENTOS SESENTA Y CUATRO CON 67/100 ($ 95.864,67) el importe que surge de aplicar la equivalencia contenida en…",
+   "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348412/20261002",
+   "fuente": "Boletín Oficial de la República Argentina",
+   "resumen": "Establécese en PESOS NOVENTA Y CINCO MIL OCHOCIENTOS SESENTA Y CUATRO CON 67/100 ($ 95.864,67) el importe que surge de aplicar la equivalencia contenida en el primer párrafo del artículo 15 del Decreto N° 1.694 de fecha 05 de noviembre de 2009, de conformidad con lo dispuesto en la Resolución de…",
+   "riesgos": [],
+   "rubros": [],
+   "general": true,
+   "palabras": [
+    "riesgos del trabajo",
+    "24.557"
+   ]
+  }
+ ]
+}

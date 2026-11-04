@@ -1,0 +1,57 @@
+{
+  "id": "orden_limpieza",
+  "version": "1.0",
+  "titulo": "Orden y limpieza",
+  "descripcion": "Circulaciones, pisos, almacenamiento y residuos por sector",
+  "grupo": "Condiciones y salud",
+  "icono": "escoba",
+  "color": "verde",
+  "subtitulo_informe": "Relevamiento de orden y limpieza",
+  "tipo_elemento": "sector",
+  "nombre_elemento": "Sector",
+  "nombre_elemento_plural": "Sectores",
+  "atributos": [
+    { "clave": "responsable", "etiqueta": "Responsable del sector", "tipo": "texto" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "responsable", "desvios", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 12, art. 79", "aplicacion": "Demarcación de pasillos y zonas de peligro." },
+    { "codigo": "Dec. 351/79 – Cap. 12 (arts. 71 a 76)", "aplicacion": "Iluminación en los lugares de trabajo." },
+    { "codigo": "Dec. 351/79 – Anexo VII, pto. 3", "aplicacion": "Medios de escape." }
+  ],
+  "secciones": [
+    { "clave": "circulacion", "titulo": "Circulaciones y pisos" },
+    { "clave": "almacenamiento", "titulo": "Almacenamiento" },
+    { "clave": "general", "titulo": "Condiciones del sector" }
+  ],
+  "items": [
+    { "clave": "pasillos", "seccion": "circulacion", "texto": "Pasillos y circulaciones libres de obstáculos", "criterio": "Se puede circular sin esquivar materiales, cajas ni equipos.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Pasillos con materiales u obstáculos.", "accion_defecto": "Despejar los pasillos y mantenerlos libres.", "responsable_defecto": "Encargado del sector", "foto_obligatoria_si_nc": true },
+    { "clave": "demarcacion", "seccion": "circulacion", "texto": "Pasillos y zonas de almacenamiento demarcados", "criterio": "Las circulaciones y los sectores de acopio están pintados o demarcados.", "norma": "Dec. 351/79 – art. 79", "gravedad": "BAJA", "desvio_defecto": "Pasillos y zonas de almacenamiento sin demarcar.", "accion_defecto": "Demarcar pasillos y zonas de almacenamiento.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "pisos_limpios", "seccion": "circulacion", "texto": "Pisos limpios, secos y sin derrames", "criterio": "Sin aceite, agua, polvo ni restos que puedan provocar resbalones.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Pisos con derrames o suciedad que pueden provocar resbalones.", "accion_defecto": "Limpiar los pisos y controlar el origen de los derrames.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "pisos_estado", "seccion": "circulacion", "texto": "Pisos sin roturas, desniveles ni elementos sueltos", "criterio": "Superficie pareja, sin pozos, rejillas sueltas ni cables cruzados.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Pisos con roturas, desniveles o elementos sueltos.", "accion_defecto": "Reparar los pisos y eliminar los elementos sueltos.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "apilado", "seccion": "almacenamiento", "texto": "Materiales apilados en forma estable y a altura segura", "criterio": "Las pilas son estables, no superan una altura segura y no invaden circulaciones.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Materiales apilados en forma inestable o a altura excesiva.", "accion_defecto": "Reordenar el apilado de materiales en forma estable.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "estanterias", "seccion": "almacenamiento", "texto": "Estanterías en buen estado, ancladas y sin sobrecarga", "criterio": "Estanterías fijadas, sin deformaciones y con la carga dentro de su capacidad.", "norma": "Buenas prácticas", "gravedad": "ALTA", "desvio_defecto": "Estanterías sin anclar, deformadas o sobrecargadas.", "accion_defecto": "Anclar las estanterías, reparar las dañadas y respetar su capacidad.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "herramientas", "seccion": "almacenamiento", "texto": "Herramientas y materiales guardados en su lugar", "criterio": "Cada elemento tiene un lugar asignado y está guardado.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Herramientas y materiales fuera de su lugar.", "accion_defecto": "Asignar lugares de guardado y mantener el orden.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "residuos", "seccion": "general", "texto": "Residuos en recipientes identificados y retirados con frecuencia", "criterio": "Hay recipientes identificados y los residuos no se acumulan.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Residuos acumulados o sin recipientes identificados.", "accion_defecto": "Colocar recipientes identificados y organizar el retiro de residuos.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "accesos", "seccion": "general", "texto": "Acceso libre a extintores, tableros y salidas", "criterio": "Ningún material bloquea extintores, tableros eléctricos ni salidas.", "norma": "Dec. 351/79 – Anexo VII", "gravedad": "ALTA", "desvio_defecto": "Materiales que bloquean extintores, tableros o salidas.", "accion_defecto": "Despejar el acceso a extintores, tableros y salidas.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "iluminacion", "seccion": "general", "texto": "Iluminación suficiente en el sector", "criterio": "Las luminarias funcionan y la iluminación permite trabajar y circular con seguridad.", "norma": "Dec. 351/79 – Cap. 12", "gravedad": "MEDIA", "desvio_defecto": "Sector con iluminación insuficiente o luminarias fuera de servicio.", "accion_defecto": "Reparar las luminarias y mejorar la iluminación del sector.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "items_generales": [
+    { "clave": "rutina", "texto": "Rutina de orden y limpieza definida", "criterio": "Existe una rutina o programa de orden y limpieza con responsables.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No hay una rutina definida de orden y limpieza.", "accion_defecto": "Definir una rutina de orden y limpieza con responsables por sector.", "responsable_defecto": "Responsable del establecimiento" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Realizar recorridas periódicas de orden y limpieza por sector.", "responsable": "Responsable del establecimiento", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Evaluar las condiciones de orden y limpieza de los sectores del establecimiento, en particular las circulaciones, los pisos y el almacenamiento de materiales.",
+    "metodologia": "Se recorrió cada sector observando circulaciones, pisos, almacenamiento, residuos y accesos a elementos de emergencia.",
+    "alcance_extra": "No incluye la evaluación estructural de estanterías ni mediciones de iluminación.",
+    "recomendaciones": [
+      "Aplicar la regla de \"un lugar para cada cosa y cada cosa en su lugar\".",
+      "Limpiar los derrames en el momento en que se producen.",
+      "Asignar responsables de orden y limpieza en cada sector."
+    ]
+  }
+}

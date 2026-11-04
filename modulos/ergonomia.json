@@ -1,0 +1,51 @@
+{
+  "id": "ergonomia",
+  "version": "1.0",
+  "titulo": "Ergonomía",
+  "descripcion": "Cargas, posturas, movimientos repetitivos y puestos con pantalla",
+  "grupo": "Condiciones y salud",
+  "icono": "postura",
+  "color": "azul",
+  "subtitulo_informe": "Relevamiento de factores de riesgo ergonómico",
+  "tipo_elemento": "sector",
+  "nombre_elemento": "Puesto de trabajo",
+  "nombre_elemento_plural": "Puestos de trabajo",
+  "atributos": [
+    { "clave": "tarea", "etiqueta": "Tarea principal", "tipo": "texto", "obligatorio": true },
+    { "clave": "trabajadores", "etiqueta": "Trabajadores en el puesto", "etiqueta_corta": "Personal", "tipo": "numero" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "tarea", "trabajadores", "desvios", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Res. SRT 886/15", "aplicacion": "Protocolo de Ergonomía: identificación y evaluación de factores de riesgo." },
+    { "codigo": "Res. MTEySS 295/03 – Anexo I", "aplicacion": "Ergonomía y levantamiento manual de cargas." }
+  ],
+  "items": [
+    { "clave": "cargas", "texto": "Levantamiento manual de cargas dentro de límites aceptables", "criterio": "Peso, frecuencia y distancia de las cargas no superan los valores recomendados.", "norma": "Res. MTEySS 295/03", "gravedad": "MEDIA", "desvio_defecto": "Levantamiento manual de cargas por encima de los valores recomendados.", "accion_defecto": "Evaluar el levantamiento de cargas y reducir peso o frecuencia.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "ayudas", "texto": "Ayudas mecánicas disponibles para cargas pesadas", "criterio": "Hay carros, zorras o elevadores para mover cargas pesadas.", "norma": "Res. MTEySS 295/03", "gravedad": "MEDIA", "desvio_defecto": "No hay ayudas mecánicas para mover cargas pesadas.", "accion_defecto": "Incorporar ayudas mecánicas para el manejo de cargas.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "posturas", "texto": "Sin posturas forzadas sostenidas", "criterio": "No se trabaja en forma sostenida con el tronco flexionado o los brazos sobre los hombros.", "norma": "Res. SRT 886/15", "gravedad": "MEDIA", "desvio_defecto": "Tarea con posturas forzadas sostenidas.", "accion_defecto": "Rediseñar el puesto para evitar posturas forzadas.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "repetitivos", "texto": "Movimientos repetitivos con pausas o rotación", "criterio": "Las tareas repetitivas tienen pausas o rotación de puestos.", "norma": "Res. SRT 886/15", "gravedad": "MEDIA", "desvio_defecto": "Movimientos repetitivos sin pausas ni rotación.", "accion_defecto": "Implementar pausas activas o rotación de tareas.", "responsable_defecto": "Supervisor" },
+    { "clave": "bipedestacion", "texto": "Bipedestación prolongada con posibilidad de alternar postura", "criterio": "Quienes trabajan de pie pueden sentarse o alternar posturas.", "norma": "Res. SRT 886/15", "gravedad": "BAJA", "desvio_defecto": "Trabajo de pie prolongado sin posibilidad de alternar.", "accion_defecto": "Proveer asientos o apoyos para alternar posturas.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "altura_plano", "texto": "Altura del plano de trabajo adecuada", "criterio": "La mesada o banco permite trabajar sin agacharse ni elevar los hombros.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Altura del plano de trabajo inadecuada.", "accion_defecto": "Ajustar la altura del plano de trabajo.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "contacto", "texto": "Sin estrés de contacto", "criterio": "No hay apoyo prolongado sobre bordes filosos ni uso de la mano como martillo.", "norma": "Res. SRT 886/15", "gravedad": "BAJA", "desvio_defecto": "Estrés de contacto en el puesto.", "accion_defecto": "Redondear o acolchar los bordes de apoyo y proveer herramientas adecuadas.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "pantalla", "texto": "Puesto con pantalla: silla regulable y monitor a la altura de los ojos", "criterio": "Silla con regulación y respaldo, monitor frente al usuario y apoyo para antebrazos.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Puesto con pantalla sin condiciones ergonómicas adecuadas.", "accion_defecto": "Adecuar silla, monitor y superficie del puesto con pantalla.", "responsable_defecto": "Responsable del establecimiento" }
+  ],
+  "items_generales": [
+    { "clave": "protocolo", "texto": "Protocolo de ergonomía realizado", "criterio": "Existe el protocolo de la Res. SRT 886/15 con sus planillas para los puestos con riesgo.", "norma": "Res. SRT 886/15", "gravedad": "MEDIA", "desvio_defecto": "No se cuenta con el protocolo de ergonomía.", "accion_defecto": "Realizar el protocolo de ergonomía según Res. SRT 886/15.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "capacitacion", "texto": "Personal capacitado en manejo manual de cargas y posturas", "criterio": "Existe registro de capacitación sobre técnicas de levantamiento y posturas.", "norma": "Dec. 351/79 – art. 208", "gravedad": "BAJA", "desvio_defecto": "No hay registro de capacitación en ergonomía.", "accion_defecto": "Capacitar al personal en manejo manual de cargas y posturas.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Actualizar el protocolo de ergonomía cuando cambien los puestos o las tareas.", "responsable": "Servicio de Higiene y Seguridad", "norma": "Res. SRT 886/15" }
+  ],
+  "textos": {
+    "objetivo": "Identificar los factores de riesgo ergonómico presentes en los puestos de trabajo y las medidas de control necesarias.",
+    "metodologia": "Se observó cada puesto durante la tarea y se identificaron los factores de riesgo ergonómico. Los ítems que no corresponden al puesto se marcaron como No aplica.",
+    "alcance_extra": "Es una identificación inicial. No reemplaza la evaluación con los métodos del protocolo de la Res. SRT 886/15.",
+    "recomendaciones": [
+      "Evaluar con los métodos de la Res. SRT 886/15 los puestos con desvíos.",
+      "Priorizar las mejoras de diseño del puesto antes que las medidas administrativas.",
+      "Incorporar pausas activas en tareas repetitivas."
+    ]
+  }
+}

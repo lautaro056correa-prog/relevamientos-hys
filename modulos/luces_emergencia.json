@@ -1,0 +1,62 @@
+{
+  "id": "luces_emergencia",
+  "version": "1.0",
+  "titulo": "Luces de emergencia",
+  "descripcion": "Equipos autónomos y carteles de salida iluminados",
+  "grupo": "Incendio y emergencias",
+  "icono": "luz",
+  "color": "verde",
+  "subtitulo_informe": "Relevamiento de iluminación de emergencia",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Luz de emergencia",
+  "nombre_elemento_plural": "Luces de emergencia",
+  "atributos": [
+    { "clave": "puesto", "etiqueta": "Puesto N°", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true, "ayuda": "Ej.: pasillo hacia salida principal" },
+    { "clave": "tipo", "etiqueta": "Tipo", "tipo": "opcion", "obligatorio": true, "opciones": ["Equipo autónomo", "Cartel de salida iluminado", "Equipo centralizado"] },
+    { "clave": "autonomia", "etiqueta": "Autonomía declarada", "etiqueta_corta": "Autonomía", "tipo": "numero", "unidad": "h" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "ubicacion", "tipo", "prueba", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 12, art. 76", "aplicacion": "Iluminación de emergencia en los lugares de trabajo." },
+    { "codigo": "Dec. 351/79 – Anexo VII, pto. 3", "aplicacion": "Medios de escape." },
+    { "codigo": "IRAM 10005", "aplicacion": "Colores y señales de seguridad." }
+  ],
+  "secciones": [
+    { "clave": "instalacion", "titulo": "Instalación" },
+    { "clave": "funcionamiento", "titulo": "Funcionamiento" }
+  ],
+  "items": [
+    { "clave": "ubicacion_escape", "seccion": "instalacion", "texto": "Ubicada sobre el recorrido de evacuación o la zona que debe iluminar", "criterio": "Ilumina medios de escape, salidas, cambios de dirección o puestos que no pueden quedar a oscuras.", "norma": "Dec. 351/79 – art. 76", "gravedad": "MEDIA", "desvio_defecto": "Luz de emergencia mal ubicada respecto del recorrido de evacuación.", "accion_defecto": "Reubicar las luces de emergencia sobre los recorridos de evacuación.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "fijacion", "seccion": "instalacion", "texto": "Equipo firmemente fijado", "criterio": "Sujeto a pared o techo, sin riesgo de caída ni de desplazamiento.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Luz de emergencia mal fijada.", "accion_defecto": "Fijar correctamente las luces de emergencia.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "limpieza", "seccion": "instalacion", "texto": "Difusor y lámparas limpios", "criterio": "Sin polvo ni suciedad que reduzca la iluminación.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Luz de emergencia con suciedad acumulada.", "accion_defecto": "Limpiar difusores y lámparas de las luces de emergencia.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "conexion", "seccion": "instalacion", "texto": "Conexión eléctrica en buen estado y permanente", "criterio": "Conectada en forma permanente a la red, sin cables expuestos ni empalmes precarios.", "norma": "Dec. 351/79 – Cap. 14", "gravedad": "MEDIA", "desvio_defecto": "Conexión eléctrica de la luz de emergencia precaria o desconectada.", "accion_defecto": "Normalizar la conexión eléctrica de las luces de emergencia.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "cartel", "seccion": "instalacion", "texto": "Cartel de salida legible y con pictograma normalizado", "criterio": "Leyenda y pictograma de salida visibles, con colores de seguridad normalizados.", "norma": "IRAM 10005 – Dec. 351/79 art. 80", "gravedad": "MEDIA", "desvio_defecto": "Cartel de salida ilegible o sin pictograma normalizado.", "accion_defecto": "Reemplazar los carteles de salida por carteles normalizados.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "indicador", "seccion": "funcionamiento", "texto": "Indicador de carga encendido", "criterio": "El led testigo indica que el equipo está alimentado y cargando la batería.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Luz de emergencia sin indicación de carga.", "accion_defecto": "Verificar la alimentación y la batería de las luces sin indicación de carga.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "pulsador", "seccion": "funcionamiento", "texto": "Botón de prueba en buen estado", "criterio": "El botón de prueba existe y acciona el equipo.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Luz de emergencia sin botón de prueba operativo.", "accion_defecto": "Reparar el botón de prueba de las luces de emergencia.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "prueba", "etiqueta_corta": "Enciende", "seccion": "funcionamiento", "texto": "Enciende al cortar la alimentación o accionar la prueba", "criterio": "Al simular el corte de energía el equipo enciende de inmediato.", "norma": "Dec. 351/79 – art. 76", "gravedad": "ALTA", "desvio_defecto": "Luz de emergencia que no enciende al cortar la alimentación.", "accion_defecto": "Reparar o reemplazar las luces de emergencia que no funcionan.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "autonomia_ok", "seccion": "funcionamiento", "texto": "Mantiene el encendido durante la prueba de autonomía", "criterio": "Durante la prueba la iluminación no decae en forma notoria y la batería conserva su autonomía.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Luz de emergencia con autonomía insuficiente.", "accion_defecto": "Reemplazar las baterías de las luces de emergencia con autonomía insuficiente.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "items_generales": [
+    { "clave": "cobertura", "texto": "Todos los medios de escape y salidas cuentan con iluminación de emergencia", "criterio": "Pasillos, escaleras, salidas y cambios de dirección están cubiertos por luces de emergencia.", "norma": "Dec. 351/79 – art. 76", "gravedad": "MEDIA", "desvio_defecto": "Medios de escape sin iluminación de emergencia.", "accion_defecto": "Instalar luces de emergencia en los medios de escape que no las tienen.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "registro", "texto": "Registro de pruebas periódicas de las luces de emergencia", "criterio": "Existe registro de las pruebas de funcionamiento y autonomía.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No se registran las pruebas periódicas de las luces de emergencia.", "accion_defecto": "Implementar un registro de pruebas de las luces de emergencia.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "reglas_automaticas": [
+    { "descripcion": "Si no es un cartel de salida → el ítem del cartel No aplica", "cuando": { "atributo": "tipo", "operador": "distinto", "valor": "Cartel de salida iluminado" }, "entonces": { "items": ["cartel"], "valor": "NA" } }
+  ],
+  "acciones_gestion": [
+    { "accion": "Probar mensualmente el encendido de las luces de emergencia y registrar el resultado.", "responsable": "Mantenimiento", "norma": "Buenas prácticas" },
+    { "accion": "Realizar una prueba de autonomía al menos una vez al año.", "responsable": "Mantenimiento", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar la ubicación, el estado y el funcionamiento de las luces de emergencia y los carteles de salida del establecimiento, para asegurar la evacuación ante un corte de energía.",
+    "metodologia": "Se inspeccionó cada equipo en su ubicación y se verificó su encendido accionando el botón de prueba o cortando la alimentación.",
+    "alcance_extra": "No incluye la medición de niveles de iluminación de emergencia ni la prueba de autonomía completa de cada equipo.",
+    "recomendaciones": [
+      "Mantener las luces de emergencia conectadas en forma permanente a la red.",
+      "Probar periódicamente el encendido y la autonomía de los equipos.",
+      "Reemplazar las baterías según la vida útil indicada por el fabricante."
+    ]
+  }
+}

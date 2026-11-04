@@ -1,0 +1,44 @@
+{
+  "id": "primeros_auxilios",
+  "version": "1.0",
+  "titulo": "Primeros auxilios",
+  "descripcion": "Botiquín, personal capacitado y respuesta ante accidentes",
+  "grupo": "Incendio y emergencias",
+  "icono": "cruz",
+  "color": "verde",
+  "subtitulo_informe": "Relevamiento de primeros auxilios y respuesta ante accidentes",
+  "tipo_elemento": "establecimiento",
+  "nombre_elemento": "Establecimiento",
+  "nombre_elemento_plural": "Establecimientos",
+  "atributos": [],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Ley 24.557", "aplicacion": "Riesgos del trabajo: prestaciones y atención de accidentes." },
+    { "codigo": "Dec. 351/79 – Cap. 21", "aplicacion": "Capacitación del personal." },
+    { "codigo": "IRAM 10005", "aplicacion": "Señalización de seguridad." }
+  ],
+  "items": [
+    { "clave": "botiquin", "texto": "Botiquín de primeros auxilios disponible", "criterio": "Hay al menos un botiquín en el establecimiento.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "El establecimiento no cuenta con botiquín de primeros auxilios.", "accion_defecto": "Disponer un botiquín de primeros auxilios.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "botiquin_completo", "texto": "Botiquín completo y con productos vigentes", "criterio": "Contiene los elementos básicos y ninguno está vencido.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "Botiquín incompleto o con productos vencidos.", "accion_defecto": "Reponer el botiquín y controlar los vencimientos.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "botiquin_acceso", "texto": "Botiquín accesible y señalizado", "criterio": "Está en un lugar conocido, sin llave y con su señal.", "norma": "IRAM 10005", "gravedad": "BAJA", "desvio_defecto": "Botiquín inaccesible o sin señalizar.", "accion_defecto": "Ubicar el botiquín en un lugar accesible y señalizarlo.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "personal", "texto": "Personal capacitado en primeros auxilios y RCP", "criterio": "En cada turno hay personas con capacitación registrada.", "norma": "Dec. 351/79 – art. 208", "gravedad": "MEDIA", "desvio_defecto": "No hay personal capacitado en primeros auxilios en todos los turnos.", "accion_defecto": "Capacitar en primeros auxilios y RCP a personal de cada turno.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "telefonos", "texto": "Teléfonos de emergencia y datos de la ART exhibidos", "criterio": "En lugar visible figuran emergencias, ART y centro de atención.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "No se exhiben los teléfonos de emergencia ni los datos de la ART.", "accion_defecto": "Exhibir los teléfonos de emergencia y los datos de la ART.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "procedimiento", "texto": "Procedimiento ante accidentes conocido por el personal", "criterio": "El personal sabe a quién avisar, cómo actuar y a dónde derivar.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "El personal desconoce el procedimiento ante accidentes.", "accion_defecto": "Difundir el procedimiento de actuación ante accidentes.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "lavaojos", "texto": "Lavaojos donde hay riesgo de proyecciones o químicos", "criterio": "Hay lavaojos operativo cerca de los puestos con ese riesgo.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Sin lavaojos en puestos con riesgo de proyecciones o químicos.", "accion_defecto": "Instalar lavaojos cerca de los puestos con ese riesgo.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "traslado", "texto": "Elementos para el traslado de un accidentado", "criterio": "Donde el tamaño o la actividad lo justifican, hay camilla o tabla de traslado.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No hay elementos para el traslado de accidentados.", "accion_defecto": "Disponer una camilla o tabla de traslado.", "responsable_defecto": "Responsable del establecimiento" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Revisar mensualmente el contenido y los vencimientos del botiquín.", "responsable": "Responsable del establecimiento", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar que el establecimiento cuente con los recursos y la organización necesarios para brindar primeros auxilios y responder ante un accidente.",
+    "metodologia": "Se verificó la existencia, ubicación y contenido del botiquín, la información de emergencia exhibida y la capacitación del personal.",
+    "alcance_extra": "No incluye la evaluación del servicio médico ni de los centros de atención de la ART.",
+    "recomendaciones": [
+      "Registrar todo accidente o incidente, aunque no requiera atención médica.",
+      "Actualizar la capacitación en primeros auxilios y RCP periódicamente.",
+      "Mantener actualizados los datos de la ART y los teléfonos de emergencia."
+    ]
+  }
+}

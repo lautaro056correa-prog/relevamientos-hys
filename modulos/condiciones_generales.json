@@ -1,0 +1,59 @@
+{
+  "id": "condiciones_generales",
+  "version": "1.0",
+  "titulo": "Condiciones generales",
+  "descripcion": "Sanitarios, vestuarios, agua potable, iluminación y ventilación",
+  "grupo": "Condiciones y salud",
+  "icono": "edificio",
+  "color": "verde",
+  "subtitulo_informe": "Relevamiento de condiciones generales del establecimiento",
+  "tipo_elemento": "establecimiento",
+  "nombre_elemento": "Establecimiento",
+  "nombre_elemento_plural": "Establecimientos",
+  "atributos": [
+    { "clave": "varones", "etiqueta": "Trabajadores varones", "tipo": "numero" },
+    { "clave": "mujeres", "etiqueta": "Trabajadoras mujeres", "tipo": "numero" }
+  ],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 5 (arts. 42 a 56)", "aplicacion": "Servicios sanitarios, vestuarios y comedores." },
+    { "codigo": "Dec. 351/79 – Cap. 6 (arts. 57 y 58)", "aplicacion": "Provisión de agua potable." },
+    { "codigo": "Dec. 351/79 – Caps. 8, 11, 12 y 13", "aplicacion": "Carga térmica, ventilación, iluminación, ruido y vibraciones." },
+    { "codigo": "Res. SRT 84/12 y 85/12", "aplicacion": "Protocolos de medición de iluminación y de ruido." }
+  ],
+  "secciones": [
+    { "clave": "sanitarios", "titulo": "Servicios sanitarios y bienestar" },
+    { "clave": "agua", "titulo": "Agua potable" },
+    { "clave": "ambiente", "titulo": "Ambiente de trabajo" }
+  ],
+  "items": [
+    { "clave": "sanitarios_sexo", "seccion": "sanitarios", "texto": "Servicios sanitarios separados por sexo", "criterio": "Hay sanitarios independientes para varones y mujeres.", "norma": "Dec. 351/79 – art. 46", "gravedad": "MEDIA", "desvio_defecto": "Servicios sanitarios no separados por sexo.", "accion_defecto": "Separar los servicios sanitarios por sexo.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "sanitarios_cantidad", "seccion": "sanitarios", "texto": "Cantidad de inodoros, lavabos y duchas acorde al personal", "criterio": "La cantidad de artefactos cumple con lo exigido según el número de trabajadores.", "norma": "Dec. 351/79 – arts. 47 a 49", "gravedad": "MEDIA", "desvio_defecto": "Cantidad de artefactos sanitarios insuficiente para el personal.", "accion_defecto": "Adecuar la cantidad de artefactos sanitarios al personal.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "sanitarios_estado", "seccion": "sanitarios", "texto": "Sanitarios limpios, ventilados y en buen estado", "criterio": "Artefactos funcionando, con higiene adecuada y ventilación.", "norma": "Dec. 351/79 – art. 46", "gravedad": "MEDIA", "desvio_defecto": "Sanitarios en malas condiciones de higiene o mantenimiento.", "accion_defecto": "Reparar y mantener la higiene de los sanitarios.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "vestuarios", "seccion": "sanitarios", "texto": "Vestuarios con armarios individuales", "criterio": "Donde corresponde, hay vestuarios separados por sexo con armarios individuales.", "norma": "Dec. 351/79 – arts. 50 y 51", "gravedad": "BAJA", "desvio_defecto": "Faltan vestuarios o armarios individuales.", "accion_defecto": "Acondicionar vestuarios con armarios individuales.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "comedor", "seccion": "sanitarios", "texto": "Comedor o lugar adecuado para comer", "criterio": "El personal come en un lugar separado de los puestos de trabajo, limpio y adecuado.", "norma": "Dec. 351/79 – art. 52", "gravedad": "BAJA", "desvio_defecto": "No hay un lugar adecuado para comer.", "accion_defecto": "Disponer un comedor o lugar adecuado para comer.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "agua", "seccion": "agua", "texto": "Agua potable disponible para el personal", "criterio": "Hay provisión de agua apta para consumo humano.", "norma": "Dec. 351/79 – art. 57", "gravedad": "ALTA", "desvio_defecto": "No hay provisión de agua potable para el personal.", "accion_defecto": "Asegurar la provisión de agua potable.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "analisis_agua", "seccion": "agua", "texto": "Análisis de agua vigentes", "criterio": "Hay análisis bacteriológico semestral y físico-químico anual con resultado apto.", "norma": "Dec. 351/79 – arts. 57 y 58", "gravedad": "MEDIA", "desvio_defecto": "No se cuenta con análisis de agua vigentes.", "accion_defecto": "Realizar los análisis bacteriológico y físico-químico del agua.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "tanques", "seccion": "agua", "texto": "Tanques de agua limpios y tapados", "criterio": "Los tanques están tapados y se limpian periódicamente.", "norma": "Dec. 351/79 – art. 57", "gravedad": "BAJA", "desvio_defecto": "Tanques de agua sin tapa o sin limpieza periódica.", "accion_defecto": "Tapar los tanques y programar su limpieza periódica.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "iluminacion", "seccion": "ambiente", "texto": "Iluminación general adecuada en los puestos", "criterio": "La iluminación permite realizar las tareas sin esfuerzo visual; luminarias funcionando.", "norma": "Dec. 351/79 – Cap. 12 – Res. SRT 84/12", "gravedad": "MEDIA", "desvio_defecto": "Iluminación insuficiente en puestos de trabajo.", "accion_defecto": "Mejorar la iluminación y verificarla con una medición según Res. SRT 84/12.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "ventilacion", "seccion": "ambiente", "texto": "Ventilación adecuada de los locales", "criterio": "Renovación de aire suficiente, sin acumulación de humos, polvos ni olores.", "norma": "Dec. 351/79 – Cap. 11", "gravedad": "MEDIA", "desvio_defecto": "Ventilación insuficiente en locales de trabajo.", "accion_defecto": "Mejorar la ventilación natural o forzada de los locales.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "termico", "seccion": "ambiente", "texto": "Condiciones térmicas aceptables", "criterio": "No se observan situaciones de calor o frío extremos sin medidas de control.", "norma": "Dec. 351/79 – Cap. 8", "gravedad": "BAJA", "desvio_defecto": "Condiciones térmicas desfavorables sin medidas de control.", "accion_defecto": "Evaluar la carga térmica e implementar medidas de control.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "ruido", "seccion": "ambiente", "texto": "Ruido controlado o con medición vigente", "criterio": "Donde hay ruido elevado existe medición según Res. SRT 85/12 y medidas de control.", "norma": "Dec. 351/79 – Cap. 13 – Res. SRT 85/12", "gravedad": "MEDIA", "desvio_defecto": "Exposición a ruido elevado sin medición ni medidas de control.", "accion_defecto": "Medir el ruido según Res. SRT 85/12 y aplicar medidas de control.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "edificio", "seccion": "ambiente", "texto": "Paredes, techos y aberturas en buen estado", "criterio": "Sin filtraciones, desprendimientos ni vidrios rotos.", "norma": "Dec. 351/79 – Cap. 5", "gravedad": "BAJA", "desvio_defecto": "Edificio con filtraciones, desprendimientos o vidrios rotos.", "accion_defecto": "Reparar paredes, techos y aberturas.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "desniveles", "seccion": "ambiente", "texto": "Escaleras, rampas y desniveles con barandas", "criterio": "Los desniveles con riesgo de caída tienen barandas o protecciones.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Desniveles o escaleras sin barandas.", "accion_defecto": "Colocar barandas en escaleras, rampas y desniveles.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Programar los análisis de agua (bacteriológico semestral y físico-químico anual).", "responsable": "Responsable del establecimiento", "norma": "Dec. 351/79 – art. 57" }
+  ],
+  "textos": {
+    "objetivo": "Evaluar las condiciones generales de higiene del establecimiento: servicios sanitarios, agua potable, iluminación, ventilación y ambiente de trabajo.",
+    "metodologia": "Se recorrió el establecimiento verificando servicios sanitarios, vestuarios, comedor y condiciones ambientales, y se solicitaron los análisis de agua y protocolos vigentes.",
+    "alcance_extra": "No incluye mediciones de iluminación, ruido, carga térmica ni contaminantes.",
+    "recomendaciones": [
+      "Mantener un programa de limpieza de sanitarios y comedor.",
+      "Repetir las mediciones ambientales cuando cambien las condiciones de trabajo.",
+      "Conservar los análisis de agua y protocolos en el legajo técnico."
+    ]
+  }
+}

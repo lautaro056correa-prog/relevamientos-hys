@@ -1,0 +1,59 @@
+{
+  "id": "medios_escape",
+  "version": "1.0",
+  "titulo": "Medios de escape y señalización",
+  "descripcion": "Salidas, recorridos de evacuación y cartelería",
+  "grupo": "Incendio y emergencias",
+  "icono": "salida",
+  "color": "verde",
+  "subtitulo_informe": "Relevamiento de medios de escape y señalización",
+  "tipo_elemento": "establecimiento",
+  "nombre_elemento": "Establecimiento",
+  "nombre_elemento_plural": "Establecimientos",
+  "atributos": [
+    { "clave": "salidas", "etiqueta": "Cantidad de salidas al exterior", "tipo": "numero" },
+    { "clave": "plantas", "etiqueta": "Cantidad de plantas", "tipo": "numero" }
+  ],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Anexo VII, pto. 3", "aplicacion": "Medios de escape: ancho, cantidad, puertas y escaleras." },
+    { "codigo": "Dec. 351/79 – Cap. 12 (arts. 77 a 84)", "aplicacion": "Colores de seguridad y señalización de evacuación." },
+    { "codigo": "Dec. 351/79 – art. 76", "aplicacion": "Iluminación de emergencia." },
+    { "codigo": "Dec. 351/79 – arts. 183 y 187", "aplicacion": "Carga de fuego exhibida; capacitación y simulacros." },
+    { "codigo": "IRAM 10005", "aplicacion": "Colores y señales de seguridad." }
+  ],
+  "secciones": [
+    { "clave": "salidas", "titulo": "Salidas y recorridos" },
+    { "clave": "senalizacion", "titulo": "Señalización" },
+    { "clave": "plan", "titulo": "Plan de evacuación" }
+  ],
+  "items": [
+    { "clave": "salidas_libres", "seccion": "salidas", "texto": "Salidas de emergencia libres de obstáculos", "criterio": "Nada impide abrir las puertas ni circular hacia el exterior.", "norma": "Dec. 351/79 – Anexo VII, pto. 3", "gravedad": "ALTA", "desvio_defecto": "Salida de emergencia obstruida.", "accion_defecto": "Despejar las salidas de emergencia y mantenerlas libres.", "responsable_defecto": "Responsable del establecimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "sin_traba", "seccion": "salidas", "texto": "Puertas de salida sin llave ni traba durante la jornada", "criterio": "Las puertas de salida se abren desde adentro sin llaves ni herramientas.", "norma": "Dec. 351/79 – Anexo VII, pto. 3", "gravedad": "ALTA", "desvio_defecto": "Puerta de salida con llave o traba durante la jornada.", "accion_defecto": "Retirar trabas y llaves de las puertas de salida o instalar barrales antipánico.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "sentido_apertura", "seccion": "salidas", "texto": "Puertas de salida abren en el sentido de circulación", "criterio": "Las salidas de emergencia abren hacia el sentido de evacuación.", "norma": "Dec. 351/79 – Anexo VII, pto. 3", "gravedad": "MEDIA", "desvio_defecto": "Puerta de salida que abre en contra del sentido de evacuación.", "accion_defecto": "Invertir el sentido de apertura de las puertas de salida.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "ancho", "seccion": "salidas", "texto": "Ancho de pasillos y salidas acorde a la ocupación", "criterio": "El ancho de salida cumple con las unidades de ancho exigidas según la cantidad de personas.", "norma": "Dec. 351/79 – Anexo VII, pto. 3", "gravedad": "MEDIA", "desvio_defecto": "Ancho de pasillos o salidas insuficiente para la ocupación.", "accion_defecto": "Adecuar el ancho de los medios de escape a la ocupación.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "escaleras", "seccion": "salidas", "texto": "Escaleras con pasamanos y escalones en buen estado", "criterio": "Escalones parejos, antideslizantes y con pasamanos firmes.", "norma": "Dec. 351/79 – Anexo VII, pto. 3", "gravedad": "MEDIA", "desvio_defecto": "Escaleras sin pasamanos o con escalones deteriorados.", "accion_defecto": "Colocar pasamanos y reparar los escalones.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "iluminacion_emergencia", "seccion": "salidas", "texto": "Iluminación de emergencia en el recorrido de evacuación", "criterio": "Los recorridos hasta las salidas tienen luces de emergencia.", "norma": "Dec. 351/79 – art. 76", "gravedad": "MEDIA", "desvio_defecto": "Recorrido de evacuación sin iluminación de emergencia.", "accion_defecto": "Instalar iluminación de emergencia en los recorridos de evacuación.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "cartel_salida", "seccion": "senalizacion", "texto": "Salidas señalizadas con cartel normalizado", "criterio": "Cada salida tiene cartel de salida visible según IRAM 10005.", "norma": "IRAM 10005 – Dec. 351/79 art. 80", "gravedad": "MEDIA", "desvio_defecto": "Salidas sin señalización normalizada.", "accion_defecto": "Señalizar las salidas con carteles normalizados.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "flechas", "seccion": "senalizacion", "texto": "Recorridos señalizados con flechas direccionales", "criterio": "Desde cualquier punto se ve la dirección hacia la salida.", "norma": "Dec. 351/79 – art. 80", "gravedad": "MEDIA", "desvio_defecto": "Recorridos de evacuación sin señalización direccional.", "accion_defecto": "Colocar señalización direccional en los recorridos de evacuación.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "senal_riesgos", "seccion": "senalizacion", "texto": "Señalización de riesgos, prohibiciones y obligaciones en los sectores", "criterio": "Hay carteles de riesgo, prohibición y uso de EPP donde corresponde.", "norma": "IRAM 10005 – Dec. 351/79 arts. 77 a 84", "gravedad": "BAJA", "desvio_defecto": "Faltan carteles de riesgo, prohibición u obligación.", "accion_defecto": "Completar la señalización de riesgos y obligaciones.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "carga_fuego", "seccion": "senalizacion", "texto": "Carga de fuego de cada sector exhibida", "criterio": "En cada sector de incendio está exhibida su carga de fuego.", "norma": "Dec. 351/79 – art. 183", "gravedad": "BAJA", "desvio_defecto": "No se exhibe la carga de fuego de los sectores.", "accion_defecto": "Exhibir la carga de fuego de cada sector de incendio.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "plano", "seccion": "plan", "texto": "Plano de evacuación exhibido", "criterio": "Hay planos con la posición del lector, salidas y extintores en lugares visibles.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No se exhiben planos de evacuación.", "accion_defecto": "Confeccionar y exhibir planos de evacuación.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "punto_encuentro", "seccion": "plan", "texto": "Punto de encuentro definido y señalizado", "criterio": "El punto de reunión exterior está definido, señalizado y es conocido.", "norma": "Buenas prácticas", "gravedad": "BAJA", "desvio_defecto": "No hay punto de encuentro señalizado.", "accion_defecto": "Definir y señalizar el punto de encuentro.", "responsable_defecto": "Responsable del establecimiento" },
+    { "clave": "simulacros", "seccion": "plan", "texto": "Simulacros de evacuación registrados", "criterio": "Existe registro de simulacros y de la capacitación de la brigada.", "norma": "Dec. 351/79 – art. 187", "gravedad": "MEDIA", "desvio_defecto": "No hay registro de simulacros de evacuación.", "accion_defecto": "Realizar y registrar simulacros de evacuación.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Realizar al menos un simulacro de evacuación al año y registrarlo.", "responsable": "Servicio de Higiene y Seguridad", "norma": "Dec. 351/79 – art. 187" }
+  ],
+  "textos": {
+    "objetivo": "Verificar que los medios de escape del establecimiento permitan una evacuación segura y que la señalización de seguridad sea la adecuada.",
+    "metodologia": "Se recorrieron los medios de escape desde los sectores de trabajo hasta el exterior, verificando salidas, puertas, recorridos, señalización e iluminación de emergencia.",
+    "alcance_extra": "No incluye el cálculo de unidades de ancho de salida ni el estudio de carga de fuego.",
+    "recomendaciones": [
+      "Mantener siempre libres y sin trabas las salidas de emergencia.",
+      "Actualizar los planos de evacuación ante cambios en el layout.",
+      "Capacitar al personal en el plan de evacuación."
+    ]
+  }
+}

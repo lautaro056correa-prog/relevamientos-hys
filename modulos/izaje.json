@@ -1,0 +1,70 @@
+{
+  "id": "izaje",
+  "version": "1.0",
+  "titulo": "Elementos de elevación",
+  "descripcion": "Puentes grúa, aparejos, monorrieles y plumas",
+  "grupo": "Izaje y movimiento de cargas",
+  "icono": "gancho",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de equipos de izaje",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Equipo de izaje",
+  "nombre_elemento_plural": "Equipos de izaje",
+  "atributos": [
+    { "clave": "identificacion", "etiqueta": "N° de identificación", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true },
+    { "clave": "tipo", "etiqueta": "Tipo", "tipo": "opcion", "obligatorio": true, "opciones": ["Puente grúa", "Aparejo eléctrico", "Aparejo manual", "Monorriel", "Pluma giratoria"] },
+    { "clave": "capacidad", "etiqueta": "Capacidad", "etiqueta_corta": "Cap.", "tipo": "numero", "unidad": "t", "obligatorio": true },
+    { "clave": "comando", "etiqueta": "Comando", "tipo": "opcion", "opciones": ["Botonera alámbrica", "Control inalámbrico", "Manual"] }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "tipo", "capacidad", "gancho", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 15 (aparatos para izar)", "aplicacion": "Aparatos para izar, aparejos, cables, cadenas y ganchos." },
+    { "codigo": "Dec. 351/79 – Cap. 14", "aplicacion": "Instalaciones eléctricas." },
+    { "codigo": "Dec. 351/79 – Cap. 21", "aplicacion": "Capacitación del personal." }
+  ],
+  "secciones": [
+    { "clave": "estructura", "titulo": "Estructura e identificación" },
+    { "clave": "elevacion", "titulo": "Elementos de elevación" },
+    { "clave": "comandos", "titulo": "Comandos y funcionamiento" }
+  ],
+  "items": [
+    { "clave": "estructura", "seccion": "estructura", "texto": "Estructura de soporte sin deformaciones ni fisuras", "criterio": "Vigas, columnas y uniones sin deformaciones, fisuras ni corrosión importante.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Estructura del equipo de izaje con deformaciones o fisuras.", "accion_defecto": "Retirar de servicio el equipo y hacer evaluar la estructura por personal competente.", "responsable_defecto": "Responsable del establecimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "carga_maxima", "seccion": "estructura", "texto": "Carga máxima indicada en forma visible", "criterio": "La capacidad máxima está marcada y se lee desde el lugar de operación.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Equipo de izaje sin indicación visible de la carga máxima.", "accion_defecto": "Indicar en forma visible la carga máxima de cada equipo de izaje.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "cable", "seccion": "elevacion", "texto": "Cable o cadena sin hilos cortados, deformaciones ni desgaste", "criterio": "Sin hilos rotos, aplastamientos, nudos, corrosión ni eslabones deformados.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Cable o cadena del equipo de izaje deteriorado.", "accion_defecto": "Reemplazar el cable o la cadena del equipo de izaje.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "enrollador", "seccion": "elevacion", "texto": "Tambor o enrollador en buen estado", "criterio": "El cable enrolla ordenadamente y el tambor no presenta daños.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "MEDIA", "desvio_defecto": "Tambor o enrollador en mal estado.", "accion_defecto": "Reparar el tambor o enrollador del equipo de izaje.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "gancho", "etiqueta_corta": "Gancho", "seccion": "elevacion", "texto": "Gancho sin deformación ni fisuras", "criterio": "El gancho no está abierto, torcido ni fisurado.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Gancho deformado o fisurado.", "accion_defecto": "Reemplazar el gancho del equipo de izaje.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "traba", "seccion": "elevacion", "texto": "Gancho con traba de seguridad", "criterio": "La traba existe y cierra por sí sola.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Gancho sin traba de seguridad.", "accion_defecto": "Colocar traba de seguridad en el gancho.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "pasteca", "seccion": "elevacion", "texto": "Pasteca en buen estado", "criterio": "Poleas y carcasa de la pasteca sin daños.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "MEDIA", "desvio_defecto": "Pasteca deteriorada.", "accion_defecto": "Reparar o reemplazar la pasteca.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "comandos_identificados", "seccion": "comandos", "texto": "Comandos identificados", "criterio": "Cada botón indica claramente su movimiento.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "MEDIA", "desvio_defecto": "Comandos del equipo de izaje sin identificar.", "accion_defecto": "Identificar los comandos de la botonera.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "comandos_estado", "seccion": "comandos", "texto": "Botonera o comandos en buen estado", "criterio": "Botonera entera, con cable y carcasa sin daños.", "norma": "Dec. 351/79 – Cap. 14", "gravedad": "MEDIA", "desvio_defecto": "Botonera o comandos deteriorados.", "accion_defecto": "Reparar o reemplazar la botonera del equipo de izaje.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "parada_emergencia", "seccion": "comandos", "texto": "Parada de emergencia operativa", "criterio": "El pulsador de parada de emergencia detiene todos los movimientos.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Equipo de izaje sin parada de emergencia operativa.", "accion_defecto": "Instalar o reparar la parada de emergencia del equipo de izaje.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "frenos", "seccion": "comandos", "texto": "Funcionamiento mecánico y frenos correctos", "criterio": "La carga queda retenida al soltar el comando; sin ruidos ni movimientos anormales.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Funcionamiento mecánico o frenos deficientes.", "accion_defecto": "Retirar de servicio el equipo y reparar el sistema de frenos.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "electrico", "seccion": "comandos", "texto": "Funcionamiento eléctrico correcto", "criterio": "Los movimientos responden a los comandos sin fallas.", "norma": "Dec. 351/79 – Cap. 14", "gravedad": "MEDIA", "desvio_defecto": "Fallas en el funcionamiento eléctrico del equipo de izaje.", "accion_defecto": "Revisar y reparar el sistema eléctrico del equipo de izaje.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "final_carrera", "seccion": "comandos", "texto": "Finales de carrera operativos", "criterio": "Los finales de carrera de elevación y traslación cortan el movimiento.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Finales de carrera inexistentes o inoperantes.", "accion_defecto": "Instalar o reparar los finales de carrera.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "desplazamiento", "seccion": "comandos", "texto": "Desplazamiento del puente y del carro sin trabas", "criterio": "El puente recorre la nave y el carro el puente sin golpes ni trabas.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "MEDIA", "desvio_defecto": "Desplazamiento del puente o del carro con trabas o golpes.", "accion_defecto": "Revisar rieles, ruedas y topes del puente grúa.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "items_generales": [
+    { "clave": "operadores", "texto": "Operadores capacitados y autorizados", "criterio": "Solo opera el equipo personal capacitado y autorizado por la empresa.", "norma": "Dec. 351/79 – art. 208", "gravedad": "MEDIA", "desvio_defecto": "Equipos de izaje operados por personal sin capacitación registrada.", "accion_defecto": "Capacitar y autorizar formalmente a los operadores de equipos de izaje.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "inspecciones", "texto": "Registro de inspecciones y mantenimiento de los equipos de izaje", "criterio": "Existe registro de inspecciones periódicas por personal competente.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "BAJA", "desvio_defecto": "No hay registro de inspecciones de los equipos de izaje.", "accion_defecto": "Implementar inspecciones periódicas registradas de los equipos de izaje.", "responsable_defecto": "Mantenimiento" }
+  ],
+  "reglas_automaticas": [
+    { "descripcion": "Aparejo manual → sin parada de emergencia, parte eléctrica ni finales de carrera", "cuando": { "atributo": "tipo", "operador": "igual", "valor": "Aparejo manual" }, "entonces": { "items": ["parada_emergencia", "electrico", "final_carrera", "comandos_estado"], "valor": "NA" } },
+    { "descripcion": "Solo puentes grúa y monorrieles se desplazan → en los demás No aplica", "cuando": { "atributo": "tipo", "operador": "no_en", "valor": ["Puente grúa", "Monorriel"] }, "entonces": { "items": ["desplazamiento"], "valor": "NA" } }
+  ],
+  "acciones_gestion": [
+    { "accion": "Inspeccionar periódicamente los equipos de izaje y registrar las inspecciones.", "responsable": "Mantenimiento", "norma": "Dec. 351/79 – Cap. 15" },
+    { "accion": "Verificar antes de cada turno ganchos, trabas, cables y parada de emergencia.", "responsable": "Operador", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar el estado de los equipos de izaje del establecimiento, sus elementos de elevación y sus dispositivos de seguridad.",
+    "metodologia": "Se inspeccionó cada equipo de izaje y se verificó el funcionamiento de sus comandos, frenos, finales de carrera y parada de emergencia sin carga.",
+    "alcance_extra": "No incluye ensayos de carga, mediciones de desgaste con instrumentos ni la revisión interna de motores y reductores.",
+    "recomendaciones": [
+      "No superar la carga máxima indicada en cada equipo.",
+      "No circular ni permanecer debajo de cargas suspendidas.",
+      "Retirar de servicio de inmediato todo equipo con fallas en frenos o parada de emergencia."
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "titulo_informe": "INFORME TÉCNICO",
+  "subtitulo_general": "Relevamiento de condiciones de higiene y seguridad",
+  "objetivo_general": "Evaluar las condiciones de higiene y seguridad del establecimiento en los aspectos relevados ({modulos}), verificando el cumplimiento de la normativa vigente e identificando los desvíos y las medidas correctivas necesarias.",
+  "alcance": "El relevamiento se realizó el {fecha} en el establecimiento de {razon_social}{domicilio_frase}. Comprendió {elementos_relevados}{sectores_frase}.",
+  "alcance_limite_comun": "El informe refleja las condiciones observadas el día de la inspección.",
+  "metodologia": "Se realizó una recorrida por el establecimiento{acompanante_frase}. Cada ítem de verificación se calificó como Cumple, No cumple o No aplica según su criterio de aceptación. Cada incumplimiento constituye un desvío, al que se le asigna una prioridad y una acción correctiva. El porcentaje de cumplimiento se calcula como ítems que cumplen / (ítems evaluados − ítems que no aplican) × 100.",
+  "prioridades": {
+    "ALTA": { "descripcion": "Riesgo inmediato o el elemento no cumple su función.", "plazo": "Hasta 7 días", "dias": 7 },
+    "MEDIA": { "descripcion": "Sin riesgo inmediato, pero con incumplimiento claro de la normativa.", "plazo": "Hasta 30 días", "dias": 30 },
+    "BAJA": { "descripcion": "Mejoras de gestión y control.", "plazo": "Hasta 90 días", "dias": 90 }
+  },
+  "resumen_desvios": {
+    "titulo": "DESVÍOS A CORREGIR",
+    "intro": "Durante la recorrida del {fecha} {se_detectaron} {n_desvios} que hay que corregir. Están ordenados de lo más urgente a lo menos urgente. Cada fila indica dónde está el problema, qué se observó, qué hay que hacer y hasta cuándo.",
+    "intro_sin": "Durante la recorrida del {fecha} no se detectaron desvíos.",
+    "cierre": "Cuando completen cada acción, márquenla como hecha y avisen al profesional de Higiene y Seguridad para verificarla en la próxima visita."
+  },
+  "seguimiento": {
+    "objetivo": "Efectuar el seguimiento de las observaciones que se realizaron durante las verificaciones periódicas.",
+    "alcance": "El presente informe se encuentra confeccionado para la firma {razon_social} ubicado en {domicilio} de la localidad de {localidad}.",
+    "marco_legal": ["Ley 19.587 [1.972] Ley de Higiene y Seguridad en el Trabajo.", "Decreto PEN 351 [1.979] Reglamentación de la Ley N.º 19.587"],
+    "desarrollo": "En el presente cuadro se realiza un detalle de las adecuaciones solicitadas."
+  },
+  "sin_desvios_tabla": "No se detectaron desvíos.",
+  "sin_observaciones": "No se registraron observaciones.",
+  "conclusion": {
+    "sin_desvios": "{se_relevaron} {elementos}. No se detectaron desvíos: los elementos inspeccionados se encuentran en condición adecuada, con un cumplimiento del {pct} %.",
+    "media_baja": "{se_relevaron} {elementos}; {estado_elementos}. {se_registran} {desvios_resumen}. La condición se considera aceptable, con mejoras a implementar en los plazos indicados en el plan de acción. El cumplimiento es del {pct} %.",
+    "alta": "{se_relevaron} {elementos}; {estado_elementos}. {se_registran} {desvios_resumen}. La condición requiere intervención inmediata por los desvíos de prioridad ALTA: {lista_alta}. El cumplimiento es del {pct} %.",
+    "sector": "El sector con mayor cantidad de desvíos es {sector} ({n_sector}).",
+    "sectores_empate": "Los sectores con mayor cantidad de desvíos son {sectores} ({n_sector} cada uno).",
+    "general_sin_desvios": "En conjunto, el establecimiento presenta un cumplimiento del {pct} % en los aspectos relevados, sin desvíos detectados.",
+    "general_media_baja": "En conjunto, el establecimiento presenta un cumplimiento del {pct} % en los aspectos relevados, con {desvios_resumen}. La condición general es aceptable, con mejoras a implementar.",
+    "general_alta": "En conjunto, el establecimiento presenta un cumplimiento del {pct} % en los aspectos relevados, con {desvios_resumen}. La condición general requiere intervención inmediata sobre los desvíos de prioridad ALTA."
+  }
+}

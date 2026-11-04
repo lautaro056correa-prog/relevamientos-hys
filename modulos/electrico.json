@@ -1,0 +1,259 @@
+{
+  "id": "electrico",
+  "version": "1.0",
+  "titulo": "Instalación eléctrica",
+  "descripcion": "Tableros eléctricos, protecciones y puesta a tierra",
+  "grupo": "Instalaciones y equipos",
+  "icono": "rayo",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de la instalación eléctrica",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Tablero",
+  "nombre_elemento_plural": "Tableros",
+  "atributos": [
+    { "clave": "identificacion", "etiqueta": "N° de identificación", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto", "obligatorio": true },
+    { "clave": "tipo", "etiqueta": "Tipo de tablero", "tipo": "opcion", "obligatorio": true, "opciones": ["Principal", "Seccional", "Subseccional", "De máquina"] },
+    { "clave": "tension", "etiqueta": "Alimentación", "tipo": "opcion", "obligatorio": true, "opciones": ["Monofásico", "Trifásico", "24 V"] }
+  ],
+  "columnas_planilla_resumen": ["nombre", "sector", "ubicacion", "tipo", "tension", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 14 (arts. 95 a 102) y Anexo VI", "aplicacion": "Instalaciones eléctricas en establecimientos." },
+    { "codigo": "Res. SRT 900/15", "aplicacion": "Protocolo de medición de puesta a tierra y verificación de continuidad de masas (validez 12 meses)." },
+    { "codigo": "AEA 90364", "aplicacion": "Reglamentación para la ejecución de instalaciones eléctricas en inmuebles." },
+    { "codigo": "IRAM 10005", "aplicacion": "Colores y señales de seguridad." }
+  ],
+  "secciones": [
+    { "clave": "gabinete", "titulo": "Gabinete y acceso" },
+    { "clave": "protecciones", "titulo": "Protecciones" },
+    { "clave": "conexiones", "titulo": "Cableado, tomas y puesta a tierra" }
+  ],
+  "items": [
+    {
+      "clave": "gabinete",
+      "seccion": "gabinete",
+      "texto": "Gabinete en buen estado, sin roturas ni corrosión",
+      "criterio": "El gabinete está entero, fijado y sin perforaciones ni corrosión que comprometan la protección.",
+      "norma": "AEA 90364",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Gabinete del tablero deteriorado.",
+      "accion_defecto": "Reparar o reemplazar el gabinete del tablero.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "puerta",
+      "seccion": "gabinete",
+      "texto": "Puerta en buen estado y con cierre",
+      "criterio": "La puerta cierra correctamente y mantiene el tablero cerrado.",
+      "norma": "AEA 90364",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Tablero con puerta dañada o sin cierre.",
+      "accion_defecto": "Reparar la puerta del tablero y su sistema de cierre.",
+      "responsable_defecto": "Mantenimiento"
+    },
+    {
+      "clave": "contratapa",
+      "seccion": "gabinete",
+      "texto": "Frente protector (contratapa) colocado: sin partes bajo tensión accesibles",
+      "criterio": "Cuenta con contratapa acrílica o metálica que impide el contacto directo con partes bajo tensión.",
+      "norma": "Dec. 351/79 – Anexo VI – AEA 90364",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Tablero sin contratapa: partes bajo tensión accesibles.",
+      "accion_defecto": "Colocar contratapa en el tablero.",
+      "responsable_defecto": "Electricista matriculado",
+      "foto_obligatoria_si_nc": true
+    },
+    {
+      "clave": "senal_riesgo",
+      "seccion": "gabinete",
+      "texto": "Señalización de riesgo eléctrico",
+      "criterio": "El tablero tiene señal de advertencia de riesgo eléctrico visible.",
+      "norma": "IRAM 10005 – Dec. 351/79 Cap. 12",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Tablero sin señalización de riesgo eléctrico.",
+      "accion_defecto": "Colocar señalización de riesgo eléctrico en el tablero.",
+      "responsable_defecto": "Mantenimiento"
+    },
+    {
+      "clave": "acceso",
+      "seccion": "gabinete",
+      "texto": "Acceso al tablero libre y despejado",
+      "criterio": "El frente del tablero está libre de objetos que impidan operarlo o cortar la energía en una emergencia.",
+      "norma": "AEA 90364",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Acceso al tablero obstruido.",
+      "accion_defecto": "Despejar el frente del tablero y mantenerlo libre de obstáculos.",
+      "responsable_defecto": "Encargado del sector",
+      "foto_obligatoria_si_nc": true
+    },
+    {
+      "clave": "termomagneticas",
+      "seccion": "protecciones",
+      "texto": "Llaves termomagnéticas instaladas y en buen estado",
+      "criterio": "Cada circuito cuenta con interruptor termomagnético sin daños ni puentes.",
+      "norma": "AEA 90364",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Circuitos sin protección termomagnética o con interruptores dañados.",
+      "accion_defecto": "Instalar o reemplazar las protecciones termomagnéticas.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "diferencial",
+      "seccion": "protecciones",
+      "texto": "Cuenta con interruptor diferencial",
+      "criterio": "El tablero tiene protección diferencial para los circuitos de tomas e iluminación.",
+      "norma": "AEA 90364",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Tablero sin protección diferencial.",
+      "accion_defecto": "Instalar interruptor diferencial.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "prueba_diferencial",
+      "seccion": "protecciones",
+      "texto": "El diferencial dispara al accionar el botón de prueba",
+      "criterio": "Al presionar el botón de prueba, el disyuntor corta.",
+      "norma": "AEA 90364",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Interruptor diferencial que no dispara en la prueba manual.",
+      "accion_defecto": "Reemplazar el interruptor diferencial.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "cableado",
+      "seccion": "conexiones",
+      "texto": "Cableado ordenado, sin empalmes precarios ni conductores expuestos",
+      "criterio": "Los conductores están canalizados, aislados y sin uniones precarias.",
+      "norma": "Dec. 351/79 – Anexo VI – AEA 90364",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Cableado con empalmes precarios o conductores expuestos.",
+      "accion_defecto": "Normalizar el cableado del tablero.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "cable_alimentacion",
+      "seccion": "conexiones",
+      "texto": "Cable de alimentación en buen estado y protegido",
+      "criterio": "El cable que alimenta el tablero no tiene daños en la aislación y está canalizado o protegido.",
+      "norma": "AEA 90364",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Cable de alimentación dañado o sin protección.",
+      "accion_defecto": "Reemplazar o canalizar el cable de alimentación del tablero.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "tomas_mono",
+      "seccion": "conexiones",
+      "texto": "Tomacorrientes monofásicos en buen estado",
+      "criterio": "Los tomas están fijados, sin roturas ni signos de recalentamiento.",
+      "norma": "AEA 90364",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Tomacorrientes monofásicos dañados.",
+      "accion_defecto": "Reemplazar los tomacorrientes dañados.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "tomas_tri",
+      "seccion": "conexiones",
+      "texto": "Tomacorrientes trifásicos en buen estado",
+      "criterio": "Los tomas trifásicos están fijados, sin roturas ni signos de recalentamiento.",
+      "norma": "AEA 90364",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Tomacorrientes trifásicos dañados.",
+      "accion_defecto": "Reemplazar los tomacorrientes dañados.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "puesta_tierra",
+      "seccion": "conexiones",
+      "texto": "Gabinete conectado a puesta a tierra",
+      "criterio": "El conductor de protección está conectado a la barra de tierra y al gabinete.",
+      "norma": "Dec. 351/79 – Anexo VI – Res. SRT 900/15",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Tablero sin conexión a puesta a tierra.",
+      "accion_defecto": "Conectar el tablero a la puesta a tierra.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "continuidad",
+      "seccion": "conexiones",
+      "texto": "Continuidad de tierra a tomas y tapa del gabinete",
+      "criterio": "Los tomas y la puerta/tapa del gabinete tienen conductor de protección conectado.",
+      "norma": "Res. SRT 900/15 – AEA 90364",
+      "gravedad": "ALTA",
+      "desvio_defecto": "Falta de continuidad de tierra en tomas o tapa del gabinete.",
+      "accion_defecto": "Conectar a tierra los tomas y la tapa del gabinete.",
+      "responsable_defecto": "Electricista matriculado"
+    },
+    {
+      "clave": "circuitos_identificados",
+      "seccion": "conexiones",
+      "texto": "Circuitos identificados",
+      "criterio": "Cada protección tiene indicado el circuito que comanda.",
+      "norma": "AEA 90364",
+      "gravedad": "BAJA",
+      "desvio_defecto": "Circuitos del tablero sin identificar.",
+      "accion_defecto": "Identificar los circuitos de cada tablero.",
+      "responsable_defecto": "Electricista matriculado"
+    }
+  ],
+  "items_generales": [
+    {
+      "clave": "protocolo_pat",
+      "texto": "Protocolo de puesta a tierra vigente (menos de 12 meses)",
+      "criterio": "Existe medición de puesta a tierra y continuidad de masas según Res. SRT 900/15 con menos de 12 meses.",
+      "norma": "Res. SRT 900/15",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "No se cuenta con protocolo de puesta a tierra vigente.",
+      "accion_defecto": "Realizar la medición de puesta a tierra y continuidad de masas según Res. SRT 900/15.",
+      "responsable_defecto": "Profesional matriculado"
+    },
+    {
+      "clave": "personal_capacitado",
+      "texto": "Mantenimiento eléctrico a cargo de personal capacitado",
+      "criterio": "Las tareas sobre la instalación eléctrica las realiza personal capacitado y autorizado.",
+      "norma": "Dec. 351/79 – art. 98",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "El mantenimiento eléctrico no está a cargo de personal capacitado.",
+      "accion_defecto": "Asignar el mantenimiento eléctrico a personal capacitado y autorizado.",
+      "responsable_defecto": "Responsable del establecimiento"
+    },
+    {
+      "clave": "prolongaciones",
+      "texto": "Sin prolongaciones ni zapatillas conectadas en cadena",
+      "criterio": "No se observan prolongaciones provisorias ni zapatillas conectadas una a otra.",
+      "norma": "Buenas prácticas",
+      "gravedad": "MEDIA",
+      "desvio_defecto": "Uso de prolongaciones provisorias o zapatillas conectadas en cadena.",
+      "accion_defecto": "Retirar las prolongaciones y zapatillas en cadena e instalar tomas fijos donde se necesiten.",
+      "responsable_defecto": "Mantenimiento"
+    }
+  ],
+  "reglas_automaticas": [
+    {
+      "descripcion": "Sin diferencial → la prueba del diferencial No aplica",
+      "cuando": { "item": "diferencial", "operador": "igual", "valor": "NC" },
+      "entonces": { "items": ["prueba_diferencial"], "valor": "NA" }
+    },
+    {
+      "descripcion": "Tablero que no es trifásico → tomas trifásicos No aplica",
+      "cuando": { "atributo": "tension", "operador": "distinto", "valor": "Trifásico" },
+      "entonces": { "items": ["tomas_tri"], "valor": "NA" }
+    }
+  ],
+  "acciones_gestion": [
+    { "accion": "Realizar la medición anual de puesta a tierra y continuidad de masas.", "responsable": "Responsable del establecimiento", "norma": "Res. SRT 900/15" },
+    { "accion": "Probar mensualmente los interruptores diferenciales con el botón de prueba y registrarlo.", "responsable": "Mantenimiento", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Evaluar el estado de los tableros y de la instalación eléctrica del establecimiento, verificando las protecciones contra contactos directos e indirectos.",
+    "metodologia": "Se inspeccionó visualmente cada tablero, se verificó la presencia y el funcionamiento de las protecciones mediante el botón de prueba de los interruptores diferenciales y se controló cada ítem contra su criterio de aceptación.",
+    "alcance_extra": "No incluye mediciones de puesta a tierra, de aislación ni ensayos instrumentales de los interruptores diferenciales.",
+    "recomendaciones": [
+      "Realizar la medición anual de puesta a tierra (Res. SRT 900/15).",
+      "Toda intervención sobre la instalación debe realizarla un electricista matriculado.",
+      "Mantener los tableros cerrados y con su contratapa colocada."
+    ]
+  }
+}

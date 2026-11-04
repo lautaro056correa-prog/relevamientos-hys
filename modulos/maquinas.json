@@ -1,0 +1,62 @@
+{
+  "id": "maquinas",
+  "version": "1.0",
+  "titulo": "Máquinas y herramientas",
+  "descripcion": "Resguardos, parada de emergencia, comandos y bloqueo",
+  "grupo": "Instalaciones y equipos",
+  "icono": "engranaje",
+  "color": "amarillo",
+  "subtitulo_informe": "Relevamiento de máquinas y herramientas",
+  "tipo_elemento": "equipo",
+  "nombre_elemento": "Máquina",
+  "nombre_elemento_plural": "Máquinas",
+  "atributos": [
+    { "clave": "denominacion", "etiqueta": "Máquina / equipo", "etiqueta_corta": "Máquina", "tipo": "texto", "obligatorio": true, "ayuda": "Ej.: torno, agujereadora de banco, amasadora" },
+    { "clave": "identificacion", "etiqueta": "N° de identificación", "tipo": "texto" },
+    { "clave": "ubicacion", "etiqueta": "Ubicación", "tipo": "texto" }
+  ],
+  "columnas_planilla_resumen": ["nombre", "denominacion", "sector", "protecciones", "parada", "resultado"],
+  "normas": [
+    { "codigo": "Ley 19.587", "aplicacion": "Ley de Higiene y Seguridad en el Trabajo." },
+    { "codigo": "Dec. 351/79 – Cap. 15 (arts. 103 a 113)", "aplicacion": "Máquinas: protecciones, mantenimiento, bloqueo y herramientas." },
+    { "codigo": "Dec. 351/79 – Cap. 14", "aplicacion": "Instalaciones eléctricas." },
+    { "codigo": "Dec. 351/79 – Cap. 19", "aplicacion": "Equipos y elementos de protección personal." },
+    { "codigo": "Dec. 351/79 – Cap. 21", "aplicacion": "Capacitación." }
+  ],
+  "secciones": [
+    { "clave": "protecciones", "titulo": "Protecciones" },
+    { "clave": "electrico", "titulo": "Comandos e instalación" },
+    { "clave": "operacion", "titulo": "Operación y mantenimiento" }
+  ],
+  "items": [
+    { "clave": "protecciones", "etiqueta_corta": "Resguardos", "seccion": "protecciones", "texto": "Transmisiones y partes móviles con resguardos", "criterio": "Correas, poleas, engranajes, ejes y cadenas están cubiertos por protecciones fijas.", "norma": "Dec. 351/79 – arts. 103 a 107", "gravedad": "ALTA", "desvio_defecto": "Máquina con partes móviles o transmisiones sin resguardo.", "accion_defecto": "Colocar resguardos en las partes móviles y transmisiones.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "zona_operacion", "seccion": "protecciones", "texto": "Zona de operación protegida", "criterio": "La zona donde la máquina corta, prensa o arrastra tiene pantallas, barreras o dispositivos que impiden el contacto.", "norma": "Dec. 351/79 – arts. 103 a 107", "gravedad": "ALTA", "desvio_defecto": "Zona de operación de la máquina sin protección.", "accion_defecto": "Instalar protecciones en la zona de operación de la máquina.", "responsable_defecto": "Mantenimiento", "foto_obligatoria_si_nc": true },
+    { "clave": "dispositivos", "seccion": "protecciones", "texto": "Dispositivos de seguridad presentes y sin anular", "criterio": "Enclavamientos, sensores y pantallas funcionan y no están puenteados.", "norma": "Dec. 351/79 – arts. 103 a 107", "gravedad": "ALTA", "desvio_defecto": "Dispositivos de seguridad de la máquina anulados o inoperantes.", "accion_defecto": "Restituir y poner en funcionamiento los dispositivos de seguridad.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "parada", "etiqueta_corta": "Parada emerg.", "seccion": "electrico", "texto": "Parada de emergencia accesible y operativa", "criterio": "Hay pulsador de parada de emergencia al alcance del operador y detiene la máquina.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "ALTA", "desvio_defecto": "Máquina sin parada de emergencia operativa.", "accion_defecto": "Instalar o reparar la parada de emergencia.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "comandos", "seccion": "electrico", "texto": "Comandos identificados y protegidos contra accionamiento accidental", "criterio": "Los pulsadores están rotulados y el arranque no se puede accionar sin querer.", "norma": "Dec. 351/79 – Cap. 15", "gravedad": "MEDIA", "desvio_defecto": "Comandos sin identificar o expuestos a accionamiento accidental.", "accion_defecto": "Identificar y proteger los comandos de la máquina.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "electrica", "seccion": "electrico", "texto": "Alimentación eléctrica en buen estado y con puesta a tierra", "criterio": "Cables sin daños, conexiones protegidas y masa conectada a tierra.", "norma": "Dec. 351/79 – Cap. 14", "gravedad": "ALTA", "desvio_defecto": "Instalación eléctrica de la máquina deficiente o sin puesta a tierra.", "accion_defecto": "Normalizar la alimentación eléctrica y la puesta a tierra de la máquina.", "responsable_defecto": "Electricista matriculado" },
+    { "clave": "anclaje", "seccion": "operacion", "texto": "Máquina anclada o estable", "criterio": "La máquina no se desplaza ni vuelca durante la operación.", "norma": "Buenas prácticas", "gravedad": "MEDIA", "desvio_defecto": "Máquina sin anclaje o inestable.", "accion_defecto": "Anclar la máquina o asegurar su estabilidad.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "senalizacion", "seccion": "operacion", "texto": "Señalización de riesgos y de uso de EPP en la máquina", "criterio": "La máquina tiene carteles de riesgo y de EPP obligatorio.", "norma": "IRAM 10005", "gravedad": "BAJA", "desvio_defecto": "Máquina sin señalización de riesgos ni de EPP.", "accion_defecto": "Señalizar los riesgos y el EPP obligatorio en la máquina.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "mantenimiento", "seccion": "operacion", "texto": "Mantenimiento registrado", "criterio": "Hay registro del mantenimiento y las máquinas averiadas se bloquean y señalizan.", "norma": "Dec. 351/79 – arts. 108 y 109", "gravedad": "MEDIA", "desvio_defecto": "Sin registro de mantenimiento de la máquina.", "accion_defecto": "Registrar el mantenimiento de la máquina.", "responsable_defecto": "Mantenimiento" },
+    { "clave": "operador", "seccion": "operacion", "texto": "Operador capacitado en el uso seguro", "criterio": "Quien la opera está capacitado y la capacitación está registrada.", "norma": "Dec. 351/79 – art. 208", "gravedad": "MEDIA", "desvio_defecto": "Operador sin capacitación registrada en el uso seguro de la máquina.", "accion_defecto": "Capacitar a los operadores en el uso seguro de las máquinas.", "responsable_defecto": "Servicio de Higiene y Seguridad" },
+    { "clave": "epp", "seccion": "operacion", "texto": "El operador usa el EPP requerido", "criterio": "Se observa el uso de protección ocular, auditiva u otra que requiera la tarea.", "norma": "Dec. 351/79 – Cap. 19", "gravedad": "MEDIA", "desvio_defecto": "Operador sin el EPP requerido para la máquina.", "accion_defecto": "Proveer y exigir el uso del EPP requerido.", "responsable_defecto": "Supervisor" }
+  ],
+  "items_generales": [
+    { "clave": "herramientas", "texto": "Herramientas manuales y portátiles en buen estado", "criterio": "Mangos firmes, filos protegidos, cables y carcasas sin daños en las herramientas eléctricas.", "norma": "Dec. 351/79 – arts. 110 a 113", "gravedad": "MEDIA", "desvio_defecto": "Herramientas manuales o eléctricas portátiles en mal estado.", "accion_defecto": "Retirar de uso y reemplazar las herramientas en mal estado.", "responsable_defecto": "Encargado del sector" },
+    { "clave": "bloqueo", "texto": "Procedimiento de bloqueo y señalización para mantenimiento", "criterio": "Se bloquea y señaliza la fuente de energía antes de intervenir una máquina.", "norma": "Dec. 351/79 – art. 109", "gravedad": "MEDIA", "desvio_defecto": "No hay procedimiento de bloqueo y señalización para mantenimiento.", "accion_defecto": "Implementar un procedimiento de bloqueo y señalización de energías.", "responsable_defecto": "Servicio de Higiene y Seguridad" }
+  ],
+  "reglas_automaticas": [],
+  "acciones_gestion": [
+    { "accion": "Verificar antes de cada turno los resguardos y la parada de emergencia de cada máquina.", "responsable": "Operador", "norma": "Buenas prácticas" }
+  ],
+  "textos": {
+    "objetivo": "Verificar las condiciones de seguridad de las máquinas y herramientas, en particular sus resguardos, paradas de emergencia y comandos.",
+    "metodologia": "Se inspeccionó cada máquina en su puesto, se verificaron sus protecciones y se probó la parada de emergencia cuando fue posible.",
+    "alcance_extra": "No incluye la evaluación de conformidad de las máquinas con normas de diseño ni mediciones de ruido o vibraciones.",
+    "recomendaciones": [
+      "No retirar ni anular los resguardos y dispositivos de seguridad.",
+      "Bloquear y señalizar la máquina antes de limpiarla o repararla.",
+      "No usar ropa suelta, cadenas ni pelo largo suelto cerca de partes móviles."
+    ]
+  }
+}
