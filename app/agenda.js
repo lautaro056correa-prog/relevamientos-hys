@@ -604,7 +604,7 @@ const AG = (() => {
         <h3>Observaciones</h3>
         <div class="card"><textarea id="v_obs" rows="5" placeholder="Lo que viste, lo que hablaste con el cliente…" ${dis} ${oi('vObs')}>${esc(v.observaciones)}</textarea>
           ${dis ? '' : `<div class="actions" style="margin-top:10px"><button class="btn sec small" id="v_mic" ${on('vDictar')}>${ic('mic')}Dictar</button>
-            <button class="btn sec small" ${on('abrirDictadoIA')}>${ic('auto')}Dictado con IA</button></div>`}</div>
+            ${Sync.habilitada ? `<button class="btn sec small" ${on('abrirDictadoIA')}>${ic('auto')}Dictado con IA</button>` : ''}</div>`}</div>
 
         <h3>Fotos</h3>
         <div class="card" id="v_fotos">${v.fotos.length || !dis ? fotosVisitaHtml(v, !!dis) : '<p class="sub" style="margin:0">Sin fotos.</p>'}

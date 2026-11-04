@@ -4,6 +4,10 @@
 // Si dos dispositivos cambian lo mismo, gana la última modificación. Las fotos y los PDF van al almacenamiento "archivos"
 // y en la fila queda solo la referencia hysfile:<huella>.<ext>. Se carga antes que app.js.
 const Sync = (() => {
+  // El usuario eligió NO sincronizar (nov-2026): trabaja con copias de seguridad. Con false no hay cuenta, nube, avisos con la
+  // app cerrada, enlace del director ni dictado con IA, y nada sale del dispositivo. Para activarla: true acá,
+  // enable_signup = true en supabase/config.toml + "supabase config push", y publicar.
+  const HABILITADA = false;
   const URL_SB = 'https://obnuhhublcbdaolfpsjh.supabase.co', CLAVE_PUBLICA = 'sb_publishable_cP6fsViS7VW3ydIM-Oikjw_wY538Eyd';
   const VAPID_PUBLICA = 'BNwQ8n8zmJikKzeO-nRBpnpOVKAWBc7PEDQd81hg_Z_i7bK47QX8FF0mZKa0_u91Wp7j6BP53dxDAS8B3piHR2U';
   const WEB = 'https://lautaro056correa-prog.github.io/relevamientos-hys/';
@@ -24,7 +28,7 @@ const Sync = (() => {
 
   // ===== Cola: la llama app.js en cada put/del =====
   function anotar(store, id, borrado = false){
-    if (!sincronizable(store, id)) return Promise.resolve();
+    if (!HABILITADA || !sincronizable(store, id)) return Promise.resolve();
     const fila = {id: `${store}|${id}`, store, rid: id, modificado: Date.now(), borrado};
     return crudoPut('sync_cola', fila).catch(() => {}).then(() => programar());
   }
@@ -185,7 +189,7 @@ const Sync = (() => {
     return `<b>${n ? plural(n, 'cambio por subir', 'cambios por subir') : 'Todo sincronizado'}</b><br>Última sincronización: ${cuando}`;
   }
   // Botón del encabezado del Inicio
-  const botonNube = () => `<button class="hbtn" id="syncBoton" ${on('go', 'cuenta')} aria-label="${activo() ? (error ? 'Problema de sincronización' : 'Sincronización activa') : 'Activar la sincronización'}"><span class="nube ${activo() ? (error ? 'mal' : 'bien') : ''}">${ic('nube')}</span></button>`;
+  const botonNube = () => !HABILITADA ? '' : `<button class="hbtn" id="syncBoton" ${on('go', 'cuenta')} aria-label="${activo() ? (error ? 'Problema de sincronización' : 'Sincronización activa') : 'Activar la sincronización'}"><span class="nube ${activo() ? (error ? 'mal' : 'bien') : ''}">${ic('nube')}</span></button>`;
 
   // ===== Cuenta =====
   const conectando = {p: null};
@@ -320,6 +324,7 @@ const Sync = (() => {
 
   // ===== Enlace de solo lectura para el director =====
   async function directorHtml(){
+    if (!HABILITADA) return '';
     if (!activo()) return `<h3>Enlace para el director</h3>${aviso('info', 'link', `Para generar un enlace de solo lectura, iniciá sesión. <a class="link" ${on('go', 'cuenta')}>Activar</a>`)}`;
     const enlace = await getOne('config', 'directorEnlace');
     return `<h3>Enlace para el director</h3><div class="card">
@@ -419,6 +424,7 @@ const Sync = (() => {
 
   // ===== Arranque =====
   async function init(){
+    if (!HABILITADA) return;
     addEventListener('online', () => programar(1000));
     addEventListener('offline', refrescar);
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') programar(500); else if (activo()) sincronizar(); });
@@ -430,5 +436,5 @@ const Sync = (() => {
     try { await conectar(); programar(800); refrescar(); } catch (e) { console.warn('Sync', e); }
   }
 
-  return {views, acciones, prev, init, anotar, activo, botonNube, directorHtml, sincronizar};
+  return {views, acciones, prev, init, anotar, activo, botonNube, directorHtml, sincronizar, habilitada: HABILITADA};
 })();
