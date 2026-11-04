@@ -164,13 +164,14 @@ const AG = (() => {
     if (nuevas.length) { await put('config', CLIMA); notificar('Alerta de clima', nuevas.join('\n')); }
     // La noche anterior: resumen de las visitas de mañana con su clima
     const man = sumarDias(h, 1), vm = d.vis.filter(v => v.fecha === man && v.estado === 'planificada').sort(porHora);
-    if (hora >= 19 && vm.length && pref.get('avisoManiana') !== h) {
+    const yaAviso = (await getOne('config', 'avisosLocal')) || {};   // lo que ya avisó el service worker con la app cerrada
+    if (hora >= 19 && vm.length && pref.get('avisoManiana') !== h && yaAviso.noche !== h) {
       pref.set('avisoManiana', h);
       notificar(`Mañana: ${plural(vm.length, 'visita', 'visitas')}`, vm.map(v => { const s = estabDe(d, v), c = climaDia(s, man); return `${v.hora || ''} ${cliente(d, s)} ${c ? TIEMPO(c.code)[1].toLowerCase() + ' ' + grados(c.max) : ''}`.trim(); }).join('\n'));
     }
     // Visitas pasadas sin cerrar (una vez por día)
     const sin = d.vis.filter(v => v.estado === 'planificada' && v.fecha < h).length;
-    if (sin && hora >= 8 && pref.get('avisoSinCerrar') !== h) { pref.set('avisoSinCerrar', h); notificar('Visitas sin cerrar', `Tenés ${plural(sin, 'visita pasada', 'visitas pasadas')} sin cerrar.`); }
+    if (sin && hora >= 8 && pref.get('avisoSinCerrar') !== h && yaAviso.manana !== h) { pref.set('avisoSinCerrar', h); notificar('Visitas sin cerrar', `Tenés ${plural(sin, 'visita pasada', 'visitas pasadas')} sin cerrar.`); }
   }
 
   // ===== Qué toca relevar: tema más atrasado del Panel de control y sector que hace más que no se releva =====
@@ -604,7 +605,7 @@ const AG = (() => {
         <h3>Observaciones</h3>
         <div class="card"><textarea id="v_obs" rows="5" placeholder="Lo que viste, lo que hablaste con el cliente…" ${dis} ${oi('vObs')}>${esc(v.observaciones)}</textarea>
           ${dis ? '' : `<div class="actions" style="margin-top:10px"><button class="btn sec small" id="v_mic" ${on('vDictar')}>${ic('mic')}Dictar</button>
-            ${Sync.habilitada ? `<button class="btn sec small" ${on('abrirDictadoIA')}>${ic('auto')}Dictado con IA</button>` : ''}</div>`}</div>
+            <button class="btn sec small" ${on('abrirDictadoIA')}>${ic('auto')}Dictado con IA</button></div>`}</div>
 
         <h3>Fotos</h3>
         <div class="card" id="v_fotos">${v.fotos.length || !dis ? fotosVisitaHtml(v, !!dis) : '<p class="sub" style="margin:0">Sin fotos.</p>'}

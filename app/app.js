@@ -430,7 +430,7 @@ const VIEWS = {
         <div class="accesos">${acceso(['tab', 'clientes'], 'edificio', 'Clientes')}${acceso(['tab', 'agenda'], 'calendario', 'Agenda')}
           ${acceso(['tab', 'informes'], 'doc', 'Informes')}${acceso(['go', 'desviosTodos'], 'alerta', 'Desvíos', abiertos ? `<span class="badge b-bad">${abiertos}</span>` : '')}</div>
         ${PERFIL.nombre ? '' : aviso('info', 'persona', `Cargá tus datos de profesional (nombre, matrícula, logo y firma) para que salgan en los informes. <a class="link" ${on('go', 'perfil')}>Cargar mis datos</a>`)}
-        ${!Sync.activo() && emp.length && (dias === null || dias >= 7) ? aviso('aviso', 'alerta', `${ultima ? `Hace ${dias} días que no descargás una copia de seguridad.` : 'Todavía no descargaste ninguna copia de seguridad.'} Tus datos están solo en este dispositivo. <a class="link" ${on('exportar')}>Descargar copia</a>${Sync.habilitada ? ` o <a class="link" ${on('go', 'cuenta')}>activar la sincronización</a>` : ''}`) : ''}
+        ${!(Sync.sincroniza && Sync.activo()) && emp.length && (dias === null || dias >= 7) ? aviso('aviso', 'alerta', `${ultima ? `Hace ${dias} días que no descargás una copia de seguridad.` : 'Todavía no descargaste ninguna copia de seguridad.'} Tus datos están solo en este dispositivo. <a class="link" ${on('exportar')}>Descargar copia</a>`) : ''}
         ${P.resumen}${P.asistente}
         ${venc.length ? `<div class="card alertas"><div class="between"><b>${ic('reloj')} Relevamientos a realizar</b><span class="badge ${venc.some(v => v.estado === 'vencido') ? 'b-bad' : 'b-mid'}">${venc.length}</span></div>
           ${venc.slice(0, 5).map(v => `<div class="el" ${on('abrirPanel', v.estab.id)}><span class="dot ${v.estado === 'vencido' ? 'bad' : 'mid'}"></span>
@@ -498,7 +498,7 @@ const VIEWS = {
         <div><b>${titulo}</b><div class="sub">${sub}</div></div>${ic('chev', 'chev')}</div>`;
       const nuevas = nuevasGenerales(), activas = ACTIVIDADES.lista.filter(a => a.activa).length;
       return `<div class="list">
-        ${Sync.habilitada ? fila(['go', 'cuenta'], 'nube', 'menta', 'Cuenta y sincronización', Sync.activo() ? 'Sincronización activa · avisos' : 'Tus datos en el celular y en la compu') : ''}
+        ${fila(['go', 'cuenta'], 'persona', 'menta', Sync.sincroniza ? 'Cuenta y sincronización' : 'Cuenta', Sync.activo() ? 'Sesión iniciada · avisos, enlace del director y dictado con IA' : 'Para avisos con la app cerrada, enlace del director y dictado con IA')}
         ${fila(['go', 'legajoPanel'], 'carpeta', 'menta', 'Legajo técnico', 'Panel de todos los clientes, vencimientos y catálogo de requisitos')}
         ${fila(['go', 'desviosTodos'], 'alerta', 'menta', 'Desvíos de todos los clientes', 'Abiertos y cerrados, por establecimiento')}
         ${fila(['go', 'normativa'], 'libro', 'menta', 'Normativa', nuevas ? plural(nuevas, 'novedad sin leer', 'novedades sin leer') : 'Novedades del Boletín Oficial')}
@@ -633,7 +633,7 @@ const VIEWS = {
         <button class="btn block" ${on('guardarPerfil')}>${ic('check')}Guardar mis datos</button>
         <h3>Copia de seguridad</h3>
         <div class="card">
-          <p style="margin-top:0">${Sync.activo() ? 'Con la sincronización activa, tus datos ya están en la nube. La copia es un resguardo extra: descargala cada tanto y guardala en Drive o en la compu.'
+          <p style="margin-top:0">${Sync.sincroniza && Sync.activo() ? 'Con la sincronización activa, tus datos ya están en la nube. La copia es un resguardo extra: descargala cada tanto y guardala en Drive o en la compu.'
             : 'Tus clientes, relevamientos, visitas, legajos y fotos están guardados solo en este dispositivo. Descargá una copia cada semana y guardala en Drive o en la compu: si cambiás de teléfono o se borran los datos del navegador, la restaurás desde acá.'}</p>
           <p class="sub">${ultima ? `Última copia descargada: ${fmtFecha(ultima)}` : 'Todavía no descargaste ninguna copia.'}</p>
           <div class="actions">
