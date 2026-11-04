@@ -13,8 +13,11 @@ const db = new Promise((res, rej) => {
       for (const s of STORES)
         if (!r.result.objectStoreNames.contains(s)) r.result.createObjectStore(s, {keyPath: 'id'});
     };
-    r.onsuccess = () => res(r.result);
+    // Si una versión nueva de la app necesita actualizar la base, esta pestaña cede y se recarga
+    r.onsuccess = () => { r.result.onversionchange = () => { r.result.close(); location.reload(); }; res(r.result); };
     r.onerror = () => rej(r.error);
+    // Otra pestaña vieja (sin la línea de arriba) tiene la base abierta: se destraba sola al cerrarla
+    r.onblocked = () => { document.getElementById('app').innerHTML = aviso('aviso', 'info', 'La app se actualizó. Cerrá las otras pestañas o ventanas donde la tengas abierta y esperá unos segundos.'); };
   } catch (e) { rej(e); }
 });
 function tx(store, mode, fn){
