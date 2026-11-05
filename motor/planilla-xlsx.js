@@ -48,9 +48,11 @@ const Planilla = (() => {
     }).join('');
     const cols = h.anchos ? `<cols>${h.anchos.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('')}</cols>` : '';
     const merges = h.combinar?.length ? `<mergeCells count="${h.combinar.length}">${h.combinar.map(m => `<mergeCell ref="${m}"/>`).join('')}</mergeCells>` : '';
+    // Listas desplegables: [{rango: 'C3:C1000', lista: 'Rubros!$A$1:$A$14', error: 'Elegí de la lista'}]
+    const listas = h.listas?.length ? `<dataValidations count="${h.listas.length}">${h.listas.map(l => `<dataValidation type="list" allowBlank="1" showErrorMessage="1" errorTitle="Valor no válido" error="${xml(l.error)}" sqref="${l.rango}"><formula1>${xml(l.lista)}</formula1></dataValidation>`).join('')}</dataValidations>` : '';
     const fijar = h.fijarFila ? `<sheetViews><sheetView workbookViewId="0"><pane ySplit="${h.fijarFila}" topLeftCell="A${h.fijarFila + 1}" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>` : '';
     const pagina = '<pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/>';
-    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>${fijar}${cols}<sheetData>${filas}</sheetData>${merges}${pagina}</worksheet>`;
+    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>${fijar}${cols}<sheetData>${filas}</sheetData>${merges}${listas}${pagina}</worksheet>`;
   }
 
   // ---- Zip "stored" (sin compresión): alcanza para planillas chicas y evita depender de una librería ----

@@ -243,7 +243,6 @@ function completarActividades(guardadas){
   return guardadas;
 }
 const ROLES = ['Dueño', 'Encargado', 'RRHH', 'Otro'];
-const FREC_VISITA = [['', 'Sin frecuencia fija'], ['semanal', 'Semanal'], ['quincenal', 'Quincenal'], ['mensual', 'Mensual']];
 
 async function cargarConfig(){
   const j = u => fetch(u, {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
@@ -476,7 +475,7 @@ const VIEWS = {
       const d = await datosInicio();
       return `<div class="stack"><div class="search">${ic('search')}<input id="buscar" placeholder="Buscar por razón social o CUIT" value="${esc(S.filtro)}" ${oi('filtrar')}></div>
           <div class="list" id="listaEmp">${listaEmpresasHtml(d)}</div></div>
-        <div class="bottom-bar"><div class="actions"><button class="btn hazard" ${on('nuevaEmpresa')}>${ic('plus')}Agregar cliente</button></div></div>`;
+        <div class="bottom-bar"><div class="actions"><button class="btn sec" ${on('impAbrir')}>${ic('doc')}Desde Excel</button><button class="btn hazard" ${on('nuevaEmpresa')}>${ic('plus')}Agregar cliente</button></div></div>`;
     }
   },
   informesLista: {
@@ -576,7 +575,7 @@ const VIEWS = {
           <p class="hint">También podés copiar las coordenadas desde Google Maps (mantené apretado el lugar) y pegarlas.</p>
         </div>
         <div class="card"><h4>Visitas</h4>
-          <div class="row"><div class="fld"><label for="s_frecv">Frecuencia de visita</label><select id="s_frecv">${FREC_VISITA.map(([v, t]) => `<option value="${v}" ${(s.frecVisita || '') === v ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+          <div class="row">${campo('s_vismes', 'Visitas mensuales', AG.visitasMesDe(s) || '', 'type="number" inputmode="numeric" min="0" step="1"')}
             ${campo('s_horas', 'Horas mensuales comprometidas', s.horasMes, 'type="number" inputmode="decimal" min="0" step="0.5"')}</div>
           <label for="s_fotoobl" style="margin-top:16px">Foto obligatoria al cerrar la visita</label>
           <select id="s_fotoobl">${[['', `Como en la configuración general (${PERFIL.fotoObligatoria ? 'sí' : 'no'})`], ['si', 'Sí, siempre'], ['no', 'No']].map(([v, t]) => `<option value="${v}" ${(s.fotoObligatoria || '') === v ? 'selected' : ''}>${t}</option>`).join('')}</select>
@@ -697,7 +696,7 @@ const VIEWS = {
         ${venc.length ? `<div style="margin-top:12px">${aviso(venc.some(p => p.estado === 'vencido') ? 'error' : 'aviso', 'reloj', venc.map(p => `<b>${esc(p.mod.titulo)}</b>: ${textoVence(p)}`).join('<br>'))}</div>` : ''}
         <div class="secc"><h3>Trabajo en planta</h3><div class="grid menu">
           ${item(['go', 'categorias'], 'lista', 'menta', 'Relevamientos', `${plural(rels.filter(r => !terminado(r)).length, 'en curso', 'en curso')} · ${plural(rels.filter(terminado).length, 'terminado', 'terminados')}`)}
-          ${item(['nuevaVisita'], 'calendario', 'menta', 'Agendar visita', esc(s.frecVisita ? 'Visita ' + FREC_VISITA.find(f => f[0] === s.frecVisita)[1].toLowerCase() : 'Planificá la próxima visita'))}
+          ${item(['nuevaVisita'], 'calendario', 'menta', 'Agendar visita', esc(AG.visitasMesDe(s) ? plural(AG.visitasMesDe(s), 'visita', 'visitas') + ' por mes' : 'Planificá la próxima visita'))}
           ${item(['nuevoInformeDesvios'], 'camara', 'amarillo', 'Informe de desvío', 'Para un desvío que viste fuera de un relevamiento')}
         </div></div>
         <div class="secc"><h3>Control</h3><div class="grid menu">
@@ -709,7 +708,7 @@ const VIEWS = {
         </div></div>
         <div class="secc"><h3>Datos</h3><div class="grid menu">
           ${item(['editarEstab'], 'edificio', 'menta', 'Datos del establecimiento', esc([s.responsable && 'Resp.: ' + s.responsable, s.trabajadores && s.trabajadores + ' trabajadores',
-            s.frecVisita && 'Visita ' + FREC_VISITA.find(f => f[0] === s.frecVisita)[1].toLowerCase(), s.horasMes && s.horasMes + ' h/mes'].filter(Boolean).join(' · ') || 'Dirección, responsable, trabajadores, visitas, legajo'))}
+            AG.visitasMesDe(s) && plural(AG.visitasMesDe(s), 'visita', 'visitas') + ' por mes', s.horasMes && s.horasMes + ' h/mes'].filter(Boolean).join(' · ') || 'Dirección, responsable, trabajadores, visitas, legajo'))}
         </div></div>`;
     }
   },
@@ -1481,7 +1480,7 @@ const A = {
     if (v('s_coord') && !coord) return avisar('Las coordenadas no se entienden. Tienen que ser dos números separados por coma, por ejemplo: -32.9468, -60.6393');
     S.estab = {...(S.editando ? S.estab : {id: uid(), empresaId: S.empresa.id, programa: {}, creado: Date.now()}), nombre: v('s_nom'), domicilio: v('s_dom'),
       localidad: v('s_loc'), provincia: v('s_prov'), responsable: v('s_resp'), trabajadores: v('s_trab'), superficie: v('s_sup'), horario: v('s_horario'), notas: v('s_notas'),
-      lat: coord?.[0] ?? null, lng: coord?.[1] ?? null, frecVisita: v('s_frecv'), horasMes: v('s_horas'), fotoObligatoria: v('s_fotoobl'),
+      lat: coord?.[0] ?? null, lng: coord?.[1] ?? null, frecVisita: '', visitasMes: Math.max(0, Math.round(+v('s_vismes') || 0)), horasMes: v('s_horas'), fotoObligatoria: v('s_fotoobl'),
       legajo: {...Object.fromEntries(['quimicos', 'residuos', 'ruido', 'comedor', 'cancerigenos', 'obra'].map(k => [k, v('lg_' + k) === '' ? null : v('lg_' + k) === 'si'])),
         agua: v('lg_agua'), puntosAgua: v('lg_puntos') ? Math.max(1, +v('lg_puntos')) : null}};
     await put('establecimientos', S.estab);

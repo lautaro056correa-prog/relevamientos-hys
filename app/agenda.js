@@ -190,7 +190,8 @@ const AG = (() => {
   }
 
   // ===== Sugerencias del asistente =====
-  const DIAS_FREC = {semanal: 7, quincenal: 14, mensual: 30};
+  // Visitas por mes del establecimiento; los cargados antes con frecuencia semanal/quincenal/mensual se traducen
+  const visitasMesDe = s => +s?.visitasMes > 0 ? +s.visitasMes : ({semanal: 4, quincenal: 2, mensual: 1})[s?.frecVisita] || 0;
   function sugerencias(d){
     const out = [], h = hoy(), en7 = sumarDias(h, 7);
     for (const v of d.vis.filter(v => v.estado === 'planificada' && v.fecha < h).sort(porHora))
@@ -199,13 +200,14 @@ const AG = (() => {
       const al = alertasClima(v, estabDe(d, v));
       if (al.length) out.push({prio: 1, icono: 'lluvia', color: 'amarillo', txt: `Clima: <b>${esc(cliente(d, estabDe(d, v)))}</b> ${fechaCorta(v.fecha)} · ${esc(al[0])}`, accion: ['diasBuenos', v.id], boton: 'Reprogramar'});
     }
-    for (const s of d.est.filter(s => DIAS_FREC[s.frecVisita])) {
+    for (const s of d.est.filter(s => visitasMesDe(s))) {
+      const nMes = visitasMesDe(s), cadaDias = Math.max(1, Math.floor(30 / nMes));
       const vs = d.vis.filter(v => v.estabId === s.id);
       const ult = vs.filter(v => v.estado === 'cumplida' || v.estado === 'parcial').map(v => v.fecha).sort().pop();
       const prox = vs.filter(v => v.estado === 'planificada' && v.fecha >= h).map(v => v.fecha).sort()[0];
-      const toca = ult ? sumarDias(ult, DIAS_FREC[s.frecVisita]) : h;
+      const toca = ult ? sumarDias(ult, cadaDias) : h;
       if ((!prox || prox > toca) && toca <= en7)
-        out.push({prio: toca <= h ? 1 : 2, icono: 'calendario', color: 'menta', txt: `<b>${esc(cliente(d, s))}</b>: visita ${s.frecVisita} ${ult ? `(última ${fmtFecha(ult)})` : '(sin visitas registradas)'}${prox ? `, la próxima agendada es el ${fmtFecha(prox)}` : ', sin visita agendada'}`,
+        out.push({prio: toca <= h ? 1 : 2, icono: 'calendario', color: 'menta', txt: `<b>${esc(cliente(d, s))}</b>: ${plural(nMes, 'visita', 'visitas')} por mes ${ult ? `(última ${fmtFecha(ult)})` : '(sin visitas registradas)'}${prox ? `, la próxima agendada es el ${fmtFecha(prox)}` : ', sin visita agendada'}`,
           accion: ['agendar', s.id, '', toca < h ? h : toca], boton: 'Agendar'});
     }
     // Legajo técnico: vencidos, faltantes y por vencer (si tienen una tarea que los renueva, se ofrece agendarla)
@@ -904,5 +906,5 @@ const AG = (() => {
 
   return {views, acciones, prev, init, inicioPartes, textoClima, textoPlano, icClima, climaDia, actualizarClima, sugerencias, pedirMotivo, vincularRelev, borrarDeEstab, lib, datos, cliente, empresaDe, estabDe, actividad, ESTADOS, sumarDias, lunesDe,
     fechaLarga, fechaCorta, cap, horasVisita, fmtHoras, porHora, flecha, badgeEstado, aBlob, aDataUrl, feriado, tocaRelevar, UMBRAL,
-    semanas: () => SEMANAS, semanaCerrada};
+    semanas: () => SEMANAS, semanaCerrada, visitasMesDe};
 })();
