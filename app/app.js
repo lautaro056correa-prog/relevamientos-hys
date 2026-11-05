@@ -498,12 +498,12 @@ const VIEWS = {
         <div><b>${titulo}</b><div class="sub">${sub}</div></div>${ic('chev', 'chev')}</div>`;
       const nuevas = nuevasGenerales(), activas = ACTIVIDADES.lista.filter(a => a.activa).length;
       return `<div class="list">
-        ${fila(['go', 'cuenta'], 'persona', 'menta', Sync.sincroniza ? 'Cuenta y sincronización' : 'Cuenta', Sync.activo() ? 'Sesión iniciada · avisos, enlace del director y dictado con IA' : 'Para avisos con la app cerrada, enlace del director y dictado con IA')}
+        ${fila(['go', 'cuenta'], 'persona', 'menta', Sync.sincroniza ? 'Cuenta y sincronización' : 'Cuenta', Sync.activo() ? 'Sesión iniciada · avisos con la app cerrada' : 'Para recibir avisos con la app cerrada')}
         ${fila(['go', 'legajoPanel'], 'carpeta', 'menta', 'Legajo técnico', 'Panel de todos los clientes, vencimientos y catálogo de requisitos')}
         ${fila(['go', 'desviosTodos'], 'alerta', 'menta', 'Desvíos de todos los clientes', 'Abiertos y cerrados, por establecimiento')}
         ${fila(['go', 'normativa'], 'libro', 'menta', 'Normativa', nuevas ? plural(nuevas, 'novedad sin leer', 'novedades sin leer') : 'Novedades del Boletín Oficial')}
         ${fila(['go', 'actividades'], 'lista', 'menta', 'Actividades', `${plural(activas, 'actividad activa', 'actividades activas')} para las visitas`)}
-        ${fila(['go', 'perfil'], 'persona', 'menta', 'Mis datos y configuración', 'Datos para los informes, director, clima, copia de seguridad')}
+        ${fila(['go', 'perfil'], 'persona', 'menta', 'Mis datos y configuración', 'Datos para los informes, clima, copia de seguridad')}
       </div>`;
     }
   },
@@ -613,9 +613,9 @@ const VIEWS = {
         </div>
         <h3>Agenda de visitas</h3>
         <div class="card">
-          <p class="sub" style="margin-top:0">El informe semanal de visitas va dirigido a esta persona.</p>
-          <div class="row"><div class="fld"><label for="p_dir">Nombre del director</label><input id="p_dir" value="${esc(PERFIL.directorNombre)}"></div>
-            <div class="fld"><label for="p_dirmail">Email del director</label><input id="p_dirmail" type="email" inputmode="email" value="${esc(PERFIL.directorEmail)}"></div></div>
+          <p class="sub" style="margin-top:0">Opcional: si lo completás, figura como destinatario en el resumen semanal. Si lo dejás vacío, no aparece.</p>
+          <div class="row"><div class="fld"><label for="p_dir">Nombre del destinatario</label><input id="p_dir" value="${esc(PERFIL.directorNombre)}"></div>
+            <div class="fld"><label for="p_dirmail">Email del destinatario</label><input id="p_dirmail" type="email" inputmode="email" value="${esc(PERFIL.directorEmail)}"></div></div>
           <label class="check"><input type="checkbox" id="p_fotoobl" ${PERFIL.fotoObligatoria ? 'checked' : ''}> Pedir una foto obligatoria al cerrar cada visita</label>
           <p class="hint">Se puede cambiar para cada establecimiento en sus datos.</p>
         </div>

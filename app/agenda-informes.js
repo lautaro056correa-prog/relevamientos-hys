@@ -1,4 +1,4 @@
-// Informes de la agenda: informe semanal al director (PDF y Word), cierre de semana, constancia de visita (PDF),
+// Informes de la agenda: resumen semanal de visitas (PDF y Word), cierre de semana, constancia de visita (PDF),
 // escaneo de la planilla firmada, Excel de visitas, constancias del mes en .zip, calendario .ics y gráficos de control.
 // Se carga después de agenda.js y antes de app.js.
 (() => {
@@ -27,6 +27,7 @@
   const noCumplidas = r => r.vs.filter(v => ['reprogramada', 'cancelada', 'parcial', 'planificada'].includes(v.estado));
   const motivoDe = v => v.estado === 'parcial' ? 'Sin hacer: ' + (v.tareas.filter(t => !t.hecha).map(t => t.nombre).join(', ') || '-') : v.estado === 'planificada' ? 'Sin cerrar' : v.motivo || '-';
   const nombreSemana = l => `Informe_semanal_visitas_${l.split('-').reverse().join('-')}.pdf`;
+  const destinatario = () => [PERFIL.directorNombre, PERFIL.directorEmail].filter(Boolean).join(' · ');
   const profesional = () => [PERFIL.titulo, PERFIL.nombre].filter(Boolean).join(' ') + (PERFIL.matricula ? ` · Mat. ${PERFIL.matricula}` : '');
 
   // ===== PDF: piezas comunes =====
@@ -136,7 +137,7 @@
     encabezadoPdf(doc, 'INFORME SEMANAL DE VISITAS', `Período: ${fmtFecha(lunes)} al ${fmtFecha(dom)}`);
     let y = tabla(doc, {startY: 32, theme: 'plain', styles: {fontSize: 9.5, cellPadding: 1.3}, columnStyles: {0: {fontStyle: 'bold', cellWidth: 34}},
       body: [['Profesional', profesional() || '-'], ['Contacto', [PERFIL.telefono, PERFIL.email].filter(Boolean).join(' · ') || '-'],
-        ['Destinatario', [PERFIL.directorNombre, PERFIL.directorEmail].filter(Boolean).join(' · ') || '-'], ['Emitido', fmtFecha(hoy())]]});
+        ...(destinatario() ? [['Destinatario', destinatario()]] : []), ['Emitido', fmtFecha(hoy())]]});
     y = titulo(doc, 'Resumen', y + 7);
     y = tabla(doc, {startY: y, styles: {fontSize: 9, halign: 'center', cellPadding: 2}, head: [['Programadas', 'Cumplidas', 'Parciales', 'Reprogramadas', 'Canceladas', 'Sin cerrar', 'Cumplimiento']],
       body: [[r.total, r.cumplida, r.parcial, r.reprogramada, r.cancelada, r.planificada, r.pct + ' %']]});
@@ -191,7 +192,7 @@
       new Paragraph({children: [new TextRun({text: 'INFORME SEMANAL DE VISITAS', bold: true, size: 32, color: '1F3864'})]}),
       p(`Período: ${fmtFecha(lunes)} al ${fmtFecha(dom)}`),
       p(`Profesional: ${profesional() || '-'}${PERFIL.telefono || PERFIL.email ? ' · ' + [PERFIL.telefono, PERFIL.email].filter(Boolean).join(' · ') : ''}`),
-      p(`Destinatario: ${[PERFIL.directorNombre, PERFIL.directorEmail].filter(Boolean).join(' · ') || '-'} · Emitido: ${fmtFecha(hoy())}`),
+      p(`${destinatario() ? `Destinatario: ${destinatario()} · ` : ''}Emitido: ${fmtFecha(hoy())}`),
       tit('Resumen'),
       tablaW(['Programadas', 'Cumplidas', 'Parciales', 'Reprogramadas', 'Canceladas', 'Sin cerrar', 'Cumplimiento'], [[r.total, r.cumplida, r.parcial, r.reprogramada, r.cancelada, r.planificada, r.pct + ' %']]),
       p(''),
@@ -235,7 +236,7 @@
       <h3>Visitas de la semana</h3>
       <div class="card fold-list">${r.vs.map(v => `<div class="el" ${on('abrirVisita', v.id)}><span class="hora num">${AG.fechaCorta(v.fecha)}</span><div><b>${esc(cliente(d, estabDe(d, v)))}</b>
         <div class="sub">${esc(v.tareas.map(t => t.nombre).join(', ') || 'Sin tareas')}${horasVisita(v) ? ' · ' + fmtHoras(horasVisita(v)) : ''}</div></div>${AG.badgeEstado(v)}</div>`).join('') || '<p class="sub">No hay visitas en esta semana.</p>'}</div>
-      <h3>Informe para el director</h3>
+      <h3>Resumen de la semana</h3>
       <div class="card">
         <label class="check"><input type="checkbox" ${S.infFotos ? 'checked' : ''} ${oc('infFotos')}> Incluir las fotos de las visitas</label>
         <div class="actions" style="margin-top:12px">
@@ -246,7 +247,6 @@
           : `<button class="btn hazard block" style="margin-top:12px" ${on('cerrarSemana')}>${ic('check')}Emitir y cerrar la semana</button>
              <p class="hint">Al cerrarla, las visitas de la semana quedan bloqueadas (se puede reabrir).</p>`}
       </div>
-      ${await Sync.directorHtml()}
       <h3>Exportar</h3>
       <div class="card">
         <div class="row"><div class="fld"><label for="x_desde">Desde</label><input id="x_desde" type="date" value="${S.xDesde}" ${oc('xCampo', 'xDesde')}></div>
@@ -303,28 +303,28 @@
 
   // Acciones del informe
   acciones.semanal = async (t, tipo, modo) => {
-    toast('Preparando el informe…');
+    toast('Preparando el resumen…');
     try {
       const blob = tipo === 'pdf' ? await pdfSemanal(S.semana, S.infFotos) : await wordSemanal(S.semana, S.infFotos);
       await entregar(modo, nombreSemana(S.semana).replace('.pdf', tipo === 'pdf' ? '.pdf' : '.docx'), blob);
-    } catch (e) { console.error(e); avisar('No se pudo generar el informe: ' + e.message); }
+    } catch (e) { console.error(e); avisar('No se pudo generar el resumen: ' + e.message); }
   };
   acciones.cerrarSemana = async () => {
     const d = await datos(), lunes = S.semana, r = resumen(d, lunes, sumarDias(lunes, 6));
     if (lunes > lunesDe(hoy()) && !(await confirmar('Esta semana todavía no empezó. ¿La cerrás igual?', 'Cerrar igual'))) return;
-    if (r.planificada && !(await confirmar(`Hay ${plural(r.planificada, 'visita', 'visitas')} sin cerrar. En el informe figuran como "sin cerrar". ¿Emitir igual?`, 'Emitir igual'))) return;
-    toast('Preparando el informe…');
+    if (r.planificada && !(await confirmar(`Hay ${plural(r.planificada, 'visita', 'visitas')} sin cerrar. En el resumen figuran como "sin cerrar". ¿Emitir igual?`, 'Emitir igual'))) return;
+    toast('Preparando el resumen…');
     let blob;
-    try { blob = await pdfSemanal(lunes, S.infFotos); } catch (e) { console.error(e); return avisar('No se pudo generar el informe: ' + e.message); }
-    const sem = {...(AG.semanas()[lunes] || {}), id: lunes, cerrada: true, fechaEnvio: hoy(), emitido: Date.now()};
+    try { blob = await pdfSemanal(lunes, S.infFotos); } catch (e) { console.error(e); return avisar('No se pudo generar el resumen: ' + e.message); }
+    const sem ={...(AG.semanas()[lunes] || {}), id: lunes, cerrada: true, fechaEnvio: hoy(), emitido: Date.now()};
     AG.semanas()[lunes] = sem;
     await put('semanas', sem);
     render();
-    const modo = await menu(`Semana cerrada. ¿Cómo le mandás el informe${PERFIL.directorNombre ? ' a ' + PERFIL.directorNombre : ''}?`, [{txt: 'Compartir (WhatsApp, mail…)', icono: 'compartir', valor: 'compartir'}, {txt: 'Descargar', icono: 'descarga', valor: 'descargar'}]);
+    const modo = await menu('Semana cerrada. ¿Cómo querés mandar el resumen?', [{txt: 'Compartir (WhatsApp, mail…)', icono: 'compartir', valor: 'compartir'}, {txt: 'Descargar', icono: 'descarga', valor: 'descargar'}]);
     if (modo) entregar(modo, nombreSemana(lunes), blob);
   };
   acciones.reabrirSemana = async () => {
-    if (!(await confirmar('¿Reabrir la semana? Las visitas se pueden volver a modificar. Si cambiás algo, emití el informe de nuevo.', 'Reabrir'))) return;
+    if (!(await confirmar('¿Reabrir la semana? Las visitas se pueden volver a modificar. Si cambiás algo, emití el resumen de nuevo.', 'Reabrir'))) return;
     const sem = AG.semanas()[S.semana];
     sem.cerrada = false;
     await put('semanas', sem);

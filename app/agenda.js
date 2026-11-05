@@ -271,7 +271,7 @@ const AG = (() => {
     await put('visitas', n);
     return n;
   }
-  const avisoSemanaCerrada = () => avisar('Esa semana ya está cerrada porque se emitió el informe para el director. Para cambiar algo, reabrila desde Informes › Visitas.');
+  const avisoSemanaCerrada = () => avisar('Esa semana ya está cerrada porque se emitió el resumen. Para cambiar algo, reabrila desde Informes › Visitas.');
   async function moverVisita(id, fecha){
     const v = await getOne('visitas', id);
     if (!v || v.fecha === fecha) return null;
@@ -563,7 +563,7 @@ const AG = (() => {
       return `<div class="card rowcard" style="cursor:default">${e ? avatar(e) : ''}
           <div><b>${esc(e?.razonSocial || '—')}</b><div class="sub">${esc([s?.nombre, s?.domicilio, s?.localidad].filter(Boolean).join(' · '))}</div></div>${badgeEstado(v)}</div>
         <div class="stack" style="margin-top:12px">
-        ${lock ? aviso('aviso', 'info', `Semana cerrada: el informe al director ya se emitió (${fmtFecha(SEMANAS[lunesDe(v.fecha)].fechaEnvio)}). Para modificar la visita, reabrí la semana en Informes › Visitas.`) : ''}
+        ${lock ? aviso('aviso', 'info', `Semana cerrada: el resumen ya se emitió (${fmtFecha(SEMANAS[lunesDe(v.fecha)].fechaEnvio)}). Para modificar la visita, reabrí la semana en Informes › Visitas.`) : ''}
         ${v.estado === 'reprogramada' ? aviso('aviso', 'calendario', `Reprogramada. Motivo: <b>${esc(v.motivo)}</b>. <a class="link" ${on('abrirVisita', v.reprogramadaA)}>Ver la nueva visita</a>`) : ''}
         ${v.estado === 'cancelada' ? aviso('error', 'x', `Cancelada. Motivo: <b>${esc(v.motivo)}</b>`) : ''}
         ${v.historial?.length ? `<p class="sub" style="margin:0">${v.historial.map(x => `Movida del ${fmtFecha(x.de)} al ${fmtFecha(x.a)} (${esc(x.motivo)})`).join('<br>')}</p>` : ''}
@@ -579,7 +579,7 @@ const AG = (() => {
         <div class="card"><div class="row">
           <div class="fld"><label for="v_ini">Ingreso</label><input id="v_ini" type="time" value="${v.inicio}" ${dis} ${oc('vHora', 'inicio')}></div>
           <div class="fld"><label for="v_fin">Egreso</label><input id="v_fin" type="time" value="${v.fin}" ${dis} ${oc('vHora', 'fin')}></div></div>
-          ${dis ? '' : `<div class="actions" style="margin-top:12px">${!v.inicio ? `<button class="btn" ${on('vMarcar', 'inicio')}>${ic('reloj')}Empezar</button>` : !v.fin ? `<button class="btn" ${on('vMarcar', 'fin')}>${ic('reloj')}Terminar</button>` : ''}</div>`}
+          ${dis ? '' : v.fecha < hoy() ? (!v.inicio || !v.fin ? '<p class="hint">Visita de una fecha pasada: cargá a mano la hora de ingreso y de egreso.</p>' : '') : `<div class="actions" style="margin-top:12px">${!v.inicio ? `<button class="btn" ${on('vMarcar', 'inicio')}>${ic('reloj')}Empezar</button>` : !v.fin ? `<button class="btn" ${on('vMarcar', 'fin')}>${ic('reloj')}Terminar</button>` : ''}</div>`}
           ${h ? `<p class="sub" style="margin:10px 0 0">Tiempo en planta: <b>${fmtHoras(h)}</b></p>` : ''}</div>
 
         <h3>Tareas</h3>
@@ -604,8 +604,7 @@ const AG = (() => {
 
         <h3>Observaciones</h3>
         <div class="card"><textarea id="v_obs" rows="5" placeholder="Lo que viste, lo que hablaste con el cliente…" ${dis} ${oi('vObs')}>${esc(v.observaciones)}</textarea>
-          ${dis ? '' : `<div class="actions" style="margin-top:10px"><button class="btn sec small" id="v_mic" ${on('vDictar')}>${ic('mic')}Dictar</button>
-            <button class="btn sec small" ${on('abrirDictadoIA')}>${ic('auto')}Dictado con IA</button></div>`}</div>
+          ${dis ? '' : `<div class="actions" style="margin-top:10px"><button class="btn sec small" id="v_mic" ${on('vDictar')}>${ic('mic')}Dictar</button></div>`}</div>
 
         <h3>Fotos</h3>
         <div class="card" id="v_fotos">${v.fotos.length || !dis ? fotosVisitaHtml(v, !!dis) : '<p class="sub" style="margin:0">Sin fotos.</p>'}

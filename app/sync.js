@@ -1,12 +1,11 @@
-// Sincronización con Supabase, cuenta del usuario, avisos con la app cerrada, enlace del director y dictado con IA.
+// Sincronización con Supabase (apagada), cuenta del usuario y avisos con la app cerrada.
 // La app sigue trabajando siempre contra los datos del dispositivo (IndexedDB): cada put/del de app.js anota el registro
 // en la cola "sync_cola" y, cuando hay sesión y señal, se sube y se baja lo de los otros dispositivos.
 // Si dos dispositivos cambian lo mismo, gana la última modificación. Las fotos y los PDF van al almacenamiento "archivos"
 // y en la fila queda solo la referencia hysfile:<huella>.<ext>. Se carga antes que app.js.
 const Sync = (() => {
   // El usuario eligió NO sincronizar sus datos (nov-2026): trabaja con copias de seguridad. Con false, la cuenta sirve solo de
-  // llave para tres servicios: avisos con la app cerrada (el servidor solo despierta al celular; el mensaje lo arma sw.js con
-  // los datos locales), enlace del director (se sube solo el resumen de visitas) y dictado con IA (se manda solo lo dictado).
+  // llave de los avisos con la app cerrada (el servidor solo despierta al celular; el mensaje lo arma sw.js con los datos locales).
   // Para sincronizar todo: true acá y publicar.
   const SINCRONIZAR = false;
   const URL_SB = 'https://obnuhhublcbdaolfpsjh.supabase.co', CLAVE_PUBLICA = 'sb_publishable_cP6fsViS7VW3ydIM-Oikjw_wY538Eyd';
@@ -29,7 +28,6 @@ const Sync = (() => {
 
   // ===== Cola: la llama app.js en cada put/del =====
   function anotar(store, id, borrado = false){
-    marcarDirector(store, id);
     if (!SINCRONIZAR || !sincronizable(store, id)) return Promise.resolve();
     const fila = {id: `${store}|${id}`, store, rid: id, modificado: Date.now(), borrado};
     return crudoPut('sync_cola', fila).catch(() => {}).then(() => programar());
@@ -223,7 +221,7 @@ const Sync = (() => {
         <button class="btn block" style="margin-top:12px" ${on('cuNuevaClave')}>${ic('check')}Guardar contraseña</button></div>`;
       if (!activo()) return `<div class="stack">
         ${SINCRONIZAR ? aviso('info', 'nube', 'Con una cuenta, tus datos se guardan también en la nube, protegidos con tu usuario: los ves en el celular y en la compu, y no se pierden si cambiás de teléfono. La app sigue funcionando sin señal.')
-          : aviso('info', 'persona', 'La cuenta es la llave para tres servicios: avisos con la app cerrada, enlace para el director y dictado con IA. <b>Tus clientes, relevamientos y fotos siguen solo en este dispositivo:</b> sin cuenta, la app funciona igual.')}
+          : aviso('info', 'persona', 'La cuenta sirve para recibir avisos con la app cerrada. <b>Tus clientes, relevamientos y fotos siguen solo en este dispositivo:</b> sin cuenta, la app funciona igual.')}
         <div class="card"><label for="cu_mail">Email</label><input id="cu_mail" type="email" inputmode="email" autocomplete="username">
           <label for="cu_clave">Contraseña</label><input id="cu_clave" type="password" autocomplete="current-password">
           <p class="hint">Al menos 8 caracteres. Guardala bien: es la llave de tus datos.</p>
@@ -241,14 +239,11 @@ const Sync = (() => {
             : push === 'bloqueado' ? aviso('aviso', 'alerta', 'El navegador tiene bloqueados los avisos para esta app. Activalos desde los permisos del navegador.')
             : push === 'noSoportado' ? aviso('aviso', 'info', 'Este navegador no permite avisos con la app cerrada. En iPhone, primero instalá la app en la pantalla de inicio.')
             : `<button class="btn block" ${on('cuPushActivar')}>${ic('campana')}Activar avisos</button>`}</div>
-        ${SINCRONIZAR ? '' : `<div class="card"><h4>Enlace para el director</h4><p class="sub" style="margin:0">Se crea en <a class="link" ${on('irInformeVisitas')}>Informes › Visitas</a>.</p></div>
-        <div class="card"><h4>Dictado con IA</h4><p class="sub" style="margin:0">Está dentro de cada visita, en Observaciones. Lo que dictás va a Claude para ordenarlo y no se guarda en el servidor.</p></div>`}
         <button class="btn ghost block" ${on('cuSalir')}>Cerrar sesión</button>
-        <p class="sub" style="margin:0">${SINCRONIZAR ? 'Al cerrar sesión, los datos quedan en este dispositivo y deja de sincronizar hasta que vuelvas a entrar.' : 'Al cerrar sesión, tus datos quedan en este dispositivo. Dejás de poder usar el dictado con IA y de actualizar el enlace del director hasta que vuelvas a entrar.'}</p></div>`;
+        <p class="sub" style="margin:0">${SINCRONIZAR ? 'Al cerrar sesión, los datos quedan en este dispositivo y deja de sincronizar hasta que vuelvas a entrar.' : 'Al cerrar sesión, tus datos quedan en este dispositivo.'}</p></div>`;
     }
   };
   prev.cuenta = () => raiz();
-  acciones.irInformeVisitas = () => { S.infTab = 'visitas'; A.tab(null, 'informes'); };
   acciones.cuEntrar = async () => {
     const email = $('#cu_mail').value.trim(), password = $('#cu_clave').value;
     if (!email || !password) return avisar('Poné tu email y tu contraseña.');
@@ -259,7 +254,6 @@ const Sync = (() => {
     toast('Sesión iniciada');
     render();
     sincronizar();
-    publicarDirector().catch(x => console.warn('Director', x));
   };
   acciones.cuCrear = async () => {
     const email = $('#cu_mail').value.trim(), password = $('#cu_clave').value;
@@ -332,167 +326,18 @@ const Sync = (() => {
     render();
   };
 
-  // ===== Enlace de solo lectura para el director =====
-  // Solo lo que ya va en el informe semanal: nada de relevamientos, fotos, legajo ni contactos
-  async function armarDirector(){
-    const [vis, ests, emps, rels, segs, pens, sems] = await Promise.all(['visitas', 'establecimientos', 'empresas', 'relevamientos', 'seguimiento', 'pendientes', 'semanas'].map(getAll));
-    const desde = AG.sumarDias(hoy(), -400), estab = new Map(ests.map(s => [s.id, s])), empresa = new Map(emps.map(e => [e.id, e.razonSocial]));
-    return {
-      profesional: {nombre: PERFIL.nombre || '', titulo: PERFIL.titulo || '', matricula: PERFIL.matricula || ''},
-      visitas: vis.filter(v => v.fecha >= desde).map(v => {
-        const s = estab.get(v.estabId);
-        return {fecha: v.fecha, hora: v.hora, inicio: v.inicio, fin: v.fin, estado: v.estado, motivo: v.motivo, cliente: empresa.get(s?.empresaId ?? v.empresaId) ?? '—', establecimiento: s?.nombre ?? '', estabId: v.estabId,
-          tareas: (v.tareas || []).map(t => ({nombre: t.nombre, hecha: !!t.hecha})), observaciones: v.observaciones || '',
-          pendientes: pens.filter(p => p.visitaId === v.id || p.cierreVisitaId === v.id).map(p => ({texto: p.texto, estado: p.estado}))};
-      }),
-      establecimientos: ests.map(s => ({id: s.id, nombre: s.nombre, cliente: empresa.get(s.empresaId) ?? '—', horasMes: +s.horasMes || 0})),
-      relevamientos: rels.filter(r => esRelev(r) && r.fecha_relevamiento >= desde).map(r => r.fecha_relevamiento),
-      desvios: segs.map(o => ({fecha: o.fecha, fechaCierre: o.fechaCierre, estado: o.estado})),
-      pendientes: pens.map(p => ({fecha: p.fecha, fechaCierre: p.fechaCierre, estado: p.estado})),
-      semanas: sems.filter(x => x.cerrada).map(x => ({lunes: x.id, fechaEnvio: x.fechaEnvio}))
-    };
-  }
-  // Cuando cambia algo que ve el director, el resumen se vuelve a subir (si hay enlace, sesión y señal)
-  const STORES_DIRECTOR = new Set(['visitas', 'establecimientos', 'empresas', 'relevamientos', 'seguimiento', 'pendientes', 'semanas']);
-  let timerDirector = null;
-  function marcarDirector(store, id){
-    if (!STORES_DIRECTOR.has(store) && !(store === 'config' && id === 'perfil')) return;
-    pref.set('directorPendiente', '1');
-    clearTimeout(timerDirector);
-    timerDirector = setTimeout(() => publicarDirector().catch(e => console.warn('Director', e)), 15000);
-  }
-  async function publicarDirector(forzar = false){
-    if (!activo() || !navigator.onLine || (!forzar && pref.get('directorPendiente') !== '1')) return false;
-    if (!(await getOne('config', 'directorEnlace'))) return false;
-    const {error: e} = await sb.from('enlaces_director').update({datos: await armarDirector(), actualizado: new Date().toISOString()}).eq('user_id', usuario().id);
-    if (e) throw new Error(e.message);
-    pref.set('directorPendiente', '');
-    pref.set('directorSubido', String(Date.now()));
-    return true;
-  }
-  async function directorHtml(){
-    if (!activo()) return `<h3>Enlace para el director</h3>${aviso('info', 'link', `Para generar un enlace de solo lectura, entrá a tu cuenta. <a class="link" ${on('go', 'cuenta')}>Ir a mi cuenta</a>`)}`;
-    const enlace = await getOne('config', 'directorEnlace'), subido = +pref.get('directorSubido');
-    return `<h3>Enlace para el director</h3><div class="card">
-      <p class="sub" style="margin-top:0">Página de solo lectura con las visitas, el cumplimiento y los gráficos. No muestra tu configuración, ni relevamientos, fotos, legajo o contactos.</p>
-      ${enlace ? `<input aria-label="Enlace para el director" readonly value="${esc(WEB + 'director.html#t=' + enlace.token)}">
-        <p class="hint">${pref.get('directorPendiente') === '1' ? 'Hay cambios por subir: se actualiza solo cuando hay señal.' : subido ? 'Actualizado el ' + new Date(subido).toLocaleString('es-AR', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'}) + '.' : ''}</p>
-        <div class="actions" style="margin-top:10px"><button class="btn sec small" ${on('dirCompartir')}>${ic('compartir')}Compartir</button><button class="btn sec small" ${on('dirActualizar')}>${ic('auto')}Actualizar ahora</button>
-          <button class="btn ghost small" ${on('dirRegenerar')}>Regenerar (anula el anterior)</button></div>`
-        : `<button class="btn sec block" ${on('dirRegenerar')}>${ic('link')}Crear enlace</button>`}</div>`;
-  }
-  acciones.dirActualizar = async () => {
-    if (!navigator.onLine) return avisar('Hace falta señal para actualizar el enlace.');
-    await publicarDirector(true);
-    toast('Enlace actualizado');
-    render();
-  };
-  acciones.dirRegenerar = async () => {
-    const hay = await getOne('config', 'directorEnlace');
-    if (!(await confirmar(hay ? 'El enlace anterior deja de funcionar. ¿Crear uno nuevo?'
-      : 'Para que el director lo vea, se sube a internet un resumen de tus visitas: cliente, establecimiento, fecha, horario, tareas, observaciones, pendientes y cantidades (lo mismo que el informe semanal). No se suben relevamientos, fotos, legajo ni contactos. Se actualiza solo cuando cambian tus visitas. ¿Crear el enlace?', hay ? 'Crear otro' : 'Crear enlace'))) return;
-    if (!navigator.onLine) return avisar('Hace falta señal para crear el enlace.');
-    const token = [...crypto.getRandomValues(new Uint8Array(32))].map(b => b.toString(16).padStart(2, '0')).join('');
-    const {error: e} = await sb.from('enlaces_director').upsert({user_id: usuario().id, token_hash: await huella(token), datos: await armarDirector(), actualizado: new Date().toISOString()});
-    if (e) return avisar('No se pudo crear el enlace: ' + e.message);
-    await put('config', {id: 'directorEnlace', token});
-    pref.set('directorPendiente', '');
-    pref.set('directorSubido', String(Date.now()));
-    toast('Enlace listo');
-    render();
-  };
-  acciones.dirCompartir = async () => {
-    const e = await getOne('config', 'directorEnlace'), url = WEB + 'director.html#t=' + e.token;
-    if (navigator.share) { try { await navigator.share({title: 'Visitas de Higiene y Seguridad', url}); return; } catch (x) { if (x?.name === 'AbortError') return; } }
-    try { await navigator.clipboard.writeText(url); toast('Enlace copiado'); } catch { avisar(url); }
-  };
-
-  // ===== Dictado con IA: propone, y solo se guarda lo que se confirma =====
-  acciones.abrirDictadoIA = async () => {
-    if (!activo()) { await avisar('El dictado con IA necesita que entres a tu cuenta. Lo que dictes va a Claude para ordenarlo y no se guarda en el servidor.'); return go('cuenta'); }
-    S.dictado = {texto: '', propuesta: null};
-    go('dictadoIA');
-  };
-  prev.dictadoIA = 'visita';
-  views.dictadoIA = {
-    title: () => 'Dictado con IA',
-    subtitle: () => S.vis ? `Visita del ${fmtFecha(S.vis.fecha)}` : '',
-    html(){
-      const D = S.dictado, P = D.propuesta;
-      if (!P) return `<div class="stack">${aviso('info', 'mic', 'Contá con tus palabras cómo fue la visita. La IA lo ordena en tareas, observaciones y pendientes, y vos lo revisás antes de guardar.')}
-        <div class="card"><label for="di_txt">Resumen de la visita</label><textarea id="di_txt" rows="8" placeholder="Ej.: hoy medimos la puesta a tierra, quedó pendiente el tablero del depósito…" ${oi('diTexto')}>${esc(D.texto)}</textarea>
-          <button class="btn sec small" style="margin-top:10px" id="di_mic" ${on('diMic')}>${ic('mic')}Dictar</button></div></div>
-        <div class="bottom-bar"><div class="actions"><button class="btn" ${on('diOrdenar')}>${ic('auto')}Ordenar con IA</button></div></div>`;
-      return `<div class="stack">${aviso('aviso', 'info', 'Esto todavía no se guardó. Revisalo, corregí lo que haga falta y confirmá.')}
-        <div class="card"><h4>Tareas realizadas</h4><p class="sub" style="margin-top:0">Una por línea.</p><textarea id="dp_tareas" rows="${Math.max(3, P.tareas_realizadas.length + 1)}">${esc(P.tareas_realizadas.join('\n'))}</textarea></div>
-        <div class="card"><h4>Observaciones</h4><textarea id="dp_obs" rows="5">${esc(P.observaciones)}</textarea></div>
-        <div class="card"><h4>Pendientes</h4><p class="sub" style="margin-top:0">Uno por línea.</p><textarea id="dp_pend" rows="${Math.max(3, P.pendientes.length + 1)}">${esc(P.pendientes.join('\n'))}</textarea></div></div>
-        <div class="bottom-bar"><div class="actions"><button class="btn ghost" ${on('diDescartar')}>Volver a dictar</button><button class="btn" ${on('diConfirmar')}>${ic('check')}Confirmar y guardar</button></div></div>`;
-    }
-  };
-  acciones.diTexto = t => { S.dictado.texto = t.value; };
-  let recoIA = null;
-  acciones.diMic = () => {
-    const R = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!R) return avisar('Este navegador no permite dictar. Usá el micrófono del teclado del celular.');
-    if (recoIA) { recoIA.stop(); return; }
-    recoIA = new R();
-    Object.assign(recoIA, {lang: 'es-AR', continuous: true, interimResults: false});
-    recoIA.onresult = ev => {
-      const ta = $('#di_txt');
-      if (!ta) return;
-      for (let i = ev.resultIndex; i < ev.results.length; i++) if (ev.results[i].isFinal) ta.value = `${ta.value.trimEnd()} ${ev.results[i][0].transcript.trim()}.`.trimStart();
-      S.dictado.texto = ta.value;
-    };
-    recoIA.onend = () => { recoIA = null; const b = $('#di_mic'); if (b) { b.innerHTML = ic('mic') + 'Dictar'; b.classList.remove('grabando'); } };
-    recoIA.onerror = e => { if (e.error === 'not-allowed') avisar('Hay que permitir el micrófono para dictar.'); };
-    recoIA.start();
-    const b = $('#di_mic'); b.innerHTML = ic('stop') + 'Detener'; b.classList.add('grabando');
-  };
-  acciones.diOrdenar = async () => {
-    const texto = S.dictado.texto.trim();
-    if (texto.length < 10) return avisar('Contá un poco más cómo fue la visita.');
-    if (!navigator.onLine) return avisar('Ordenar con IA necesita señal. Tu texto queda acá: probá cuando vuelva, o copialo en Observaciones.');
-    recoIA?.stop();
-    toast('Ordenando el dictado…');
-    const {data, error: e} = await sb.functions.invoke('ordenar-dictado', {body: {texto, tareas: S.vis.tareas.map(t => t.nombre)}});
-    if (e) {
-      let cod = '';
-      try { cod = (await e.context?.json?.())?.error || ''; } catch {}
-      return avisar(cod === 'sin_clave' ? 'Todavía falta cargar la clave de Claude en el servidor. Tu texto no se perdió.' : `No se pudo ordenar el dictado: ${cod || e.message}. Tu texto no se perdió.`);
-    }
-    S.dictado.propuesta = data;
-    render();
-    scrollTo(0, 0);
-  };
-  acciones.diDescartar = () => { S.dictado.propuesta = null; render(); };
-  acciones.diConfirmar = async () => {
-    const lineas = id => $('#' + id).value.split('\n').map(x => x.trim()).filter(Boolean);
-    const v = await getOne('visitas', S.vid), tareas = lineas('dp_tareas'), obs = $('#dp_obs').value.trim(), pend = lineas('dp_pend');
-    for (const n of tareas) {
-      const t = v.tareas.find(x => sinAcentos(x.nombre) === sinAcentos(n));
-      if (t) t.hecha = true; else v.tareas.push({id: uid(), actividadId: '', nombre: n, hecha: true, prevista: false});
-    }
-    if (obs) v.observaciones = [v.observaciones?.trim(), obs].filter(Boolean).join('\n\n');
-    await put('visitas', v);
-    for (const texto of pend) await put('pendientes', {id: uid(), estabId: v.estabId, texto, fecha: v.fecha, visitaId: v.id, estado: 'Abierto'});
-    toast('Guardado en la visita');
-    go('visita');
-  };
-
   // ===== Arranque =====
   async function init(){
-    const subirDirector = () => publicarDirector().catch(e => console.warn('Director', e));
-    addEventListener('online', () => { programar(1000); subirDirector(); });
+    addEventListener('online', () => programar(1000));
     addEventListener('offline', refrescar);
-    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { programar(500); subirDirector(); } else if (activo()) { sincronizar(); subirDirector(); } });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') programar(500); else if (activo()) sincronizar(); });
     setInterval(() => programar(100), 2 * 60e3);
     // La librería se carga solo si ya hay una sesión guardada o si se vuelve de un mail de la cuenta
     let hay = /access_token|type=recovery/.test(location.hash);
     try { hay ||= Object.keys(localStorage).some(k => k.startsWith('sb-') && k.endsWith('-auth-token')); } catch {}
     if (!hay) return;
-    try { await conectar(); programar(800); refrescar(); subirDirector(); if (esRaiz(S.view) && S.view !== 'empresas') render(); } catch (e) { console.warn('Sync', e); }
+    try { await conectar(); programar(800); refrescar(); if (esRaiz(S.view) && S.view !== 'empresas') render(); } catch (e) { console.warn('Sync', e); }
   }
 
-  return {views, acciones, prev, init, anotar, activo, botonNube, directorHtml, sincronizar, armarDirector, sincroniza: SINCRONIZAR};
+  return {views, acciones, prev, init, anotar, activo, botonNube, sincronizar, sincroniza: SINCRONIZAR};
 })();

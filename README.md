@@ -1,6 +1,6 @@
 # Relevamientos HyS
 
-App web instalable (PWA) de Higiene y Seguridad en el Trabajo, de uso propio: relevamientos con checklist e informe en Word, seguimiento de desvíos, agenda de visitas con clima, informe semanal al director, constancias de visita y legajo técnico. Funciona sin señal.
+App web instalable (PWA) de Higiene y Seguridad en el Trabajo, de uso propio: relevamientos con checklist e informe en Word, seguimiento de desvíos, agenda de visitas con clima, resumen semanal de visitas, constancias de visita y legajo técnico. Funciona sin señal.
 
 **La app:** https://lautaro056correa-prog.github.io/relevamientos-hys/
 
@@ -40,12 +40,11 @@ Después abrí http://localhost:8000. Si usás Claude Code, también está la co
 | Parte | Dónde |
 |---|---|
 | Pantallas y comportamiento | `app/app.js`, `app/agenda.js`, `app/agenda-informes.js`, `app/legajo.js` |
-| Cuenta, enlace del director, dictado con IA y sincronización (desactivada) | `app/sync.js` |
+| Cuenta, avisos con la app cerrada y sincronización (desactivada) | `app/sync.js` |
 | Armado de los avisos con la app cerrada, en el celular | `web/sw.js` |
 | Estilos | `relevamientos.html` |
 | Temas de relevamiento y catálogo del legajo | `modulos/*.json`, `config/legajo.json` |
 | Servidor: tablas, reglas y funciones | `supabase/` |
-| Página de solo lectura del director | `web/director.html` |
 
 ## Publicar una actualización
 
@@ -59,13 +58,11 @@ Arma la web en `publicar/`, la sube y en un minuto está en línea. El celular t
 
 ## Cuenta y servicios
 
-Los datos **no se sincronizan**. La cuenta (Más › Cuenta) es solo la llave de tres servicios opcionales; sin cuenta, todo lo demás funciona igual. Esto es lo único que sale del dispositivo:
+Los datos **no se sincronizan**. La cuenta (Más › Cuenta) es solo la llave de los avisos con la app cerrada; sin cuenta, todo lo demás funciona igual. Esto es lo único que sale del dispositivo:
 
 | Servicio | Qué sale | Qué no sale |
 |---|---|---|
 | **Avisos con la app cerrada** | Una dirección técnica para poder despertar al celular a las 19:00 y a las 08:00. El mensaje se arma en el propio celular. Para el clima, el celular le pide el pronóstico a Open-Meteo con las coordenadas de la visita, igual que la agenda. | Clientes, visitas y cualquier otro dato: el servidor no los conoce. |
-| **Enlace para el director** | Un resumen de visitas (cliente, establecimiento, fecha, horario, tareas, observaciones, pendientes y cantidades), el mismo contenido del informe semanal. Se sube solo si creás el enlace y se actualiza cuando cambian las visitas. | Relevamientos, fotos, legajo, contactos, CUIT y direcciones. |
-| **Dictado con IA** | Lo que dictás y los nombres de las tareas planificadas, solo cuando tocás "Ordenar con IA". Pasa por el servidor hacia Claude y no se guarda en el servidor. | Todo lo demás. |
 
 **Si algún día querés sincronizar todo:** poné `SINCRONIZAR = true` en `app/sync.js` y publicá. Los datos de los clientes pasarían a estar también en los servidores de Supabase. Ese camino nunca se probó con una cuenta real: hay que probarlo con datos de ejemplo antes de usarlo.
 
@@ -74,7 +71,7 @@ Los datos **no se sincronizan**. La cuenta (Más › Cuenta) es solo la llave de
 Ya está hecho en el proyecto `obnuhhublcbdaolfpsjh`. Esto es para rehacerlo desde cero, por ejemplo si cambiás de proyecto.
 
 1. Entrá a https://supabase.com, tocá **Start your project** y creá un proyecto (plan Free). Guardá la contraseña de la base en un lugar seguro.
-2. Copiá el **Project URL** y la clave **publishable** (Project Settings › API Keys) y ponelos en `app/sync.js` y en `web/director.html`. Esa clave es pública: lo que protege los datos son las reglas de la base. **Nunca** uses ahí la clave `secret` ni `service_role`.
+2. Copiá el **Project URL** y la clave **publishable** (Project Settings › API Keys) y ponelos en `app/sync.js`. Esa clave es pública: lo que protege los datos son las reglas de la base. **Nunca** uses ahí la clave `secret` ni `service_role`.
 3. Instalá la herramienta de Supabase y conectala (se abre el navegador y pegás un código):
    ```
    npm install supabase
@@ -92,12 +89,3 @@ Ya está hecho en el proyecto `obnuhhublcbdaolfpsjh`. Esto es para rehacerlo des
 ### Límites del plan gratis
 
 500 MB de datos y 1 GB de archivos. Los proyectos sin actividad durante una semana se pausan y se reactivan desde el panel de Supabase. Las fotos de registros borrados no se eliminan solas del almacenamiento.
-
-### Cargar la clave de la API de Claude (dictado con IA)
-
-Solo hace falta para el dictado con IA: sin la clave, todo lo demás funciona igual. Se paga por uso.
-
-1. Entrá a https://console.anthropic.com, cargá crédito y creá una clave en **API Keys**.
-2. Corré `.claude\cargar-clave-claude.ps1` (en este repositorio, una copia está en `supabase/`) y pegá la clave cuando te la pida. No se ve en pantalla ni queda en ningún archivo.
-
-La clave queda como secreto del servidor y la usa solo la función `supabase/functions/ordenar-dictado`: **nunca** va en el código de la app ni llega al navegador. No la pegues en un chat ni en un archivo. El dictado usa el modelo `claude-opus-5-5`; se cambia en esa misma función.

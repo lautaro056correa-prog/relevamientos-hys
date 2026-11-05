@@ -1,5 +1,5 @@
 ﻿# Activa el servidor de Relevamientos HyS. Se corre una sola vez, desde el Terminal, con la sesión de Supabase ya iniciada:
-#   1. Sube las funciones del servidor (dictado con IA, avisos y enlace del director).
+#   1. Sube las funciones del servidor (avisos).
 #   2. Genera las claves de los avisos y las guarda como secretos en Supabase. No se muestran ni quedan en ningún archivo.
 #   3. Escribe en app/sync.js solo la clave pública, que es la que necesita la app.
 $raiz = Split-Path -Parent $PSScriptRoot
@@ -11,7 +11,7 @@ function Revisar($paso) { if ($LASTEXITCODE -ne 0) { Write-Host ''; Write-Host "
 
 Write-Host ''
 Write-Host '1 de 3 - Subiendo las funciones del servidor (tarda un par de minutos)...' -ForegroundColor Cyan
-& $s functions deploy ordenar-dictado avisos director --no-verify-jwt --project-ref $ref --yes
+& $s functions deploy avisos --no-verify-jwt --project-ref $ref --yes
 Revisar 'subir las funciones'
 
 $sync = Join-Path $raiz 'app\sync.js'
