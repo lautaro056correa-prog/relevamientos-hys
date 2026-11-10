@@ -1,6 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "umbral_dias": 60,
+  "actualizaciones": [
+    {"version": 2, "codigo": "L10", "motivo": "Confirmado por el usuario (10-nov-2026): las auditorías internas son mensuales.",
+     "si": {"vigencia.tipo": "periodica", "vigencia.meses": 12}, "cambia": {"vigencia": {"tipo": "periodica", "meses": 1}, "nota": "Mensual.", "a_confirmar": false}}
+  ],
   "notas": "Catálogo semilla del legajo técnico. La app lo copia al dispositivo la primera vez y desde ahí se edita en Más › Legajo técnico › Catálogo. vigencia.tipo: periodica (meses), anual (vence el 31/12), fecha_fija (mes, dia), documento (vencimiento a mano), evento (casos con plazo), revision (vigente hasta marcarla desactualizada; recordatorio_meses), agrupador (solo título). aplica: siempre, provincia, trabajadores_min, quimicos, residuos, ruido, comedor, cancerigenos, no_obra, depende (código). casos: eventos | registros | productos. por: punto_agua (un ítem por punto de suministro). actividades: tareas de la agenda que lo renuevan al cerrar la visita.",
   "secciones": ["Organización y gestión", "ART y agentes de riesgo", "Autoridades y siniestros", "Capacitación, puestos y procedimientos", "Emergencias e incendio", "Productos químicos y residuos", "Mediciones"],
   "requisitos": [
@@ -25,7 +29,7 @@
     {"codigo": "L09", "nombre": "Aseguradora de Riesgos del Trabajo", "seccion": "ART y agentes de riesgo", "normativa": "Ley 24.557",
      "vigencia": {"tipo": "documento"}, "aplica": {"siempre": true}, "evidencia": "Contrato y certificado de cobertura", "nota": "", "a_confirmar": false},
     {"codigo": "L10", "nombre": "Auditorías internas", "seccion": "Organización y gestión", "normativa": "Criterio de gestión",
-     "vigencia": {"tipo": "periodica", "meses": 12}, "aplica": {"siempre": true}, "evidencia": "Informe de auditoría", "nota": "", "a_confirmar": true},
+     "vigencia": {"tipo": "periodica", "meses": 1}, "aplica": {"siempre": true}, "evidencia": "Informe de auditoría", "nota": "Mensual.", "a_confirmar": false},
     {"codigo": "L11", "nombre": "Capacitaciones", "seccion": "Capacitación, puestos y procedimientos", "normativa": "Dec. 351/79 arts. 208 a 214, Res. SRT 905/15",
      "vigencia": {"tipo": "anual"}, "aplica": {"siempre": true}, "casos": "registros", "evidencia": "Programa anual + registros firmados de cada capacitación", "nota": "", "a_confirmar": false, "actividades": ["act1"]},
     {"codigo": "L12", "nombre": "Mediciones", "seccion": "Mediciones", "normativa": "Agrupador de L20 a L26",

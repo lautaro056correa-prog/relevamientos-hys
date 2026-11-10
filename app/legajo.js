@@ -14,6 +14,13 @@
     else if (CAT && semilla && semilla.version > (CAT.version || 0)) {
       // Versión nueva del catálogo: se suman los requisitos que falten, sin pisar lo que el usuario editó
       for (const r of semilla.requisitos) if (!CAT.requisitos.some(x => x.codigo === r.codigo)) CAT.requisitos.push({activo: true, actividades: [], ...r});
+      // Correcciones de requisitos que ya existían: solo si en el dispositivo siguen como venían de fábrica
+      // (si el usuario los editó en el Catálogo, se respeta lo suyo). Los ítems cargados no se tocan.
+      const valor = (o, ruta) => ruta.split('.').reduce((x, k) => x?.[k], o);
+      for (const u of semilla.actualizaciones || []) {
+        const x = req(u.codigo);
+        if (u.version > (CAT.version || 0) && x && Object.entries(u.si || {}).every(([ruta, v]) => String(valor(x, ruta)) === String(v))) Object.assign(x, structuredClone(u.cambia));
+      }
       CAT.version = semilla.version;
     }
     CAT ||= {id: 'legajoCatalogo', version: 0, umbral_dias: 60, secciones: [], requisitos: []};
@@ -21,6 +28,12 @@
     await tx('config', 'readwrite', o => o.put(CAT));
   }
   const umbral = () => +CAT.umbral_dias || 60;
+  // Anticipación de "por vencer" para un requisito: la configurada, pero no más de un tercio del período
+  // (si no, uno mensual estaría siempre "por vencer"): mensual → 10 días; semestral y anual quedan igual (60)
+  const umbralDe = r => {
+    const v = r.vigencia || {}, m = +(v.tipo === 'periodica' ? v.meses : v.tipo === 'revision' ? v.recordatorio_meses : 0);
+    return m > 0 ? Math.min(umbral(), m * 10) : umbral();
+  };
   const reqs = () => CAT.requisitos.filter(r => r.activo !== false);
   const req = cod => CAT.requisitos.find(r => r.codigo === cod);
   const secciones = () => [...new Set([...(CAT.secciones || []), ...reqs().map(r => r.seccion)])];
@@ -84,7 +97,7 @@
     if (!v) return 'vigente';
     const dd = diasHasta(v);
     if (dd < 0) return r.vigencia?.tipo === 'revision' ? 'porvencer' : 'vencido';
-    return dd <= umbral() ? 'porvencer' : 'vigente';
+    return dd <= umbralDe(r) ? 'porvencer' : 'vigente';
   }
   const idItem = (s, cod, sub = '') => `${s.id}|${cod}|${sub}`;
   // Filas del legajo de un establecimiento: cada requisito activo (desdoblado por punto de suministro)
@@ -144,6 +157,14 @@
 
   // ===== Pantalla: legajo de un establecimiento =====
   const FILTROS = [['todos', 'Todos'], ['urgentes', 'A resolver'], ['vigente', 'Vigentes'], ['noaplica', 'No aplica']];
+  const pasaFiltro = (f, filtro) => filtro === 'todos' || (filtro === 'urgentes' ? ['vencido', 'faltante', 'porvencer', 'sinrevisar'].includes(f.est) : f.est === filtro);
+  const porUrgencia = fs => fs.sort((a, b) => URGENCIA.indexOf(a.est) - URGENCIA.indexOf(b.est) || (a.dias ?? 9999) - (b.dias ?? 9999));
+  // Orden en que se ven los ítems en la lista desde la que se abrió la ficha (para el botón "Siguiente")
+  function ordenDe(vista, fs){
+    const xs = vista === 'legajoRevision' ? porUrgencia(fs)
+      : vista === 'legajo' ? secciones().flatMap(sec => fs.filter(f => f.r.seccion === sec && pasaFiltro(f, S.legFiltro || 'todos'))) : [];
+    return xs.map(f => [f.it.codigo, f.it.sub || '']);
+  }
   function filaHtml(f, accion = 'abrirLegItem'){
     return `<div class="el" ${on(accion, f.it.codigo, f.it.sub || '')}>
       <div><b>${esc(nombreReq(f))}</b>${f.r.a_confirmar ? ' <span class="badge b-mid">a confirmar</span>' : ''}${f.propuesto && f.est !== 'sinrevisar' ? ' <span class="badge b-blanco">propuesto</span>' : ''}
@@ -156,7 +177,7 @@
       const s = S.estab, fs = filas(s, await leerTodo()), R = resumen(fs), filtro = S.legFiltro || 'todos';
       sincronizarPendientes(s, fs);
       const L = s.legajo || {}, incompleto = ['quimicos', 'residuos', 'ruido', 'comedor'].some(k => L[k] == null) || !s.provincia || !s.trabajadores;
-      const ver = fs.filter(f => filtro === 'todos' || (filtro === 'urgentes' ? ['vencido', 'faltante', 'porvencer', 'sinrevisar'].includes(f.est) : f.est === filtro));
+      const ver = fs.filter(f => pasaFiltro(f, filtro));
       const k = (e, n) => `<div class="kpi ${EST[e][1]}"><b>${n}</b><span>${EST[e][0]}</span></div>`;
       return `<div class="card"><div class="between"><div><div class="sub">Cumplimiento del legajo</div><div style="font:700 34px/1.1 var(--display)">${R.pct}%</div></div>
           <div class="sub" style="text-align:right">${R.aplicables} aplicables<br>${R.ultima ? 'Última revisión ' + fmtFecha(R.ultima) : 'Sin revisar todavía'}</div></div>
@@ -181,20 +202,24 @@
 
   // ===== Pantalla: un ítem del legajo =====
   acciones.abrirLegItem = async (t, cod, sub) => {
-    const s = S.estab, todos = await leerTodo(), f = filas(s, todos).find(x => x.it.codigo === cod && (x.it.sub || '') === (sub || ''));
+    const s = S.estab, todos = await leerTodo(), fs = filas(s, todos), f = fs.find(x => x.it.codigo === cod && (x.it.sub || '') === (sub || ''));
     if (!f) return;
-    S.legItem = structuredClone(f.it); S.legItemVolver = S.view === 'legajoItem' ? S.legItemVolver : S.view;
+    // Desde "Siguiente" se mantienen la lista de origen y su orden
+    if (S.view !== 'legajoItem') { S.legItemVolver = S.view; S.legOrden = ordenDe(S.view, fs); }
+    S.legItem = structuredClone(f.it); S.legItemOrig = JSON.stringify(f.it);
     go('legajoItem');
   };
   prev.legajoItem = () => S.legItemVolver || 'legajo';
+  const posicion = () => (S.legOrden || []).findIndex(([c, sb]) => c === S.legItem.codigo && sb === (S.legItem.sub || ''));
   views.legajoItem = {
-    title: () => S.legItem.codigo + (S.legItem.sub ? ' · ' + S.legItem.sub : ''),
+    title: () => S.legItem.codigo + (S.legItem.sub ? ' · ' + S.legItem.sub : '') + (posicion() >= 0 ? ` · ${posicion() + 1} de ${S.legOrden.length}` : ''),
     subtitle: () => req(S.legItem.codigo)?.nombre || '',
     async html(){
       const s = S.estab, it = S.legItem, r = req(it.codigo), todos = await leerTodo(), items = Object.fromEntries(todos.map(x => [x.id, x]));
       const est = estado(r, it, s, items), prop = propuesta(r, s, items), ap = it.aplica ?? prop.aplica, venc = calcVenc(r, it), tipo = r.vigencia?.tipo;
       const manual = [['', 'Automático'], ['tramite', 'En trámite'], ['faltante', 'Faltante'], [tipo === 'revision' ? 'desactualizado' : 'vencido', tipo === 'revision' ? 'Desactualizado' : 'Vencido']];
       const casoNombre = {eventos: 'Casos (actuaciones o siniestros)', registros: 'Registros', productos: 'Productos y sus FDS'}[r.casos];
+      const pos = posicion(), hay = pos >= 0 && pos < S.legOrden.length - 1;   // hay un ítem siguiente en la lista
       return `<div class="card"><div class="between"><b style="font-size:17px">${esc(r.nombre)}${it.sub ? ' – ' + esc(it.sub) : ''}</b>${badge(est)}</div>
           <p class="sub" style="margin:8px 0 0">${esc(r.normativa)}<br>Vigencia: ${esc(textoVigencia(r))}${r.evidencia ? '<br>Evidencia: ' + esc(r.evidencia) : ''}${r.nota ? '<br>' + esc(r.nota) : ''}</p>
           ${r.a_confirmar ? `<div style="margin-top:10px">${aviso('aviso', 'alerta', 'La vigencia de este requisito es un criterio a confirmar.')}</div>` : ''}</div>
@@ -233,7 +258,9 @@
           <div class="sub">${x.vencimiento ? 'Vencía ' + fmtFecha(x.vencimiento) + ' · ' : ''}reemplazado el ${fmtFecha(x.reemplazado)}${x.interviniente ? ' · ' + esc(x.interviniente) : ''}</div></div>
           ${x.archivo ? `<button class="hbtn mini" ${on('legVerVersion', i)} aria-label="Descargar versión">${ic('descarga')}</button>` : ''}</div>`).join('')}</div>` : ''}
         ${(it.revisiones || []).length ? `<h3>Revisiones</h3><div class="card fold-list">${it.revisiones.slice().reverse().slice(0, 12).map(x => `<div class="el" style="cursor:default"><div><b>${fmtFecha(x.fecha)}</b> <span class="sub">${esc(x.accion)}${x.visitaId ? ' · en una visita' : ''}</span></div></div>`).join('')}</div>` : ''}
-        <div class="bottom-bar"><div class="actions"><button class="btn ghost" ${on('atras')}>Volver</button><button class="btn" ${on('legGuardar')}>${ic('check')}Guardar</button></div></div>`;
+        <div class="bottom-bar"><div class="actions${hay ? ' tres' : ''}"><button class="btn ghost" ${on('atras')}>Volver</button>
+          ${hay ? `<button class="btn sec" ${on('legGuardar')}>Guardar</button><button class="btn" ${on('legSiguiente')}>Siguiente${ic('chev')}</button>`
+            : `<button class="btn" ${on('legGuardar')}>${ic('check')}Guardar</button>`}</div></div>`;
     }
   };
   acciones.legCampo = (t, campo, v) => { S.legItem[campo] = v; render(); };
@@ -275,14 +302,29 @@
   };
   acciones.legCasoEstado = (t, i) => { const c = S.legItem.casos[i]; c.estado = c.estado === 'Cerrado' ? 'Abierto' : 'Cerrado'; c.cierre = c.estado === 'Cerrado' ? hoy() : ''; render(); };
   acciones.legCasoQuitar = async (t, i) => { if (await confirmar('¿Quitar este registro?', 'Quitar')) { S.legItem.casos.splice(i, 1); render(); } };
-  acciones.legGuardar = async () => {
+  // Guarda la ficha abierta; resuelve false si falta algo
+  async function guardarFicha(){
     const it = S.legItem, r = req(it.codigo);
     if (it.aplica === false && !String(it.motivoNoAplica || '').trim()) it.motivoNoAplica = propuesta(r, S.estab, {}).motivo;
-    if (it.aplica === false && !String(it.motivoNoAplica || '').trim()) return avisar('Escribí el motivo por el que no aplica.');
-    if (r.vigencia?.tipo === 'documento' && it.emision && !it.vencimiento && !r.casos && !(await confirmar('No cargaste el vencimiento del documento. ¿Guardar igual?', 'Guardar'))) return;
+    if (it.aplica === false && !String(it.motivoNoAplica || '').trim()) { await avisar('Escribí el motivo por el que no aplica.'); return false; }
+    if (r.vigencia?.tipo === 'documento' && it.emision && !it.vencimiento && !r.casos && !(await confirmar('No cargaste el vencimiento del documento. ¿Guardar igual?', 'Guardar'))) return false;
     await guardarItem(it, it.aplica === false ? 'Marcado como no aplica' : `Actualizado (${EST[estado(r, it, S.estab, {})][0].toLowerCase()})`);
+    return true;
+  }
+  acciones.legGuardar = async () => {
+    if (!(await guardarFicha())) return;
     toast('Guardado');
     A.atras();
+  };
+  // Siguiente: guarda solo si se cambió algo (pasar de largo no cuenta como revisado ni crea pendientes) y abre el próximo de la lista
+  acciones.legSiguiente = async () => {
+    if (JSON.stringify(S.legItem) !== S.legItemOrig) {
+      if (!(await guardarFicha())) return;
+      toast('Guardado');
+    }
+    const sig = S.legOrden?.[posicion() + 1];
+    if (!sig) return A.atras();
+    await acciones.abrirLegItem(null, ...sig);
   };
 
   // ===== Revisión de legajo (dentro de la visita o del relevamiento): ordenada por urgencia, acciones de un toque =====
@@ -297,7 +339,7 @@
     title: () => 'Revisión de legajo',
     subtitle: () => `${S.empresa.razonSocial} · ${S.estab.nombre}`,
     async html(){
-      const fs = filas(S.estab, await leerTodo()).sort((a, b) => URGENCIA.indexOf(a.est) - URGENCIA.indexOf(b.est) || (a.dias ?? 9999) - (b.dias ?? 9999));
+      const fs = porUrgencia(filas(S.estab, await leerTodo()));
       const R = resumen(fs);
       const b = (f, k, txt, clase = 'sec') => `<button class="btn ${clase} small" ${on('legRapido', f.it.codigo, f.it.sub || '', k)}>${txt}</button>`;
       return `${aviso('info', 'info', `Primero los vencidos y faltantes. Cada toque queda registrado con la fecha${S.legVisita ? ' y esta visita' : ''}. Faltante o Vencido crea un pendiente del cliente.`)}
@@ -314,7 +356,7 @@
       // Vigente pide la fecha y el documento: se abre la ficha del ítem ya marcada como vigente
       Object.assign(it, {aplica: true, manual: ''});
       if (!it.emision && f.r.casos !== 'eventos' && f.r.casos !== 'productos') it.emision = hoy();
-      S.legItem = it; S.legItemVolver = 'legajoRevision';
+      S.legItem = it; S.legItemVolver = 'legajoRevision'; S.legOrden = ordenDe('legajoRevision', fs); S.legItemOrig = JSON.stringify(f.it);
       toast('Revisá la fecha y adjuntá la foto o el PDF del documento');
       return go('legajoItem');
     }

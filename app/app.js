@@ -279,7 +279,7 @@ const esRaiz = v => TABS.some(t => t[1] === v);
 const raiz = () => TABS.find(t => t[0] === S.tab)[1];
 // Sin entrada: vuelve a la pantalla principal de la pestaña en la que se está
 const PREV = {estab: 'empresa', categorias: 'estab', carpeta: 'categorias', perfil: 'mas', actividades: 'mas', relev: 'categorias',
-  elemento: 'relev', generales: 'relev', fotosGen: 'relev', informe: 'relev', panel: 'estab', seguimiento: 'estab', obsForm: 'seguimiento',
+  elemento: () => S.desdeInforme ? 'informe' : 'relev', generales: () => S.desdeInforme ? 'informe' : 'relev', fotosGen: 'relev', informe: 'relev', panel: 'estab', seguimiento: 'estab', obsForm: 'seguimiento',
   desvios: 'estab', desvioEl: 'desvios', normasEmp: 'empresa'};
 let volverA = null;   // pantalla a la que vuelve "atrás" cuando se entró desde una pestaña
 function go(view){ S.view = view; S.marcar = false; render(); scrollTo(0, 0); }
@@ -444,7 +444,7 @@ const VIEWS = {
   // Nuevo relevamiento desde el Inicio: primero se elige dónde
   elegirEstab: {
     title: () => 'Nuevo relevamiento',
-    subtitle: () => 'Elegí el establecimiento',
+    subtitle: () => 'Elegí el cliente y el establecimiento',
     async html(){
       const d = await datosInicio();
       if (!d.est.length) return `<div class="stack">${vacio('edificio', 'Todavía no cargaste clientes con establecimientos.')}<button class="btn block" ${on('nuevaEmpresa')}>${ic('plus')}Agregar cliente</button></div>`;
@@ -807,7 +807,9 @@ const VIEWS = {
   // ---- Carga de un elemento ----
   elemento: {
     title: () => nombreEl(),
+    despues: () => irAlFaltante(),
     html(){
+      if (S.irFalta) S.marcar = true;
       const sectores = [...new Set(S.relev.modulos.flatMap(m => m.elementos.map(e => e.sector)).filter(Boolean))];
       const m = mod(), sing = m.nombre_elemento.toLowerCase(), est = m.tipo_elemento === 'establecimiento';
       const datos = atributosHtml();
@@ -832,7 +834,8 @@ const VIEWS = {
   generales: {
     title: () => 'Verificaciones generales',
     subtitle: () => mod().titulo,
-    html: () => `<div class="stack">${modCardHtml()}${aviso('info', 'info', 'Se evalúan una sola vez para todo el establecimiento.')}
+    despues: () => irAlFaltante(),
+    html: () => (S.irFalta && (S.marcar = true), '') + `<div class="stack">${modCardHtml()}${aviso('info', 'info', 'Se evalúan una sola vez para todo el establecimiento.')}
       <div id="checklist" class="stack">${checklistHtml()}</div></div>
       <div class="bottom-bar"><div class="actions"><button class="btn" ${on('terminarGenerales')}>${ic('check')}Listo</button></div></div>`
   },
@@ -859,8 +862,10 @@ const VIEWS = {
           ${editado ? `<button class="btn ghost small" style="margin-top:6px" ${on('restaurarTexto', k)}>${ic('auto')}Restaurar texto automático</button>` : ''}`;
       };
       return `<div class="stack">
-        ${M.incompletos.length ? aviso('error', 'alerta', `<b>Faltan datos para emitir el informe:</b><ul style="margin:6px 0 0;padding-left:18px">
-          ${M.incompletos.map(i => `<li>${esc(i.modulo)} – ${esc(i.nombre)}: ${esc(i.faltan.slice(0, 3).join(', '))}${i.faltan.length > 3 ? '…' : ''}</li>`).join('')}</ul>`) : ''}
+        ${M.incompletos.length ? aviso('error', 'alerta', `<b>Faltan datos para emitir el informe:</b>
+          ${M.incompletos.map(i => `<div class="falta"><div><b>${esc(i.modulo === i.nombre ? i.modulo : `${i.modulo} – ${i.nombre}`)}</b>
+              <span>${i.faltan.length === 1 ? 'Falta' : `Faltan ${i.faltan.length}`}: ${esc(i.faltan.join(', '))}</span></div>
+            <button class="btn small" ${on('irFaltante', i.mi, i.ei)}>Completar${ic('chev')}</button></div>`).join('')}`) : ''}
         ${PERFIL.nombre ? '' : aviso('aviso', 'info', `Tus datos de profesional están vacíos: el informe saldrá sin nombre ni matrícula. <a class="link" ${on('go', 'perfil')}>Cargarlos</a>`)}
         <div class="card result">
           <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="Cumplimiento ${pct} %">
@@ -1054,13 +1059,22 @@ function listaEmpresasHtml(d){
 }
 
 // Establecimientos para elegir dónde relevar (Nuevo relevamiento del Inicio)
+// Nuevo relevamiento: una fila por razón social. Con un solo establecimiento entra directo;
+// con varios se despliega para elegir (al buscar, se abren solos con los que coinciden)
 function listaEstabHtml(d){
   const f = sinAcentos(S.filtroEst);
-  const filas = d.est.map(s => ({s, e: d.emp.find(e => e.id === s.empresaId)})).filter(x => x.e && (!f || sinAcentos(`${x.e.razonSocial} ${x.s.nombre} ${x.s.localidad}`).includes(f)))
-    .sort((a, b) => a.e.razonSocial.localeCompare(b.e.razonSocial) || a.s.nombre.localeCompare(b.s.nombre));
-  return filas.map(({s, e}) => `<div class="card rowcard" ${on('relevarEstab', s.id)}>${avatar(e)}
-    <div><b>${esc(e.razonSocial)}</b><div class="sub">${esc([s.nombre, s.localidad].filter(Boolean).join(' · '))}</div></div>${ic('chev', 'chev')}</div>`).join('')
-    || vacio('search', 'No hay establecimientos que coincidan.');
+  const grupos = d.emp.map(e => {
+    const todos = d.est.filter(s => s.empresaId === e.id).sort((a, b) => a.nombre.localeCompare(b.nombre));
+    return {e, todos, ests: todos.filter(s => !f || sinAcentos(`${e.razonSocial} ${s.nombre} ${s.localidad}`).includes(f))};
+  }).filter(g => g.ests.length).sort((a, b) => a.e.razonSocial.localeCompare(b.e.razonSocial));
+  const lugar = s => esc([s.nombre, s.localidad].filter(Boolean).join(' · '));
+  return grupos.map(({e, todos, ests}) => todos.length === 1
+    ? `<div class="card rowcard" ${on('relevarEstab', ests[0].id)}>${avatar(e)}
+      <div><b>${esc(e.razonSocial)}</b><div class="sub">${lugar(ests[0])}</div></div>${ic('chev', 'chev')}</div>`
+    : `<details class="card fold" ${f ? 'open' : ''}><summary>${avatar(e)}<div><b>${esc(e.razonSocial)}</b><div class="sub">${plural(todos.length, 'establecimiento', 'establecimientos')}</div></div>${ic('chev', 'chev')}</summary>
+      ${ests.map(s => `<div class="el" ${on('relevarEstab', s.id)}><div class="tile t-menta chico">${ic('ubicacion')}</div>
+        <div><b>${esc(s.nombre)}</b>${s.localidad ? `<div class="sub">${esc(s.localidad)}</div>` : ''}</div>${ic('chev', 'chev')}</div>`).join('')}</details>`).join('')
+    || vacio('search', 'No hay clientes ni establecimientos que coincidan.');
 }
 
 // Relevamientos agrupados por empresa (inicio: En curso / Informes)
@@ -1293,6 +1307,13 @@ async function sincronizarSeguimiento(rel, M){
     if (actuales.some(a => a.moduloId === o.moduloId && a.itemClave === o.itemClave && a.elemento === o.elemento)) continue;
     await put('seguimiento', {...o, estado: 'Cerrado', fechaCierre: rel.fecha_relevamiento, cierre: `Verificado en ${origen.toLowerCase()}`});
   }
+}
+
+// Entrada desde "Faltan datos" (Informes): lleva la pantalla al primer dato marcado
+function irAlFaltante(){
+  if (!S.irFalta) return;
+  S.irFalta = false;
+  (document.querySelector('.attr-err') || document.querySelector('.item.err'))?.scrollIntoView({block: 'center'});
 }
 
 // Valida el elemento actual; resuelve true si se puede seguir
@@ -1645,9 +1666,16 @@ const A = {
   },
   setRelev(t, campo, redibujar){ S.relev[campo] = t.value; saveRelev(); if (redibujar) render(); },
   setObsModulo(t, mi){ S.relev.modulos[mi].observaciones = t.value; saveRelev(); },
-  abrirElemento(t, mi, ei){ S.mi = mi; S.ei = ei; go('elemento'); },
+  abrirElemento(t, mi, ei){ S.mi = mi; S.ei = ei; S.desdeInforme = false; go('elemento'); },
   agregarElemento: (t, mi) => agregarElemento(mi),
-  abrirGenerales(t, mi){ S.mi = mi; go('generales'); },
+  abrirGenerales(t, mi){ S.mi = mi; S.desdeInforme = false; go('generales'); },
+  // Desde el aviso "Faltan datos" de Informes: abre el elemento (o las verificaciones generales) con lo que falta marcado,
+  // y al terminar vuelve a Informes
+  irFaltante(t, mi, ei){
+    Object.assign(S, {mi, desdeInforme: true, irFalta: true});
+    if (ei < 0) return go('generales');
+    S.ei = ei; go('elemento');
+  },
   async setFrec(t, id){ await guardarProgramaTema(id, {frec: +t.value, desde: S.estab.programa?.[id]?.desde || hoy()}); toast(+t.value ? `Programado: ${nombreFrec(t.value).toLowerCase()}` : 'Quitado del panel de control'); if (S.view === 'panel') render(); },
   async setRespProg(t, id){ await guardarProgramaTema(id, {responsable: t.value.trim()}); },
 
@@ -1679,12 +1707,12 @@ const A = {
     if (!ev.completo) {
       if (!(await confirmar(`${nombreEl()} está incompleto. Podés completarlo después desde el resumen.`, 'Salir igual', 'Seguir cargando'))) return;
     } else if (!(await validarElemento())) return;
-    go('relev');
+    go(S.desdeInforme ? 'informe' : 'relev');
   },
   async terminarGenerales(){
     const {ev} = contextoChecklist();
     if (ev.faltan.length && !(await confirmar(`Faltan ${ev.faltan.length} ítem(s) por responder.`, 'Salir igual', 'Seguir'))) return;
-    go('relev');
+    go(S.desdeInforme ? 'informe' : 'relev');
   },
   async eliminarElemento(){
     if (!(await confirmar(`¿Eliminar ${nombreEl()} y sus fotos?`, 'Eliminar'))) return;

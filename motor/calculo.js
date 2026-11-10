@@ -224,8 +224,9 @@ const Motor = (() => {
       const gestion = (mod.acciones_gestion || []).map(a => ({clave: mod.id + '|' + a.accion, moduloId: mod.id, mod, accion: a.accion,
         responsable: a.responsable, prioridad: 'BAJA', elementos: 'General', origen: 'gestion', estado: 'Pendiente', desvios: []}));
       const incompletos = [
-        ...elementos.filter(e => !e.ev.completo).map(e => ({nombre: e.nombre, faltan: [...e.ev.faltanAtributos, ...e.ev.faltan.map(k => mod.items.find(i => i.clave === k).texto)]})),
-        ...(generales && generales.faltan.length ? [{nombre: 'Verificaciones generales', faltan: generales.faltan.map(k => mod.items_generales.find(i => i.clave === k).texto)}] : [])
+        // mi / ei: dónde se completa (la pantalla Informes tiene un botón que lleva ahí; ei -1 = verificaciones generales)
+        ...elementos.filter(e => !e.ev.completo).map(e => ({nombre: e.nombre, mi, ei: e.num - 1, faltan: [...e.ev.faltanAtributos, ...e.ev.faltan.map(k => mod.items.find(i => i.clave === k).texto)]})),
+        ...(generales && generales.faltan.length ? [{nombre: 'Verificaciones generales', mi, ei: -1, faltan: generales.faltan.map(k => mod.items_generales.find(i => i.clave === k).texto)}] : [])
       ];
       const m = {mod, rm, elementos, generales, desvios, observaciones, ind, plan, gestion, incompletos};
       m.conclusion = conclusionModulo(P, mod, m);
