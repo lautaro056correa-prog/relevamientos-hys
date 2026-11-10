@@ -1077,11 +1077,12 @@ function listaEstabHtml(d){
     || vacio('search', 'No hay clientes ni establecimientos que coincidan.');
 }
 
-// Relevamientos agrupados por empresa (inicio: En curso / Informes)
+// Relevamientos agrupados por empresa (inicio: En curso / Informes): carpetas cerradas, en orden alfabético
 function relevsPorEmpresaHtml(d, filtro, txtVacio){
   const rels = d.rels.filter(filtro).sort((a, b) => b.fecha_relevamiento.localeCompare(a.fecha_relevamiento));
-  const grupos = d.emp.map(e => ({e, rels: rels.filter(r => d.est.some(s => s.id === r.establecimientoId && s.empresaId === e.id))})).filter(g => g.rels.length);
-  return grupos.map(g => `<details class="card fold" open><summary>${avatar(g.e)}<div><b>${esc(g.e.razonSocial)}</b><div class="sub">${plural(g.rels.length, 'relevamiento', 'relevamientos')}</div></div>${ic('chev', 'chev')}</summary>
+  const grupos = d.emp.map(e => ({e, rels: rels.filter(r => d.est.some(s => s.id === r.establecimientoId && s.empresaId === e.id))})).filter(g => g.rels.length)
+    .sort((a, b) => a.e.razonSocial.localeCompare(b.e.razonSocial, 'es', {sensitivity: 'base'}));
+  return grupos.map(g => `<details class="card fold"><summary>${avatar(g.e)}<div><b>${esc(g.e.razonSocial)}</b><div class="sub">${plural(g.rels.length, 'relevamiento', 'relevamientos')}</div></div>${ic('chev', 'chev')}</summary>
     ${g.rels.map(r => filaRelevHtml(r, d.est.find(s => s.id === r.establecimientoId))).join('')}</details>`).join('') || vacio('doc', txtVacio);
 }
 
